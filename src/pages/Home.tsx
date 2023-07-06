@@ -1,8 +1,14 @@
-const Home = () => {
-    return (
-        <div>Home Screen</div>
-        // TODO: Build Home Screen. Add recipes list
-    )
-}
+import { useTranslation } from "react-i18next";
 
-export default Home
+const Home = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+        {t('title')}
+        {/* PLACEHOLDER */}
+    </div>
+  )
+  // TODO: Build Home Screen. Add recipes list
+};
+
+export default Home;
