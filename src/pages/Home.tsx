@@ -1,14 +1,12 @@
-import { useTranslation } from "react-i18next";
+import { ComponentWithNavbar } from "../components/templates/ComponentWithNavbar";
 
 const Home = () => {
-  const { t } = useTranslation();
   return (
-    <div>
-        {t('title')}
-        {/* PLACEHOLDER */}
-    </div>
+    <ComponentWithNavbar>
+     Home page
+     {/* PLACEHOLDER */}
+    </ComponentWithNavbar>
   )
-  // TODO: Build Home Screen. Add recipes list
 };
 
 export default Home;
