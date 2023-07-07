@@ -1,14 +1,8 @@
-import { useTranslation } from "react-i18next";
-
 const Home = () => {
-  const { t } = useTranslation();
   return (
-    <div>
-        {t('title')}
-        {/* PLACEHOLDER */}
-    </div>
-  )
-  // TODO: Build Home Screen. Add recipes list
+    <div>Home page</div>
+    //  PLACEHOLDER
+  );
 };
 
 export default Home;
