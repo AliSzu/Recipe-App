@@ -1,12 +1,8 @@
-import { ComponentWithNavbar } from "../components/templates/ComponentWithNavbar";
-
 const Home = () => {
   return (
-    <ComponentWithNavbar>
-     Home page
-     {/* PLACEHOLDER */}
-    </ComponentWithNavbar>
-  )
+    <div>Home page</div>
+    //  PLACEHOLDER
+  );
 };
 
 export default Home;
