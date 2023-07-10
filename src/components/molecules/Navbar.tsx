@@ -38,7 +38,7 @@ export const Navbar = () => {
           <NavbarIcon />
           <Links>
             <StyledLink to={ROUTES.HOME}>Add recipe</StyledLink>
-            <StyledLink to={ROUTES.HOME}>Log In</StyledLink>
+            <StyledLink to={ROUTES.LOGIN}>Log In</StyledLink>
             {/* TODO: CHANGE ROUTES WHEN PAGES WILL BE IMPLEMENTED */}
           </Links>
         </Elements>

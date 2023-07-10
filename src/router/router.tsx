@@ -3,6 +3,8 @@ import Home from "../pages/Home";
 import { ROUTES } from "../constants/routes";
 import { Navbar } from "../components/molecules/Navbar";
 import { Container } from "@mui/material";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const NavbarLayout = () => (
   <>
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
         path: ROUTES.HOME,
         element: <Home />,
       },
+      {
+        path: ROUTES.LOGIN,
+        element: <Login/>
+      },
+      {
+        path: ROUTES.SIGNUP,
+        element: <SignUp/>
+      }
     ],
   },
 ]);

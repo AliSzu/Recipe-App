@@ -8,7 +8,7 @@ export const theme = createTheme({
       light: "#ffffff",
     },
     secondary: {
-      main: "#f5bc41",
+      main: "#ffa200",
       light: "#efefef",
     },
   },
@@ -20,6 +20,22 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: "Inter, sans-serif",
+          height: "100%",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: "2rem",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          padding: "0.8rem",
+          fontSize: '1rem'
         },
       },
     },
