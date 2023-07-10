@@ -73,7 +73,7 @@ const SignUpFrom = () => {
         required
       />
       <StyledButton type="submit" fullWidth>
-        {t("button.login")}
+        {t("button.signUp")}
       </StyledButton>
     </FormContainer>
   );

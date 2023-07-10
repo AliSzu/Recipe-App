@@ -13,7 +13,8 @@
     }
   },
   "button": {
-    "login": "Log in"
+    "login": "Log in",
+    "signUp": "Sign up"
   },
   "message" : {
     "login" : "Have an account already? <1>Log in</1>",

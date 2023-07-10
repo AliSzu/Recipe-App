@@ -13,7 +13,8 @@
     }
   },
   "button": {
-    "login": "Zaloguj się"
+    "login": "Zaloguj się",
+    "signUp": "Załóż konto"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
@@ -21,6 +22,6 @@
   },
   "cardTitle": {
     "login": "Logowanie",
-    "signUp": "Załóż konto"
+    "signUp": "Załóż Konto"
   }
 }
