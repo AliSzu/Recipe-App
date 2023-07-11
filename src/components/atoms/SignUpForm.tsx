@@ -2,14 +2,13 @@ import { Button, styled } from "@mui/material";
 import { useState } from "react";
 import {
   FormContainer,
+  FormErrorProvider,
   PasswordElement,
   TextFieldElement,
   useForm,
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -27,55 +26,62 @@ const SignUpFrom = () => {
   });
   const { t } = useTranslation();
 
-  yup.setLocale({
-    mixed: {
-      required: t("textField.error.required"),
-    },
-  });
-
-  const registerSchema = yup.object({
-    email: yup.string().email(t("textField.error.email")).required(),
-    password: yup.string().required(),
-    confirmPassword: yup
-      .string()
-      .required()
-      .oneOf([yup.ref("password"), ""], t("textField.error.passwordMatch")),
-  });
-
   const formContext = useForm<SignUpFormProps>({
     defaultValues: signUpValues,
-    resolver: yupResolver(registerSchema),
   });
 
+  const { watch } = formContext;
+
   return (
-    <FormContainer
-      formContext={formContext}
-      onSuccess={(data) => setSignUpValues(data)}
+    <FormErrorProvider
+      onError={(error) => {
+        if (error.type === "required") {
+          return t("textField.error.required");
+        } else if (error.type === "minLength") {
+          return t("textField.error.passwordLength");
+        }
+        return error.message;
+      }}
     >
-      {/* TODO: ON SUCCESS SEND DATA TO THE DATABASE AND REGISTER NEW ACCOUNT */}
-      <TextFieldElement
-        required
-        label="Email"
-        name="email"
-        fullWidth
-        type="email"
-      ></TextFieldElement>
-      <PasswordElement
-        name="password"
-        label={t("textField.label.password")}
-        fullWidth
-        required
-      />
-      <PasswordElement
-        name="confirmPassword"
-        label={t("textField.label.confirmPassword")}
-        fullWidth
-        required
-      />
-      <StyledButton type="submit" fullWidth>
-        {t("button.signUp")}
-      </StyledButton>
-    </FormContainer>
+      <FormContainer
+        formContext={formContext}
+        onSuccess={(data) => setSignUpValues(data)}
+      >
+        {/* TODO: ON SUCCESS SEND DATA TO THE DATABASE AND REGISTER NEW ACCOUNT */}
+        <TextFieldElement
+          required
+          label="Email"
+          name="email"
+          fullWidth
+          type="email"
+        ></TextFieldElement>
+        <PasswordElement
+          name="password"
+          label={t("textField.label.password")}
+          fullWidth
+          required
+          validation={{
+            minLength: 6,
+          }}
+        />
+        <PasswordElement
+          name="confirmPassword"
+          label={t("textField.label.confirmPassword")}
+          fullWidth
+          required
+          validation={{
+            validate: (val: string) => {
+              if (watch("password") !== val) {
+                return t("textField.error.passwordMatch");
+              }
+            },
+          }}
+        />
+        <StyledButton type="submit" fullWidth>
+          {t("button.signUp")}
+        </StyledButton>
+      </FormContainer>
+    </FormErrorProvider>
   );
 };
 

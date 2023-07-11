@@ -2,14 +2,13 @@ import { Button, styled } from "@mui/material";
 import { useState } from "react";
 import {
   FormContainer,
+  FormErrorProvider,
   PasswordElement,
   TextFieldElement,
   useForm,
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -19,10 +18,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledForm = styled("div")({
-  width: "100%",
-});
-
 const LoginForm = () => {
   const [loginValues, setLoginValues] = useState<LoginFormProps>({
     email: "",
@@ -31,24 +26,21 @@ const LoginForm = () => {
 
   const { t } = useTranslation();
 
-  yup.setLocale({
-    mixed: {
-      required: t("textField.error.required"),
-    },
-  });
-
-  const loginSchema = yup.object({
-    email: yup.string().email(t("textField.error.email")).required(),
-    password: yup.string().required(),
-  });
-
   const formContext = useForm<LoginFormProps>({
     defaultValues: loginValues,
-    resolver: yupResolver(loginSchema),
   });
 
   return (
-    <StyledForm>
+    <FormErrorProvider
+      onError={(error) => {
+        if (error.type === "required") {
+          return t("textField.error.required");
+        } else if (error.type === "pattern") {
+          return t("textField.error.email");
+        }
+        return error?.message;
+      }}
+    >
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {
@@ -73,7 +65,7 @@ const LoginForm = () => {
           {t("button.login")}
         </StyledButton>
       </FormContainer>
-    </StyledForm>
+    </FormErrorProvider>
   );
 };
 

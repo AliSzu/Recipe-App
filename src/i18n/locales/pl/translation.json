@@ -4,7 +4,8 @@
     "error": {
       "required": "To pole jest wymagane",
       "email": "Proszę wprowadzić poprawny adres email",
-      "passwordMatch": "Hasła nie są jednakowe"
+      "passwordMatch": "Hasła nie są jednakowe",
+      "passwordLength" : "Hasło powinno zawierać minimum 6 znaków"
     },
     "label": {
       "email": "Email",
