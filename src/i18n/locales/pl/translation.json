@@ -1,3 +1,28 @@
 {
-  "title": "Ekran główny"
+  "title": "Ekran główny",
+  "textField": {
+    "error": {
+      "required": "To pole jest wymagane",
+      "email": "Proszę wprowadzić poprawny adres email",
+      "passwordMatch": "Hasła nie są jednakowe",
+      "passwordLength" : "Hasło powinno zawierać minimum 6 znaków"
+    },
+    "label": {
+      "email": "Email",
+      "password": "Hasło",
+      "confirmPassword" : "Potwierdź hasło"
+    }
+  },
+  "button": {
+    "login": "Zaloguj się",
+    "signUp": "Załóż konto"
+  },
+  "message": {
+    "login": "Posiadasz już konto? <1>Zaloguj się</1>",
+    "signUp": "Nie posiadasz konta? <1>Załóż konto</1>"
+  },
+  "cardTitle": {
+    "login": "Logowanie",
+    "signUp": "Załóż Konto"
+  }
 }

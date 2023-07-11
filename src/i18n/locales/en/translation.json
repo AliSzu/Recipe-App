@@ -1,3 +1,28 @@
 {
-  "title": "Home Screen"
+  "title": "Home Screen",
+  "textField": {
+    "error": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "passwordMatch" : "Passwords do not match",
+      "passwordLength": "Password length must be at least 6 characters"
+    },
+    "label": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword" : "Confirm Password"
+    }
+  },
+  "button": {
+    "login": "Log in",
+    "signUp": "Sign up"
+  },
+  "message" : {
+    "login" : "Have an account already? <1>Log in</1>",
+    "signUp" : "Don't have an account? <1>Sign up</1>"
+  },
+  "cardTitle": {
+    "login": "Log In",
+    "signUp": "Sign Up"
+  }
 }
