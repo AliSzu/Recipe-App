@@ -1,5 +1,5 @@
 
-import SignUpFrom from "../components/atoms/SignUpForm";
+import SignUpFrom from "../components/organisms/SignUpForm";
 import AuthLayout from "../components/templates/AuthLayout";
 import { ROUTES } from "../constants/routes";
 
