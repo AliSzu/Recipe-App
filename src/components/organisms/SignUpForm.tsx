@@ -8,16 +8,15 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
-import axios, { AxiosError } from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "../../constants/apiEndpoints";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/routes";
 import { ErrorData } from "../../types/ErrorTypes";
 import { useState } from "react";
 import AuthSnackbar from "../atoms/AuthSnackbar";
+import { useSignUp } from "../../api/auth";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -39,14 +38,7 @@ const SignUpFrom = () => {
 
   const { watch } = formContext;
 
-  const mutation = useMutation({
-    mutationFn: (newUser: { email: string; password: string }) => {
-      return axios.post(ENDPOINTS.CREATE_NEW_USER, {
-        ...newUser,
-        returnSecureToken: true,
-      });
-    },
-  });
+  const mutation = useSignUp()
 
   const handleSignUp = (data: SignUpFormProps) => {
     mutation.mutate(
@@ -76,7 +68,7 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
-      <AuthSnackbar isError={mutation.isError} message={errorMessage}/>
+      <AuthSnackbar isError={mutation.isError} message={errorMessage} />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => handleSignUp(data)}

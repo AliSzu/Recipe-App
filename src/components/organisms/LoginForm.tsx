@@ -8,9 +8,7 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { ENDPOINTS } from "../../constants/apiEndpoints";
+import { AxiosError } from "axios";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +16,7 @@ import { ROUTES } from "../../constants/routes";
 import { ErrorData } from "../../types/ErrorTypes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useState } from "react";
+import { useSignIn } from "../../api/auth";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -37,14 +36,7 @@ const LoginForm = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const mutation = useMutation({
-    mutationFn: (user: { email: string; password: string }) => {
-      return axios.post(ENDPOINTS.SIGN_IN, {
-        ...user,
-        returnSecureToken: true,
-      });
-    },
-  });
+  const mutation = useSignIn()
 
   const handleSignIn = (data: LoginFormProps) => {
     mutation.mutate(
