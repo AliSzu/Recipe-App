@@ -8,13 +8,16 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/apiEndpoints";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/routes";
+import { ErrorData } from "../../types/ErrorTypes";
+import { useState } from "react";
+import AuthSnackbar from "../atoms/AuthSnackbar";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -25,6 +28,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignUpFrom = () => {
+  const [errorMessage, setErrorMessage] = useState(" ");
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -49,13 +53,17 @@ const SignUpFrom = () => {
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
-          dispatch(login(response.data))
-          navigate(ROUTES.HOME)
+          dispatch(login(response.data));
+          navigate(ROUTES.HOME);
+        },
+        onError: (error) => {
+          const errorResponse = error as AxiosError;
+          const errorData = errorResponse.response?.data as ErrorData;
+          setErrorMessage(errorData.error.message);
         },
       }
     );
   };
-
 
   return (
     <FormErrorProvider
@@ -68,6 +76,7 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
+      <AuthSnackbar isError={mutation.isError} message={errorMessage}/>
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => handleSignUp(data)}

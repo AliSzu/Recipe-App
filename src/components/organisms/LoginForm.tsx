@@ -9,22 +9,26 @@ import {
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ENDPOINTS } from "../../constants/apiEndpoints";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { ErrorData } from "../../types/ErrorTypes";
+import AuthSnackbar from "../atoms/AuthSnackbar";
+import { useState } from "react";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.light,
   "&:hover": {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
 const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState(" ");
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -50,6 +54,11 @@ const LoginForm = () => {
           dispatch(login(response.data));
           navigate(ROUTES.HOME);
         },
+        onError: (error) => {
+          const errorResponse = error as AxiosError;
+          const errorData = errorResponse.response?.data as ErrorData;
+          setErrorMessage(errorData.error.message);
+        },
       }
     );
   };
@@ -65,6 +74,7 @@ const LoginForm = () => {
         return error?.message;
       }}
     >
+      <AuthSnackbar isError={mutation.isError} message={errorMessage} />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {

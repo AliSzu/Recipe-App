@@ -24,7 +24,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.primary.main,
   "&:hover": {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.dark,
   },
 }));
 

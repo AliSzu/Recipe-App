@@ -6,6 +6,7 @@ export const theme = createTheme({
     primary: {
       main: "#ffbb00",
       light: "#fbf8f2",
+      dark: "#ffa302",
     },
     secondary: {
       main: "#efefef",
@@ -35,7 +36,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           padding: "0.8rem",
-          fontSize: '1rem'
+          fontSize: "1rem",
         },
       },
     },
