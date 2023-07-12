@@ -7,12 +7,14 @@ interface CardProps {
 const StyledCard = styled("div")(({ theme }) => ({
   padding: "2rem",
   margin: '1rem',
-  border: `1px solid ${theme.palette.secondary.light}`,
+  border: `1px solid ${theme.palette.secondary.main}`,
+  borderRadius: '10px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
-  maxWidth: '30rem'
+  maxWidth: '30rem',
+  backgroundColor: theme.palette.secondary.light
 }));
 
 export default function Card({ children }: CardProps) {

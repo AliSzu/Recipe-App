@@ -1,5 +1,4 @@
 import { Button, styled } from "@mui/material";
-import { useState } from "react";
 import {
   FormContainer,
   FormErrorProvider,
@@ -9,6 +8,13 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { ENDPOINTS } from "../../constants/apiEndpoints";
+import { useAppDispatch } from "../../store/store";
+import { login } from "../../slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -19,16 +25,34 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const LoginForm = () => {
-  const [loginValues, setLoginValues] = useState<LoginFormProps>({
-    email: "",
-    password: "",
-  });
-
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const formContext = useForm<LoginFormProps>({
-    defaultValues: loginValues,
+    defaultValues: { email: "", password: "" },
   });
+
+  const mutation = useMutation({
+    mutationFn: (user: { email: string; password: string }) => {
+      return axios.post(ENDPOINTS.SIGN_IN, {
+        ...user,
+        returnSecureToken: true,
+      });
+    },
+  });
+
+  const handleSignIn = (data: LoginFormProps) => {
+    mutation.mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: (response) => {
+          dispatch(login(response.data));
+          navigate(ROUTES.HOME);
+        },
+      }
+    );
+  };
 
   return (
     <FormErrorProvider
@@ -44,9 +68,8 @@ const LoginForm = () => {
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {
-          setLoginValues(data);
+          handleSignIn(data);
         }}
-        // TODO: ON SUCCESS SEND DATA TO THE DATABASE AND LOG IN
       >
         <TextFieldElement
           name="email"

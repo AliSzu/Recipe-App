@@ -10,13 +10,15 @@ interface AuthLayoutProps {
   messageRoute: string;
 }
 
-const Wrapper = styled("div")({
+const Wrapper = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
   flexDirection: "column",
-});
+  fontFamily: "Inter, sans-serif",
+  backgroundColor: theme.palette.primary.light,
+}));
 
 const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",

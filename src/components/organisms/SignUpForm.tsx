@@ -1,5 +1,4 @@
 import { Button, styled } from "@mui/material";
-import { useState } from "react";
 import {
   FormContainer,
   FormErrorProvider,
@@ -9,6 +8,13 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useAppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../../constants/apiEndpoints";
+import { login } from "../../slices/authSlice";
+import { ROUTES } from "../../constants/routes";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -19,18 +25,37 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignUpFrom = () => {
-  const [signUpValues, setSignUpValues] = useState<SignUpFormProps>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const formContext = useForm<SignUpFormProps>({
-    defaultValues: signUpValues,
+    defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
   const { watch } = formContext;
+
+  const mutation = useMutation({
+    mutationFn: (newUser: { email: string; password: string }) => {
+      return axios.post(ENDPOINTS.CREATE_NEW_USER, {
+        ...newUser,
+        returnSecureToken: true,
+      });
+    },
+  });
+
+  const handleSignUp = (data: SignUpFormProps) => {
+    mutation.mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: (response) => {
+          dispatch(login(response.data))
+          navigate(ROUTES.HOME)
+        },
+      }
+    );
+  };
+
 
   return (
     <FormErrorProvider
@@ -45,9 +70,8 @@ const SignUpFrom = () => {
     >
       <FormContainer
         formContext={formContext}
-        onSuccess={(data) => setSignUpValues(data)}
+        onSuccess={(data) => handleSignUp(data)}
       >
-        {/* TODO: ON SUCCESS SEND DATA TO THE DATABASE AND REGISTER NEW ACCOUNT */}
         <TextFieldElement
           required
           label="Email"
