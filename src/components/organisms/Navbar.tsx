@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
 import { logout } from "../../slices/authSlice";
 import HamburgerMenu from "../molecules/HamburgerMenu";
-import { ITEMS } from "../atoms/MenuItems";
 import { useTranslation } from "react-i18next";
+import { MenuItem } from "../../types/MenuTypes";
+import { MENU_ITEMS } from "../../constants/MenuItems";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -48,7 +49,6 @@ const Drawer = styled("div")(({ theme }) => ({
 export const Navbar = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const navbarItems = ITEMS;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -58,12 +58,16 @@ export const Navbar = () => {
       <Elements>
         <NavbarIcon />
         <StyledList>
-          {navbarItems.map((item) => (
-            <ListItemButton>
-              <StyledLink to={item.link}>{item.title}</StyledLink>
+          {MENU_ITEMS.map((item: MenuItem) => (
+            <ListItemButton key={item.title}>
+              <StyledLink to={item.route} key={item.title}>
+                {item.title}
+              </StyledLink>
             </ListItemButton>
           ))}
-          <ListItemButton onClick={handleLogout}>{t('button.logOut')}</ListItemButton>
+          <ListItemButton onClick={handleLogout}>
+            {t("button.logOut")}
+          </ListItemButton>
         </StyledList>
         <Drawer>
           <HamburgerMenu />

@@ -15,8 +15,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useAppDispatch } from "../../store/store";
 import { logout } from "../../slices/authSlice";
-import { ITEMS } from "../atoms/MenuItems";
+import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useTranslation } from "react-i18next";
+import { MenuItem } from "../../types/MenuTypes";
+import { useNavigate } from "react-router-dom";
 
 interface StyledIconButtonProps extends IconButtonProps {
   open?: boolean;
@@ -54,9 +56,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const HamburgerMenu = () => {
   const [open, setOpen] = useState(false);
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const items = ITEMS;
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -68,6 +71,11 @@ const HamburgerMenu = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleRouteChange = (route: string) => {
+    setOpen(false);
+    navigate(route);
   };
 
   return (
@@ -83,9 +91,12 @@ const HamburgerMenu = () => {
         </DrawerHeader>
         <Divider />
         <StyledList>
-          {items.map((item) => (
-            <ListItemButton>
-              <ListItem key={item.title}>
+          {MENU_ITEMS.map((item: MenuItem) => (
+            <ListItemButton
+              key={item.title}
+              onClick={() => handleRouteChange(item.route)}
+            >
+              <ListItem>
                 <ListItemText primary={item.title} />
               </ListItem>
             </ListItemButton>

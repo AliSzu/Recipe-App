@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ENDPOINTS } from "../constants/apiEndpoints";
+import { ENDPOINTS } from "../constants/Endpoints";
 import { FirebaseUserData } from "../types/AuthTypes";
 import { ErrorData } from "../types/ErrorTypes";
 
