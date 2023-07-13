@@ -8,18 +8,14 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
-import { AxiosError } from "axios";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { ErrorData } from "../../types/ErrorTypes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
-import { useState } from "react";
 import { useSignIn } from "../../api/auth";
 
 const LoginForm = () => {
-  const [errorMessage, setErrorMessage] = useState(" ");
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,20 +24,15 @@ const LoginForm = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const mutation = useSignIn();
+  const signInMutation = useSignIn();
 
   const handleSignIn = (data: LoginFormProps) => {
-    mutation.mutate(
+    signInMutation.mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
           dispatch(login(response.data));
           navigate(ROUTES.HOME);
-        },
-        onError: (error) => {
-          const errorResponse = error as AxiosError;
-          const errorData = errorResponse.response?.data as ErrorData;
-          setErrorMessage(errorData.error.message);
         },
       }
     );
@@ -58,7 +49,10 @@ const LoginForm = () => {
         return error?.message;
       }}
     >
-      <AuthSnackbar isError={mutation.isError} message={errorMessage} />
+      <AuthSnackbar
+        isError={signInMutation.isError}
+        message={signInMutation.error?.response?.data.error.message}
+      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {

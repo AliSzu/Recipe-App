@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { AuthState, UserInfo } from "../types/AuthTypes";
+import { RootState } from "../store/store";
 
-const initialState = {
+const initialState: AuthState = {
   userInfo: {
     email: "",
     refreshToken: "",
@@ -13,7 +15,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state, action: PayloadAction<UserInfo>) => {
       state.isLoggedIn = true;
       state.userInfo = {
         email: action.payload.email,
@@ -34,4 +36,4 @@ export const authSlice = createSlice({
 
 export const { login, logout } = authSlice.actions;
 
-export default authSlice;
+export const selectIsLoggedIn = (state: RootState): boolean => state.auth.isLoggedIn
