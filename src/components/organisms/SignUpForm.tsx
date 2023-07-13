@@ -8,13 +8,10 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
-import { AxiosError } from "axios";
 import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/routes";
-import { ErrorData } from "../../types/ErrorTypes";
-import { useState } from "react";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
 
@@ -27,7 +24,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignUpFrom = () => {
-  const [errorMessage, setErrorMessage] = useState(" ");
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -38,20 +34,15 @@ const SignUpFrom = () => {
 
   const { watch } = formContext;
 
-  const mutation = useSignUp()
+  const signUpMutation = useSignUp();
 
   const handleSignUp = (data: SignUpFormProps) => {
-    mutation.mutate(
+    signUpMutation.mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
           dispatch(login(response.data));
           navigate(ROUTES.HOME);
-        },
-        onError: (error) => {
-          const errorResponse = error as AxiosError;
-          const errorData = errorResponse.response?.data as ErrorData;
-          setErrorMessage(errorData.error.message);
         },
       }
     );
@@ -68,7 +59,10 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
-      <AuthSnackbar isError={mutation.isError} message={errorMessage} />
+      <AuthSnackbar
+        isError={signUpMutation.isError}
+        message={signUpMutation.error?.response?.data.error.message}
+      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => handleSignUp(data)}

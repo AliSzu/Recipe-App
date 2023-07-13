@@ -1,11 +1,11 @@
 import { Alert, styled } from "@mui/material";
-import { ErrorMessage } from "../../enums/ErrorMessage";
+import { ErrorMessage } from "../../constants/ErrorMessage";
 import { useTranslation } from "react-i18next";
 import { getErrorKey } from "../../utils/authUtils";
 
 interface AuthSnackbarProps {
   isError: boolean;
-  message: string;
+  message?: string;
 }
 
 const ErrorContainer = styled("div")({
@@ -14,10 +14,11 @@ const ErrorContainer = styled("div")({
 });
 
 const AuthSnackbar = ({ isError, message }: AuthSnackbarProps) => {
+  const messageKey = message ? message : ''
   const { t } = useTranslation();
 
   const errorMessage =
-    ErrorMessage[getErrorKey(message) as keyof typeof ErrorMessage];
+    ErrorMessage[getErrorKey(messageKey) as keyof typeof ErrorMessage];
 
   return (
     <ErrorContainer>
