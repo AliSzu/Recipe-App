@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   FormContainer,
   FormErrorProvider,
@@ -18,14 +18,6 @@ import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useState } from "react";
 import { useSignIn } from "../../api/auth";
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.light,
-  "&:hover": {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
-
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(" ");
   const { t } = useTranslation();
@@ -36,7 +28,7 @@ const LoginForm = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const mutation = useSignIn()
+  const mutation = useSignIn();
 
   const handleSignIn = (data: LoginFormProps) => {
     mutation.mutate(
@@ -86,9 +78,9 @@ const LoginForm = () => {
           fullWidth
           required
         />
-        <StyledButton type="submit" fullWidth>
+        <Button type="submit" fullWidth>
           {t("button.login")}
-        </StyledButton>
+        </Button>
       </FormContainer>
     </FormErrorProvider>
   );

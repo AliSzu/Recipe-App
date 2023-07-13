@@ -1,10 +1,12 @@
-import { Container } from "@mui/material";
+import { Container, List, ListItemButton } from "@mui/material";
 import { styled } from "@mui/system";
 import NavbarIcon from "../atoms/NavbarIcon";
-import { ROUTES } from "../../constants/routes";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
 import { logout } from "../../slices/authSlice";
+import HamburgerMenu from "../molecules/HamburgerMenu";
+import { ITEMS } from "../atoms/MenuItems";
+import { useTranslation } from "react-i18next";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -28,20 +30,25 @@ const StyledLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-const StyledDiv = styled("div")(({ theme }) => ({
-  cursor: "pointer",
-  "&:hover": {
-    color: theme.palette.secondary.main,
+const StyledList = styled(List)(({ theme }) => ({
+  display: "flex",
+  columnGap: "1rem",
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
   },
 }));
 
-const Links = styled("div")({
-  display: "flex",
-  columnGap: "1rem",
-});
+const Drawer = styled("div")(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+  },
+}));
 
 export const Navbar = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const navbarItems = ITEMS;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -50,11 +57,17 @@ export const Navbar = () => {
     <StyledNavbar>
       <Elements>
         <NavbarIcon />
-        <Links>
-          <StyledLink to={ROUTES.HOME}>Add recipe</StyledLink>
-          <StyledDiv onClick={handleLogout}>Log Out</StyledDiv>
-          {/* TODO: CHANGE ROUTES WHEN PAGES WILL BE IMPLEMENTED */}
-        </Links>
+        <StyledList>
+          {navbarItems.map((item) => (
+            <ListItemButton>
+              <StyledLink to={item.link}>{item.title}</StyledLink>
+            </ListItemButton>
+          ))}
+          <ListItemButton onClick={handleLogout}>{t('button.logOut')}</ListItemButton>
+        </StyledList>
+        <Drawer>
+          <HamburgerMenu />
+        </Drawer>
       </Elements>
     </StyledNavbar>
   );

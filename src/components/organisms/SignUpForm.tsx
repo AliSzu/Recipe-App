@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   FormContainer,
   FormErrorProvider,
@@ -18,14 +18,6 @@ import { useState } from "react";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.light,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.main,
-  },
-}));
-
 const SignUpFrom = () => {
   const [errorMessage, setErrorMessage] = useState(" ");
   const dispatch = useAppDispatch();
@@ -38,7 +30,7 @@ const SignUpFrom = () => {
 
   const { watch } = formContext;
 
-  const mutation = useSignUp()
+  const mutation = useSignUp();
 
   const handleSignUp = (data: SignUpFormProps) => {
     mutation.mutate(
@@ -102,9 +94,9 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <StyledButton type="submit" fullWidth>
+        <Button type="submit" fullWidth>
           {t("button.signUp")}
-        </StyledButton>
+        </Button>
       </FormContainer>
     </FormErrorProvider>
   );

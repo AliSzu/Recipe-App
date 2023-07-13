@@ -18,6 +18,9 @@ const Wrapper = styled("div")(({ theme }) => ({
   flexDirection: "column",
   fontFamily: "Inter, sans-serif",
   backgroundColor: theme.palette.primary.light,
+  [theme.breakpoints.down('sm')] : {
+    backgroundColor: theme.palette.secondary.light,
+  }
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
