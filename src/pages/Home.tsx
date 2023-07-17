@@ -1,9 +1,33 @@
-import { useAppSelector } from "../store/store";
+import { styled } from "@mui/material";
+import RecipeList from "../components/organisms/RecipeList";
+import { useTranslation } from "react-i18next";
+
+const HomeContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  "& > *": {
+    paddingTop: "2rem",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "1.5rem",
+    },
+  },
+}));
+
+const Title = styled("div")(({ theme }) => ({
+  fontSize: "1.75rem",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.5rem",
+  },
+}));
 
 const Home = () => {
-  const { userInfo } = useAppSelector((state) => state.auth);
-  return <div>Welcome Home {userInfo.email}</div>;
-  // PLACEHOLDER
+  const { t } = useTranslation();
+  return (
+    <HomeContainer>
+      <Title>{t("latestRecipes")}</Title>
+      <RecipeList />
+    </HomeContainer>
+  );
 };
 
 export default Home;

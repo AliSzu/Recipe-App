@@ -56,6 +56,39 @@ export const theme = createTheme(
           },
         },
       },
+      MuiImageListItemBar: {
+        styleOverrides: {
+          titleWrap: {
+            justifyContent: "flex-end",
+            display: "flex",
+            flexDirection: "column",
+            rowGap: "0.3rem",
+            padding: "1rem",
+            [globalTheme.breakpoints.down("sm")]: {
+              padding: "0.75rem",
+            },
+          },
+          title: {
+            fontSize: "0.85rem",
+            [globalTheme.breakpoints.down("sm")]: {
+              fontSize: "0.8rem",
+            },
+          },
+          subtitle: {
+            fontSize: "1.5rem",
+            [globalTheme.breakpoints.down("sm")]: {
+              fontSize: "1.3rem",
+            },
+          },
+        },
+      },
+      MuiImageListItem: {
+        styleOverrides: {
+          root: {
+            overflow: "hidden",
+          },
+        },
+      },
       MuiDrawer: {
         styleOverrides: {
           paper: {
