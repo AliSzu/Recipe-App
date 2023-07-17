@@ -1,5 +1,5 @@
 export interface UserInfo {
-  email: string;
+  email: string | null;
   refreshToken: string;
 }
 

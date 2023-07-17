@@ -33,7 +33,7 @@ const LoginForm = () => {
         onSuccess: (response) => {
           dispatch(
             login({
-              email: response.email!,
+              email: response.email,
               refreshToken: response.refreshToken,
             })
           );
