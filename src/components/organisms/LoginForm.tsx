@@ -39,7 +39,12 @@ const LoginForm = () => {
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
-          dispatch(login(response.data));
+          dispatch(
+            login({
+              email: response.email!,
+              refreshToken: response.refreshToken,
+            })
+          );
           navigate(ROUTES.HOME);
         },
       }
@@ -59,7 +64,7 @@ const LoginForm = () => {
     >
       <AuthSnackbar
         isError={signInMutation.isError}
-        message={signInMutation.error?.response?.data.error.message}
+        message={signInMutation.error?.code}
       />
       <FormContainer
         formContext={formContext}

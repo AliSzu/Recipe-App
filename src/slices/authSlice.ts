@@ -6,7 +6,6 @@ const initialState: AuthState = {
   userInfo: {
     email: "",
     refreshToken: "",
-    idToken: "",
   },
   isLoggedIn: false,
 };
@@ -20,7 +19,6 @@ export const authSlice = createSlice({
       state.userInfo = {
         email: action.payload.email,
         refreshToken: action.payload.refreshToken,
-        idToken: action.payload.idToken,
       };
     },
     logout: (state) => {
@@ -28,7 +26,6 @@ export const authSlice = createSlice({
         (state.userInfo = {
           email: "",
           refreshToken: "",
-          idToken: "",
         });
     },
   },
@@ -36,4 +33,5 @@ export const authSlice = createSlice({
 
 export const { login, logout } = authSlice.actions;
 
-export const selectIsLoggedIn = (state: RootState): boolean => state.auth.isLoggedIn
+export const selectIsLoggedIn = (state: RootState): boolean =>
+  state.auth.isLoggedIn;
