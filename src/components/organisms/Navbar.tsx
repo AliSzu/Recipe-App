@@ -59,6 +59,7 @@ export const Navbar = () => {
         dispatch(logout())
       },
     });
+    // TODO: ERROR SNACKBAR - TASK REC-36
   };
 
   return (

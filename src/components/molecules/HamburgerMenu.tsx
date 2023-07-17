@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import { MenuItem } from "../../types/MenuTypes";
 import { useNavigate } from "react-router-dom";
 import { useSignOut } from "../../api/auth";
+import { useDispatch } from "react-redux";
+import { logout } from "../../slices/authSlice";
 
 interface StyledIconButtonProps extends IconButtonProps {
   open?: boolean;
@@ -58,6 +60,7 @@ const HamburgerMenu = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const signOutMutation = useSignOut();
 
   const handleDrawerOpen = () => {
@@ -69,7 +72,12 @@ const HamburgerMenu = () => {
   };
 
   const handleLogout = () => {
-    signOutMutation.mutate();
+    signOutMutation.mutate(undefined, {
+      onSuccess: () => {
+        dispatch(logout());
+      },
+      // TODO: ERROR SNACKBAR - TASK REC-36
+    });
   };
 
   const handleRouteChange = (route: string) => {
