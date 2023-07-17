@@ -1,27 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { ENDPOINTS } from "../constants/Endpoints";
 import { FirebaseUserData } from "../types/AuthTypes";
-import { ErrorData } from "../types/ErrorTypes";
+import {
+  User,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../firebase";
+import { FirebaseError } from "firebase/app";
 
 export function useSignIn() {
-  return useMutation<AxiosResponse, AxiosError<ErrorData>, FirebaseUserData>({
-    mutationFn: (user: FirebaseUserData) => {
-      return axios.post(ENDPOINTS.SIGN_IN, {
-        ...user,
-        returnSecureToken: true,
-      });
+  return useMutation<User, FirebaseError, FirebaseUserData>({
+    mutationFn: async (user: FirebaseUserData) => {
+      const responseSignIn = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+      return responseSignIn.user;
     },
   });
 }
 
 export function useSignUp() {
-  return useMutation<AxiosResponse, AxiosError<ErrorData>, FirebaseUserData>({
-    mutationFn: (newUser: FirebaseUserData) => {
-      return axios.post(ENDPOINTS.CREATE_NEW_USER, {
-        ...newUser,
-        returnSecureToken: true,
-      });
+  return useMutation<User, FirebaseError, FirebaseUserData>({
+    mutationFn: async (newUser: FirebaseUserData) => {
+      const responseSignUp = await createUserWithEmailAndPassword(
+        auth,
+        newUser.email,
+        newUser.password
+      );
+      return responseSignUp.user;
     },
   });
 }

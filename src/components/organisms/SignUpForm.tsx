@@ -33,7 +33,12 @@ const SignUpFrom = () => {
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
-          dispatch(login(response.data));
+          dispatch(
+            login({
+              email: response.email!,
+              refreshToken: response.refreshToken,
+            })
+          );
           navigate(ROUTES.HOME);
         },
       }
@@ -53,7 +58,7 @@ const SignUpFrom = () => {
     >
       <AuthSnackbar
         isError={signUpMutation.isError}
-        message={signUpMutation.error?.response?.data.error.message}
+        message={signUpMutation.error?.code}
       />
       <FormContainer
         formContext={formContext}

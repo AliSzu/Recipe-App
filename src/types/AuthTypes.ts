@@ -1,7 +1,12 @@
 export interface UserInfo {
   email: string;
   refreshToken: string;
-  idToken: string;
+}
+
+export interface UserResponse {
+  data: {
+    userInfo: UserInfo;
+  };
 }
 
 export interface AuthState {
