@@ -1,5 +1,4 @@
 import { Button, styled } from "@mui/material";
-import { useState } from "react";
 import {
   FormContainer,
   FormErrorProvider,
@@ -9,26 +8,48 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { LoginFormProps } from "../../types/FormTypes";
+import { useAppDispatch } from "../../store/store";
+import { login } from "../../slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
+import AuthSnackbar from "../atoms/AuthSnackbar";
+import { useSignIn } from "../../api/auth";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.light,
   "&:hover": {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
 const LoginForm = () => {
-  const [loginValues, setLoginValues] = useState<LoginFormProps>({
-    email: "",
-    password: "",
-  });
-
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const formContext = useForm<LoginFormProps>({
-    defaultValues: loginValues,
+    defaultValues: { email: "", password: "" },
   });
+
+  const signInMutation = useSignIn();
+
+  const handleSignIn = (data: LoginFormProps) => {
+    signInMutation.mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: (response) => {
+          dispatch(
+            login({
+              email: response.email!,
+              refreshToken: response.refreshToken,
+            })
+          );
+          navigate(ROUTES.HOME);
+        },
+      }
+    );
+  };
 
   return (
     <FormErrorProvider
@@ -41,12 +62,15 @@ const LoginForm = () => {
         return error?.message;
       }}
     >
+      <AuthSnackbar
+        isError={signInMutation.isError}
+        message={signInMutation.error?.code}
+      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {
-          setLoginValues(data);
+          handleSignIn(data);
         }}
-        // TODO: ON SUCCESS SEND DATA TO THE DATABASE AND LOG IN
       >
         <TextFieldElement
           name="email"

@@ -5,12 +5,12 @@
       "required": "To pole jest wymagane",
       "email": "Proszę wprowadzić poprawny adres email",
       "passwordMatch": "Hasła nie są jednakowe",
-      "passwordLength" : "Hasło powinno zawierać minimum 6 znaków"
+      "passwordLength": "Hasło powinno zawierać minimum 6 znaków"
     },
     "label": {
       "email": "Email",
       "password": "Hasło",
-      "confirmPassword" : "Potwierdź hasło"
+      "confirmPassword": "Potwierdź hasło"
     }
   },
   "button": {
@@ -24,5 +24,12 @@
   "cardTitle": {
     "login": "Logowanie",
     "signUp": "Załóż Konto"
+  },
+  "error": {
+    "invalidPassword": "Niepoprawne hasło",
+    "userNotFound": "Nie znaleziono użytkownika",
+    "tooManyAttemptsTryLater": "Dostęp do konta zostal tymczasowo zablokowany z powodu wielu nieudanych prób logowania. Proszę spróbować ponownie później",
+    "emailExists": "Konto z tym adresem email już istnieje",
+    "unknown": "Coś poszło nie tak"
   }
 }

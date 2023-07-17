@@ -1,8 +1,9 @@
+import { useAppSelector } from "../store/store";
+
 const Home = () => {
-  return (
-    <div>Home page</div>
-    //  PLACEHOLDER
-  );
+  const { userInfo } = useAppSelector((state) => state.auth);
+  return <div>Welcome Home {userInfo.email}</div>;
+  // PLACEHOLDER
 };
 
 export default Home;

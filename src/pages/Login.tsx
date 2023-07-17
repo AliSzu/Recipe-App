@@ -1,4 +1,4 @@
-import LoginForm from "../components/atoms/LoginForm";
+import LoginForm from "../components/organisms/LoginForm";
 import AuthLayout from "../components/templates/AuthLayout";
 import { ROUTES } from "../constants/routes";
 

@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 
 const Icon = styled("div")(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+  backgroundColor: theme.palette.secondary.light,
   padding: "1rem",
   borderRadius: "10px",
   cursor: 'pointer'
 }));
 
 const Circle = styled("div")(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.light,
+  backgroundColor: theme.palette.secondary.main,
   width: "1.5rem",
   height: "1.5rem",
   borderRadius: "50%",

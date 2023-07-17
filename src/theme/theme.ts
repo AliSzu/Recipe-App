@@ -5,11 +5,12 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#ffbb00",
-      light: "#ffffff",
+      light: "#fbf8f2",
+      dark: "#ffa302",
     },
     secondary: {
-      main: "#ffa200",
-      light: "#efefef",
+      main: "#efefef",
+      light: "#ffffff",
     },
   },
   components: {
@@ -35,7 +36,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           padding: "0.8rem",
-          fontSize: '1rem'
+          fontSize: "1rem",
         },
       },
     },

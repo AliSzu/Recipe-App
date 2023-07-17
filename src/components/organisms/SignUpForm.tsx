@@ -1,5 +1,4 @@
 import { Button, styled } from "@mui/material";
-import { useState } from "react";
 import {
   FormContainer,
   FormErrorProvider,
@@ -9,6 +8,12 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
+import { useAppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../slices/authSlice";
+import { ROUTES } from "../../constants/routes";
+import AuthSnackbar from "../atoms/AuthSnackbar";
+import { useSignUp } from "../../api/auth";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -19,18 +24,34 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignUpFrom = () => {
-  const [signUpValues, setSignUpValues] = useState<SignUpFormProps>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const formContext = useForm<SignUpFormProps>({
-    defaultValues: signUpValues,
+    defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
   const { watch } = formContext;
+
+  const signUpMutation = useSignUp();
+
+  const handleSignUp = (data: SignUpFormProps) => {
+    signUpMutation.mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: (response) => {
+          dispatch(
+            login({
+              email: response.email!,
+              refreshToken: response.refreshToken,
+            })
+          );
+          navigate(ROUTES.HOME);
+        },
+      }
+    );
+  };
 
   return (
     <FormErrorProvider
@@ -43,11 +64,14 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
+      <AuthSnackbar
+        isError={signUpMutation.isError}
+        message={signUpMutation.error?.code}
+      />
       <FormContainer
         formContext={formContext}
-        onSuccess={(data) => setSignUpValues(data)}
+        onSuccess={(data) => handleSignUp(data)}
       >
-        {/* TODO: ON SUCCESS SEND DATA TO THE DATABASE AND REGISTER NEW ACCOUNT */}
         <TextFieldElement
           required
           label="Email"
