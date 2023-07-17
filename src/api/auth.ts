@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 export function useSignIn() {
@@ -30,6 +31,15 @@ export function useSignUp() {
         newUser.password
       );
       return responseSignUp.user;
+    },
+  });
+}
+
+export function useSignOut() {
+  return useMutation<void, FirebaseError, void>({
+    mutationFn: async () => {
+      const responseSingOut = await signOut(auth);
+      return responseSingOut;
     },
   });
 }

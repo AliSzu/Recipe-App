@@ -8,6 +8,7 @@ import HamburgerMenu from "../molecules/HamburgerMenu";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "../../types/MenuTypes";
 import { MENU_ITEMS } from "../../constants/MenuItems";
+import { useSignOut } from "../../api/auth";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -50,9 +51,16 @@ export const Navbar = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const signOutMutation = useSignOut();
+
+  const handleSignOut = () => {
+    signOutMutation.mutate(undefined, {
+      onSuccess: () => {
+        dispatch(logout())
+      },
+    });
   };
+
   return (
     <StyledNavbar>
       <Elements>
@@ -65,7 +73,7 @@ export const Navbar = () => {
               </StyledLink>
             </ListItemButton>
           ))}
-          <ListItemButton onClick={handleLogout}>
+          <ListItemButton onClick={handleSignOut}>
             {t("button.logOut")}
           </ListItemButton>
         </StyledList>

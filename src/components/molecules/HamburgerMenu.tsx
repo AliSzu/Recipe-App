@@ -13,12 +13,11 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useAppDispatch } from "../../store/store";
-import { logout } from "../../slices/authSlice";
 import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useTranslation } from "react-i18next";
 import { MenuItem } from "../../types/MenuTypes";
 import { useNavigate } from "react-router-dom";
+import { useSignOut } from "../../api/auth";
 
 interface StyledIconButtonProps extends IconButtonProps {
   open?: boolean;
@@ -57,9 +56,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const HamburgerMenu = () => {
   const [open, setOpen] = useState(false);
 
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const signOutMutation = useSignOut();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -70,7 +69,7 @@ const HamburgerMenu = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    signOutMutation.mutate();
   };
 
   const handleRouteChange = (route: string) => {
