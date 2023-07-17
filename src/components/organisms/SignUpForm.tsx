@@ -11,7 +11,7 @@ import { SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/Routes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
 

@@ -1,6 +1,6 @@
 
 import { MenuItem } from "../types/MenuTypes";
-import { ROUTES } from "./routes";
+import { ROUTES } from "./Routes";
 
 export const MENU_ITEMS : MenuItem[] = [
     {

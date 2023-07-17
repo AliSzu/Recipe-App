@@ -1,6 +1,6 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
-import { ROUTES } from "../constants/routes";
+import { ROUTES } from "../constants/Routes";
 import { Navbar } from "../components/organisms/Navbar";
 import { Container } from "@mui/material";
 import Login from "../pages/Login";

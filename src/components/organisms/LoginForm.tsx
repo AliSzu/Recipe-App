@@ -11,7 +11,7 @@ import { LoginFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/Routes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignIn } from "../../api/auth";
 
