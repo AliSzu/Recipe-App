@@ -1,6 +1,6 @@
 import LoginForm from "../components/organisms/LoginForm";
 import AuthLayout from "../components/templates/AuthLayout";
-import { ROUTES } from "../constants/routes";
+import { ROUTES } from "../constants/Routes";
 
 const Login = () => {
   return (

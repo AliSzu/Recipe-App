@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/Routes";
 
 const Icon = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.secondary.light,

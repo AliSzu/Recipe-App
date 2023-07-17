@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   FormContainer,
   FormErrorProvider,
@@ -11,17 +11,9 @@ import { SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/Routes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.light,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.main,
-  },
-}));
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +35,7 @@ const SignUpFrom = () => {
         onSuccess: (response) => {
           dispatch(
             login({
-              email: response.email!,
+              email: response.email,
               refreshToken: response.refreshToken,
             })
           );
@@ -101,9 +93,9 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <StyledButton type="submit" fullWidth>
+        <Button type="submit" fullWidth>
           {t("button.signUp")}
-        </StyledButton>
+        </Button>
       </FormContainer>
     </FormErrorProvider>
   );

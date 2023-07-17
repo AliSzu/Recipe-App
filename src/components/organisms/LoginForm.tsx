@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   FormContainer,
   FormErrorProvider,
@@ -11,17 +11,9 @@ import { LoginFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/Routes";
 import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignIn } from "../../api/auth";
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.light,
-  "&:hover": {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -41,7 +33,7 @@ const LoginForm = () => {
         onSuccess: (response) => {
           dispatch(
             login({
-              email: response.email!,
+              email: response.email,
               refreshToken: response.refreshToken,
             })
           );
@@ -85,9 +77,9 @@ const LoginForm = () => {
           fullWidth
           required
         />
-        <StyledButton type="submit" fullWidth>
+        <Button type="submit" fullWidth>
           {t("button.login")}
-        </StyledButton>
+        </Button>
       </FormContainer>
     </FormErrorProvider>
   );

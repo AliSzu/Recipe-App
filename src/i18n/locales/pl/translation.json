@@ -15,7 +15,8 @@
   },
   "button": {
     "login": "Zaloguj się",
-    "signUp": "Załóż konto"
+    "signUp": "Załóż konto",
+    "logOut": "Wyloguj się"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
