@@ -20,7 +20,7 @@ export const RECIPES_INFO: RecipeTile[] = [
         "https://www.pogotujmy.pl/wp-content/uploads/2015/10/PANCAKES-2.jpg?p=131",
     },
     {
-      title: "Sweet Pancakes",
+      title: "Sweet Pancakes 2",
       time: "2 hour",
       image:
         "https://www.pogotujmy.pl/wp-content/uploads/2015/10/PANCAKES-2.jpg?p=131",

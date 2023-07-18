@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignOut } from "../../api/auth";
 import { useDispatch } from "react-redux";
 import { logout } from "../../slices/authSlice";
+import { showSnackbar } from "../../slices/snackbarSlice";
 
 interface StyledIconButtonProps extends IconButtonProps {
   open?: boolean;
@@ -76,7 +77,9 @@ const HamburgerMenu = () => {
       onSuccess: () => {
         dispatch(logout());
       },
-      // TODO: ERROR SNACKBAR - TASK REC-36
+      onError: (error) => {
+        dispatch(showSnackbar({ message: error.message }));
+      },
     });
   };
 
