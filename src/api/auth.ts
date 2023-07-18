@@ -38,8 +38,7 @@ export function useSignUp() {
 export function useSignOut() {
   return useMutation<void, FirebaseError, void>({
     mutationFn: async () => {
-      const responseSingOut = await signOut(auth);
-      return responseSingOut;
+      await signOut(auth)
     },
   });
 }
