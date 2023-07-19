@@ -10,6 +10,7 @@ import { MenuItem } from "../../types/MenuTypes";
 import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useSignOut } from "../../api/auth";
 import { showSnackbar } from "../../slices/snackbarSlice";
+import LanguageSwitcher from "../molecules/LanguageSwitcher";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -44,7 +45,7 @@ const StyledList = styled(List)(({ theme }) => ({
 const Drawer = styled("div")(({ theme }) => ({
   display: "none",
   [theme.breakpoints.down("sm")]: {
-    display: "block",
+    display: "flex",
   },
 }));
 
@@ -57,31 +58,35 @@ export const Navbar = () => {
   const handleSignOut = () => {
     signOutMutation.mutate(undefined, {
       onSuccess: () => {
-        dispatch(logout())
+        dispatch(logout());
       },
       onError: (error) => {
-        dispatch(showSnackbar({message: error.message}))
-      }
+        dispatch(showSnackbar({ message: error.message }));
+      },
     });
   };
+
+  const navbarItems = MENU_ITEMS.map((item: MenuItem) => (
+    <ListItemButton key={item.title}>
+      <StyledLink to={item.route} key={item.title}>
+        {item.title}
+      </StyledLink>
+    </ListItemButton>
+  ));
 
   return (
     <StyledNavbar>
       <Elements>
         <NavbarIcon />
         <StyledList>
-          {MENU_ITEMS.map((item: MenuItem) => (
-            <ListItemButton key={item.title}>
-              <StyledLink to={item.route} key={item.title}>
-                {item.title}
-              </StyledLink>
-            </ListItemButton>
-          ))}
+          <LanguageSwitcher />
+          {navbarItems}
           <ListItemButton onClick={handleSignOut}>
             {t("button.logOut")}
           </ListItemButton>
         </StyledList>
         <Drawer>
+          <LanguageSwitcher />
           <HamburgerMenu />
         </Drawer>
       </Elements>

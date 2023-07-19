@@ -56,6 +56,20 @@ export const theme = createTheme(
           },
         },
       },
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            color: "inherit",
+          },
+        },
+      },
+      MuiSelect: {
+        styleOverrides: {
+          icon: {
+            color: 'inherit'
+          }
+        }
+      },
       MuiImageListItemBar: {
         styleOverrides: {
           titleWrap: {
