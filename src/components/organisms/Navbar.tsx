@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { MenuItem } from "../../types/MenuTypes";
 import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useSignOut } from "../../api/auth";
+import { showSnackbar } from "../../slices/snackbarSlice";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -58,8 +59,10 @@ export const Navbar = () => {
       onSuccess: () => {
         dispatch(logout())
       },
+      onError: (error) => {
+        dispatch(showSnackbar({message: error.message}))
+      }
     });
-    // TODO: ERROR SNACKBAR - TASK REC-36
   };
 
   return (

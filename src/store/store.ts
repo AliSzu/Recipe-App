@@ -11,13 +11,14 @@ import {
   REGISTER,
 } from "redux-persist";
 import { authSlice } from "../slices/authSlice";
+import { snackbarSlice } from "../slices/snackbarSlice";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const reducers = combineReducers({ auth: authSlice.reducer });
+const reducers = combineReducers({ auth: authSlice.reducer, snackbar: snackbarSlice.reducer });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
