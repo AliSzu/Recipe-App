@@ -1,16 +1,9 @@
-import {
-  CircularProgress,
-  ImageList,
-  styled,
-  useMediaQuery,
-} from "@mui/material";
-import Tile from "../molecules/Tile";
-import { theme } from "../../theme/theme";
+import { CircularProgress, styled } from "@mui/material";
 import { useFetchRecipes } from "../../api/recipes";
-import { Recipe } from "../../types/RecipeTypes";
 import { useAppDispatch } from "../../store/store";
 import { showSnackbar } from "../../slices/snackbarSlice";
 import { useTranslation } from "react-i18next";
+import RecipesList from "../molecules/RecipesList";
 
 const ProgressContainer = styled("div")({
   width: "100%",
@@ -20,17 +13,14 @@ const ProgressContainer = styled("div")({
   alignItems: "center",
 });
 
-const RecipeList = () => {
-  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
+const RecipeContainer = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const recipesQuery = useFetchRecipes();
 
-  const recipesData =
-    recipesQuery.data &&
-    recipesQuery.data.map((recipe: Recipe) => (
-      <Tile recipe={recipe} key={recipe.title}></Tile>
-    ));
+  const recipesData = recipesQuery.data && recipesQuery.data.length > 0 && (
+    <RecipesList recipes={recipesQuery.data}></RecipesList>
+  );
 
   if (recipesQuery.isError) {
     dispatch(showSnackbar({ message: recipesQuery.error.code }));
@@ -43,9 +33,7 @@ const RecipeList = () => {
           <CircularProgress />
         </ProgressContainer>
       ) : recipesData ? (
-        <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
-          {recipesData}
-        </ImageList>
+        recipesData
       ) : (
         <div>{t("emptyRecipes")}</div>
       )}
@@ -53,4 +41,4 @@ const RecipeList = () => {
   );
 };
 
-export default RecipeList;
+export default RecipeContainer;

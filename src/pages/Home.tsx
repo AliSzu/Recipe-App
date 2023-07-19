@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
-import RecipeList from "../components/organisms/RecipeList";
 import { useTranslation } from "react-i18next";
+import RecipeContainer from "../components/organisms/RecipesContainer";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
-      <RecipeList />
+      <RecipeContainer />
     </HomeContainer>
   );
 };
