@@ -1,5 +1,5 @@
-export interface RecipeTile {
+export interface Recipe {
   title: string;
   time: string;
-  image: string;
+  imgSrc: string;
 }

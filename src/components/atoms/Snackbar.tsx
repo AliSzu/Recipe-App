@@ -18,7 +18,7 @@ const Snackbar = () => {
   };
   return (
     <MuiSnackbar open={isOpen} onClick={handleClose} autoHideDuration={6000}>
-      <Alert severity="success" sx={{ width: "100%" }} onClose={handleClose}>
+      <Alert severity="error" sx={{ width: "100%" }} onClose={handleClose}>
         {message}
       </Alert>
     </MuiSnackbar>

@@ -33,5 +33,6 @@
     "emailExists": "Account with this email address already exists",
     "unknown": "Something went wrong"
   },
-  "latestRecipes" : "Latest Recipes"
+  "latestRecipes" : "Latest Recipes",
+  "emptyRecipes" : "There are no recipes here yet. Try adding first recipe!"
 }

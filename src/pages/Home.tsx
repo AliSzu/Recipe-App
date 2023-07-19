@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
+  height: "100%",
   "& > *": {
     paddingTop: "2rem",
     [theme.breakpoints.down("sm")]: {
