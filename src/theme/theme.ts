@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import Inter from "../fonts/Inter.woff2";
+import Inter from "../fonts/Inter-VariableFont_slnt,wght.ttf";
 
 const globalTheme = createTheme({
   palette: {
@@ -13,6 +13,9 @@ const globalTheme = createTheme({
       light: "#ffffff",
     },
   },
+  typography: {
+    fontFamily: "Inter",
+  },
 });
 
 export const theme = createTheme(
@@ -24,7 +27,6 @@ export const theme = createTheme(
         },
         styleOverrides: {
           root: {
-            fontFamily: "Inter, sans-serif",
             height: "100%",
           },
         },
@@ -133,14 +135,18 @@ export const theme = createTheme(
         },
       },
       MuiCssBaseline: {
-        styleOverrides: `
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('Inter'), url(${Inter}) format('woff2');`,
+        styleOverrides: {
+          "@font-face": {
+            fontFamily: "Inter",
+            fontStyle: 'normal',
+            fontWeight: '500',
+            src: `url(${Inter}) format("truetype")`,
+          },
+        },
       },
     },
   },
   globalTheme
 );
+
+
