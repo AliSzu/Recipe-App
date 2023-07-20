@@ -10,17 +10,13 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useTranslation } from "react-i18next";
-import { MenuItem } from "../../types/MenuTypes";
-import { useNavigate } from "react-router-dom";
 import { useSignOut } from "../../api/auth";
 import { useDispatch } from "react-redux";
 import { logout } from "../../slices/authSlice";
 import { showSnackbar } from "../../slices/snackbarSlice";
+import LanguageSwitcherMobile from "./LanguageSwitcherMobile";
+import MenuItems from "../atoms/MenuItems";
 
 interface StyledIconButtonProps extends IconButtonProps {
   open?: boolean;
@@ -38,7 +34,6 @@ const StyledList = styled(List)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  padding: "1rem",
 });
 
 const ActionContainer = styled("div")({
@@ -46,6 +41,8 @@ const ActionContainer = styled("div")({
   height: "inherit",
   justifyContent: "flex-end",
   flexDirection: "column",
+  rowGap: "1rem",
+  padding: '1rem'
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -60,7 +57,6 @@ const HamburgerMenu = () => {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const signOutMutation = useSignOut();
 
@@ -82,12 +78,6 @@ const HamburgerMenu = () => {
       },
     });
   };
-
-  const handleRouteChange = (route: string) => {
-    setOpen(false);
-    navigate(route);
-  };
-
   return (
     <>
       <StyledIconButton open={open} onClick={handleDrawerOpen}>
@@ -101,18 +91,10 @@ const HamburgerMenu = () => {
         </DrawerHeader>
         <Divider />
         <StyledList>
-          {MENU_ITEMS.map((item: MenuItem) => (
-            <ListItemButton
-              key={item.title}
-              onClick={() => handleRouteChange(item.route)}
-            >
-              <ListItem>
-                <ListItemText primary={item.title} />
-              </ListItem>
-            </ListItemButton>
-          ))}
+          <MenuItems />
           <ActionContainer>
             <Button onClick={handleLogout}>{t("button.logOut")}</Button>
+            <LanguageSwitcherMobile />
           </ActionContainer>
         </StyledList>
       </Drawer>

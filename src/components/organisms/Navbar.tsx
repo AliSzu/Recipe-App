@@ -1,16 +1,14 @@
 import { Container, List, ListItemButton } from "@mui/material";
 import { styled } from "@mui/system";
 import NavbarIcon from "../atoms/NavbarIcon";
-import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
 import { logout } from "../../slices/authSlice";
 import HamburgerMenu from "../molecules/HamburgerMenu";
 import { useTranslation } from "react-i18next";
-import { MenuItem } from "../../types/MenuTypes";
-import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useSignOut } from "../../api/auth";
 import { showSnackbar } from "../../slices/snackbarSlice";
 import LanguageSwitcher from "../molecules/LanguageSwitcher";
+import MenuItems from "../atoms/MenuItems";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -25,14 +23,6 @@ const Elements = styled(Container)({
   justifyContent: "space-between",
   alignItems: "center",
 });
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: "none",
-  color: "inherit",
-  "&:hover": {
-    color: theme.palette.secondary.main,
-  },
-}));
 
 const StyledList = styled(List)(({ theme }) => ({
   display: "flex",
@@ -66,27 +56,18 @@ export const Navbar = () => {
     });
   };
 
-  const navbarItems = MENU_ITEMS.map((item: MenuItem) => (
-    <ListItemButton key={item.title}>
-      <StyledLink to={item.route} key={item.title}>
-        {item.title}
-      </StyledLink>
-    </ListItemButton>
-  ));
-
   return (
     <StyledNavbar>
       <Elements>
         <NavbarIcon />
         <StyledList>
           <LanguageSwitcher />
-          {navbarItems}
+          <MenuItems/>
           <ListItemButton onClick={handleSignOut}>
             {t("button.logOut")}
           </ListItemButton>
         </StyledList>
         <Drawer>
-          <LanguageSwitcher />
           <HamburgerMenu />
         </Drawer>
       </Elements>
