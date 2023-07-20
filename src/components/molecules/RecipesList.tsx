@@ -13,7 +13,7 @@ const RecipesList = ({ recipes }: RecipesListProps) => {
   return (
     <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
       {recipes.map((recipe: Recipe) => (
-        <Tile recipe={recipe} key={recipe.title} />
+        <Tile recipe={recipe} key={recipe.recipeId} />
       ))}
     </ImageList>
   );

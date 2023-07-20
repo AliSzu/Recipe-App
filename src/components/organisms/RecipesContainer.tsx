@@ -16,19 +16,19 @@ const ProgressContainer = styled("div")({
 const RecipeContainer = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const recipesQuery = useFetchRecipes();
+  const {data, isError, error, isLoading} = useFetchRecipes();
 
-  const recipesData = recipesQuery.data && recipesQuery.data.length > 0 && (
-    <RecipesList recipes={recipesQuery.data}></RecipesList>
+  const recipesData = data && data.length > 0 && (
+    <RecipesList recipes={data}></RecipesList>
   );
 
-  if (recipesQuery.isError) {
-    dispatch(showSnackbar({ message: recipesQuery.error.code }));
+  if (isError) {
+    dispatch(showSnackbar({ message: error.code }));
   }
 
   return (
     <>
-      {recipesQuery.isLoading ? (
+      {isLoading ? (
         <ProgressContainer>
           <CircularProgress />
         </ProgressContainer>

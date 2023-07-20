@@ -3,16 +3,19 @@ import { DocumentData, getDocs } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
-import { Collections } from "../enums/Collections";
-import { createCollection } from "../utils/recipeUtils";
+import { recipeCollection } from "../firebase";
 
 export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
     queryKey: [QueryKeys.recipesData],
     queryFn: async () => {
-      const recipeCollection = createCollection<Recipe>(Collections.recipes);
       const recipeSnap = await getDocs(recipeCollection);
-      const recipes = recipeSnap.docs.map((item: DocumentData) => item.data());
+      const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => (
+        {
+          id: item.id,
+          ...item.data()
+        }
+      ));
       return recipes;
     },
   });

@@ -3,6 +3,7 @@ import { MenuItem } from "../../types/MenuTypes";
 import { MENU_ITEMS } from "../../constants/MenuItems";
 import { useNavigate } from "react-router";
 import { styled } from "@mui/system";
+import React from "react";
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
@@ -11,7 +12,7 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const StyledListItemButton = styled(ListItemButton)({
-  padding: "1rem",
+  padding: "1rem"
 });
 
 const MenuItems = () => {
@@ -23,12 +24,12 @@ const MenuItems = () => {
   return (
     <>
       {MENU_ITEMS.map((item: MenuItem) => (
-        <div key={item.title}>
+        <React.Fragment key={item.title}>
           <StyledListItemButton onClick={() => handleRouteChange(item.route)}>
             <ListItemText primary={item.title} />
           </StyledListItemButton>
           <StyledDivider />
-        </div>
+        </React.Fragment>
       ))}
     </>
   );
