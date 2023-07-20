@@ -1,5 +1,5 @@
 import { ImageListItem, ImageListItemBar, styled } from "@mui/material";
-import { RecipeTile } from "../../types/RecipeTypes";
+import { Recipe } from "../../types/RecipeTypes";
 
 const StyledImageListItemBar = styled(ImageListItemBar)({
   background:
@@ -15,13 +15,13 @@ const StyledImageListItem = styled(ImageListItem)({
 });
 
 interface TileProps {
-  recipe: RecipeTile;
+  recipe: Recipe;
 }
 
 const Tile = ({ recipe }: TileProps) => {
   return (
     <StyledImageListItem>
-      <img src={recipe.image} />
+      <img src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
     </StyledImageListItem>
   );

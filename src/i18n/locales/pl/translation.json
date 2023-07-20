@@ -33,5 +33,6 @@
     "emailExists": "Konto z tym adresem email już istnieje",
     "unknown": "Coś poszło nie tak"
   },
-  "latestRecipes" : "Ostatnie Przepisy"
+  "latestRecipes" : "Ostatnie Przepisy",
+  "emptyRecipes" : "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! "
 }

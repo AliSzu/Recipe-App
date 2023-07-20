@@ -1,6 +1,7 @@
 export interface UserInfo {
   email: string | null;
   refreshToken: string;
+  uid: string
 }
 
 export interface UserResponse {

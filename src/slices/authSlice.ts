@@ -6,6 +6,7 @@ const initialState: AuthState = {
   userInfo: {
     email: "",
     refreshToken: "",
+    uid: "",
   },
   isLoggedIn: false,
 };
@@ -19,6 +20,7 @@ export const authSlice = createSlice({
       state.userInfo = {
         email: action.payload.email,
         refreshToken: action.payload.refreshToken,
+        uid: action.payload.uid,
       };
     },
     logout: (state) => {
@@ -26,6 +28,7 @@ export const authSlice = createSlice({
         (state.userInfo = {
           email: "",
           refreshToken: "",
+          uid: "",
         });
     },
   },

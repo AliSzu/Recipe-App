@@ -35,6 +35,7 @@ const LoginForm = () => {
             login({
               email: response.email,
               refreshToken: response.refreshToken,
+              uid: response.uid
             })
           );
           navigate(ROUTES.HOME);
