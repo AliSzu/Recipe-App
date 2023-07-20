@@ -14,6 +14,12 @@ const StyledImageListItem = styled(ImageListItem)({
   borderRadius: "5px",
 });
 
+const StyledImage = styled('img')({
+  maxHeight: '30rem',
+  height: '100%',
+  objectFit: 'cover'
+})
+
 interface TileProps {
   recipe: Recipe;
 }
@@ -21,7 +27,7 @@ interface TileProps {
 const Tile = ({ recipe }: TileProps) => {
   return (
     <StyledImageListItem>
-      <img src={recipe.imgSrc} loading="lazy" />
+      <StyledImage src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
     </StyledImageListItem>
   );
