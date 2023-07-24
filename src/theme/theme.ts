@@ -15,6 +15,7 @@ const globalTheme = createTheme({
   },
   typography: {
     fontFamily: "Inter",
+    fontSize: 16
   },
 });
 

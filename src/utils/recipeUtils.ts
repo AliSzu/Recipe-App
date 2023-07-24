@@ -2,9 +2,12 @@ import {
   CollectionReference,
   DocumentData,
   collection,
+  getFirestore,
 } from "firebase/firestore";
-import { db } from "../firebase";
 
 export const createCollection = <T = DocumentData>(collectionName: string) => {
-  return collection(db, collectionName) as CollectionReference<T, DocumentData>;
+  return collection(getFirestore(), collectionName) as CollectionReference<
+    T,
+    DocumentData
+  >;
 };
