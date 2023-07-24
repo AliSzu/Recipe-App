@@ -1,5 +1,5 @@
 import { Collapse, styled, useMediaQuery } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { theme } from "../../theme/theme";
 import CollapseButton from "../atoms/CollapseButton";
 
@@ -16,6 +16,10 @@ const Title = styled("div")({
 const CollapseList = ({ children, title }: CollapseListProps) => {
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const [isOpen, setIsOpen] = useState(!matchDownSm);
+
+  useEffect(() => {
+    setIsOpen(!matchDownSm)
+  }, [matchDownSm])
 
   const handleClick = (open: boolean) => {
     setIsOpen(open);
