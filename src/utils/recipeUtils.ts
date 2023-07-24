@@ -6,5 +6,5 @@ import {
 import { db } from "../firebase";
 
 export const createCollection = <T = DocumentData>(collectionName: string) => {
-  return collection(db, collectionName) as CollectionReference<T>;
+  return collection(db, collectionName) as CollectionReference<T, DocumentData>;
 };

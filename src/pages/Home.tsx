@@ -7,9 +7,9 @@ const HomeContainer = styled("div")(({ theme }) => ({
   flexDirection: "column",
   height: "100%",
   "& > *": {
-    paddingTop: "2rem",
+    paddingTop: "1rem",
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "1.5rem",
+      paddingTop: "0.5rem",
     },
   },
 }));
