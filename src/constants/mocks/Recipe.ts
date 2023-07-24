@@ -3,14 +3,14 @@ export const MOCK_RECIPE = {
   time: "50min",
   imgSrc:
     "https://wszystkiegoslodkiego.pl/storage/images/202111/puszyste-pancakes.jpg",
-  id: "mock1",
+  recipeId: "mock1",
   ingredients: [
     {
-      amount: "1 1/2",
+      amount: "1/2",
       name: "cups all-purpose flour",
     },
     {
-      amount: "3 1/2",
+      amount: "333",
       name: "teaspoons baking powder",
     },
     {
@@ -22,7 +22,7 @@ export const MOCK_RECIPE = {
       name: "tablespoons granulated sugar",
     },
     {
-      amount: "1 1/4",
+      amount: "2",
       name: "cups milk",
     },
     {

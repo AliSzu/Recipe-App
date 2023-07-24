@@ -29,7 +29,7 @@ interface TileProps {
 const Tile = ({ recipe }: TileProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/recipe/${recipe.id}`);
+    navigate(`/recipe/${recipe.recipeId}`);
   };
   return (
     <StyledImageListItem onClick={handleClick}>
