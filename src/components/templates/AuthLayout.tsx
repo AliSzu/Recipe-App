@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Card from "../atoms/Card";
+import LanguageSwitcher from "../molecules/LanguageSwitcher";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -36,6 +37,12 @@ const Title = styled("div")({
   padding: "1rem",
 });
 
+const Actions = styled('div')({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'flex-end',
+})
+
 const AuthLayout = ({
   children,
   messageTransKey,
@@ -46,6 +53,7 @@ const AuthLayout = ({
   return (
     <Wrapper>
       <Card>
+        <Actions><LanguageSwitcher/></Actions>
         <Title>{t(titleTransKey)}</Title>
         {children}
       </Card>
