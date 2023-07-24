@@ -3,8 +3,12 @@ import Tile from "../atoms/Tile";
 import CollapseList from "../organisms/CollapseList";
 import NumberedList from "../molecules/NumberedList";
 import TwoColumnList from "../molecules/TwoColumnsList";
-import { MOCK_RECIPE } from "../../constants/mocks/Recipe";
 import { useTranslation } from "react-i18next";
+import { Recipe } from "../../types/RecipeTypes";
+
+interface RecipeLayoutProps{
+  recipe: Recipe
+}
 
 const GridItem = styled("div")({
   display: "flex",
@@ -37,25 +41,25 @@ const GridButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const RecipeLayout = () => {
+const RecipeLayout = ({recipe}: RecipeLayoutProps) => {
   const { t } = useTranslation();
   return (
     <Grid>
       <GridItem>
-        <Tile recipe={MOCK_RECIPE} />
+        <Tile recipe={recipe} />
         <Typography>
-          {MOCK_RECIPE.description}
+          {recipe.description}
         </Typography>
       </GridItem>
       <GridItem>
         <GridButton>{t("button.edit")}</GridButton>
         <CollapseList title={t('recipe.ingredients')}>
-          <TwoColumnList items={MOCK_RECIPE.ingredients!} />
+          <TwoColumnList items={recipe.ingredients} />
         </CollapseList>
       </GridItem>
       <GridItem>
         <CollapseList title={t('recipe.preparing')}>
-          <NumberedList items={MOCK_RECIPE.preparing!} />
+          <NumberedList items={recipe.preparing} />
         </CollapseList>
       </GridItem>
     </Grid>
