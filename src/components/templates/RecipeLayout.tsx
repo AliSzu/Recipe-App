@@ -50,12 +50,12 @@ const RecipeLayout = () => {
       <GridItem>
         <GridButton>{t("button.edit")}</GridButton>
         <CollapseList title={t('recipe.ingredients')}>
-          <TwoColumnList items={MOCK_RECIPE.ingredients} />
+          <TwoColumnList items={MOCK_RECIPE.ingredients!} />
         </CollapseList>
       </GridItem>
       <GridItem>
         <CollapseList title={t('recipe.preparing')}>
-          <NumberedList items={MOCK_RECIPE.preparing} />
+          <NumberedList items={MOCK_RECIPE.preparing!} />
         </CollapseList>
       </GridItem>
     </Grid>

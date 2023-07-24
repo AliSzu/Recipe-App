@@ -1,4 +1,6 @@
-export const MOCK_RECIPE = {
+import { Recipe } from "../../types/RecipeTypes";
+
+export const MOCK_RECIPE: Recipe = {
   title: "Pancakes",
   time: "50min",
   imgSrc:
