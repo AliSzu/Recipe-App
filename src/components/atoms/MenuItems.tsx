@@ -29,9 +29,9 @@ const MenuItems = ({onRouteChange} : MenuItemsProps) => {
   return (
     <>
       {MENU_ITEMS.map((item: MenuItem) => (
-        <React.Fragment key={item.title}>
+        <React.Fragment key={item.id}>
           <StyledListItemButton onClick={() => handleRouteChange(item.route)}>
-            <ListItemText primary={item.id} />
+            <ListItemText primary={item.title} />
           </StyledListItemButton>
           <StyledDivider />
         </React.Fragment>
