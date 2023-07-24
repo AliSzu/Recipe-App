@@ -19,7 +19,7 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
   return (
     <List>
       {items.map((item: Ingredient) => (
-        <StyledListItem disableGutters={true} key={item.name}>
+        <StyledListItem disableGutters={true} key={item.id}>
           <div>{item.amount}</div>
           <div>{item.name}</div>
         </StyledListItem>
