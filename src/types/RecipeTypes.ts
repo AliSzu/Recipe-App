@@ -4,8 +4,8 @@ export interface Recipe {
   imgSrc: string;
   id: string
 }
-
 export interface Ingredient {
   amount: string,
   name: string
+  id: string;
 }
