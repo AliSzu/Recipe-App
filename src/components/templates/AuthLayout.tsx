@@ -37,7 +37,7 @@ const Title = styled("div")({
   padding: "1rem",
 });
 
-const Actions = styled('div')({
+const LanguageSwitcherContainer = styled('div')({
   display: 'flex',
   width: '100%',
   justifyContent: 'flex-end',
@@ -53,7 +53,7 @@ const AuthLayout = ({
   return (
     <Wrapper>
       <Card>
-        <Actions><LanguageSwitcher/></Actions>
+        <LanguageSwitcherContainer><LanguageSwitcher/></LanguageSwitcherContainer>
         <Title>{t(titleTransKey)}</Title>
         {children}
       </Card>
