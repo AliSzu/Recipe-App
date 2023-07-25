@@ -13,6 +13,7 @@ const StyledImageListItemBar = styled(ImageListItemBar)({
 
 const StyledImageListItem = styled(ImageListItem)({
   borderRadius: "5px",
+  cursor: "pointer",
 });
 
 const StyledImage = styled("img")({
@@ -29,7 +30,7 @@ interface TileProps {
 const Tile = ({ recipe }: TileProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/recipe/${recipe.recipeId}`);
+    navigate(`/recipe/${recipe.id}`);
   };
   return (
     <StyledImageListItem onClick={handleClick}>
