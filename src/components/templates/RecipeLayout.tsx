@@ -32,10 +32,6 @@ const Grid = styled("div")(({ theme }) => ({
 
 const GridButton = styled(Button)(({ theme }) => ({
   width: "30%",
-  color: theme.palette.primary.main,
-  backgroundColor: theme.palette.secondary.light,
-  border: "1px solid",
-  borderColor: theme.palette.primary.main,
   [theme.breakpoints.down("sm")]: {
     width: "100%",
   },
@@ -52,7 +48,7 @@ const RecipeLayout = ({recipe}: RecipeLayoutProps) => {
         </Typography>
       </GridItem>
       <GridItem>
-        <GridButton>{t("button.edit")}</GridButton>
+        <GridButton variant='outlined'>{t("button.edit")}</GridButton>
         <CollapseList title={t('recipe.ingredients')}>
           <TwoColumnList items={recipe.ingredients} />
         </CollapseList>

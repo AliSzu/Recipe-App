@@ -8,7 +8,7 @@ const Login = () => {
       <AuthLayout
         messageTransKey="message.signUp"
         messageRoute={ROUTES.SIGNUP}
-        titleTransKey="cardTitle.login"
+        titleTransKey="card.login"
       >
         <LoginForm/>
       </AuthLayout>

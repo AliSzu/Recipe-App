@@ -12,8 +12,8 @@ import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
-import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignIn } from "../../api/auth";
+import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -35,10 +35,20 @@ const LoginForm = () => {
             login({
               email: response.email,
               refreshToken: response.refreshToken,
-              uid: response.uid
+              uid: response.uid,
             })
           );
+          dispatch(hideSnackbar());
           navigate(ROUTES.HOME);
+        },
+        onError: (error) => {
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: null,
+              severity: "error",
+            })
+          );
         },
       }
     );
@@ -55,10 +65,6 @@ const LoginForm = () => {
         return error?.message;
       }}
     >
-      <AuthSnackbar
-        isError={signInMutation.isError}
-        message={signInMutation.error?.code}
-      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {
@@ -78,7 +84,7 @@ const LoginForm = () => {
           fullWidth
           required
         />
-        <Button type="submit" fullWidth>
+        <Button type="submit" variant="contained" disableElevation fullWidth>
           {t("button.login")}
         </Button>
       </FormContainer>

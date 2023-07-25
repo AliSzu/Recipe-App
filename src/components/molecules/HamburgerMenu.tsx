@@ -42,7 +42,7 @@ const ActionContainer = styled("div")({
   justifyContent: "flex-end",
   flexDirection: "column",
   rowGap: "1rem",
-  padding: '1rem'
+  padding: "1rem",
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -69,8 +69,8 @@ const HamburgerMenu = () => {
   };
 
   const onRouteChange = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleLogout = () => {
     signOutMutation.mutate(undefined, {
@@ -78,7 +78,13 @@ const HamburgerMenu = () => {
         dispatch(logout());
       },
       onError: (error) => {
-        dispatch(showSnackbar({ message: error.message }));
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: null,
+            severity: "error",
+          })
+        );
       },
     });
   };

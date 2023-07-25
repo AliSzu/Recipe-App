@@ -15,10 +15,14 @@ import { snackbarSlice } from "../slices/snackbarSlice";
 
 const persistConfig = {
   key: "root",
+  blacklist: ["snackbar"],
   storage,
 };
 
-const reducers = combineReducers({ auth: authSlice.reducer, snackbar: snackbarSlice.reducer });
+const reducers = combineReducers({
+  auth: authSlice.reducer,
+  snackbar: snackbarSlice.reducer,
+});
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({

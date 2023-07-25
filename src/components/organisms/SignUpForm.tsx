@@ -12,8 +12,8 @@ import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/Routes";
-import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
+import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
@@ -37,10 +37,20 @@ const SignUpFrom = () => {
             login({
               email: response.email,
               refreshToken: response.refreshToken,
-              uid: response.uid
+              uid: response.uid,
             })
           );
           navigate(ROUTES.HOME);
+          dispatch(hideSnackbar());
+        },
+        onError: (error) => {
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: null,
+              severity: "error",
+            })
+          );
         },
       }
     );
@@ -57,10 +67,6 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
-      <AuthSnackbar
-        isError={signUpMutation.isError}
-        message={signUpMutation.error?.code}
-      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => handleSignUp(data)}
@@ -94,7 +100,7 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <Button type="submit" fullWidth>
+        <Button variant="contained" disableElevation type="submit" fullWidth>
           {t("button.signUp")}
         </Button>
       </FormContainer>

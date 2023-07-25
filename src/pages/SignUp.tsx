@@ -6,7 +6,7 @@ import { ROUTES } from "../constants/Routes";
 const SignUp = () => {
   return (
     <>
-      <AuthLayout messageTransKey="message.login" titleTransKey="cardTitle.signUp" messageRoute={ROUTES.LOGIN}>
+      <AuthLayout messageTransKey="message.login" titleTransKey="card.signUp" messageRoute={ROUTES.LOGIN}>
         <SignUpFrom />
       </AuthLayout>
     </>

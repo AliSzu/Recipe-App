@@ -1,9 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { FirebaseUserData } from "../types/AuthTypes";
 import {
+  GoogleAuthProvider,
   User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
@@ -42,3 +44,13 @@ export function useSignOut() {
     },
   });
 }
+
+export function useSignInWithGoogle() {
+  return useMutation<User, FirebaseError, GoogleAuthProvider>({
+    mutationFn: async (provider : GoogleAuthProvider) => {
+      const responseGoogle = await signInWithPopup(auth, provider)
+      return responseGoogle.user
+    }
+  })
+}
+

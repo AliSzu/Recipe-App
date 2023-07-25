@@ -1,14 +1,23 @@
-import { Alert } from "@mui/material";
+import * as React from "react";
 import MuiSnackbar from "@mui/material/Snackbar";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { hideSnackbar, selectSnackbarState } from "../../slices/snackbarSlice";
+import { useTranslation } from "react-i18next";
+import { ErrorMessage } from "../../constants/ErrorMessage";
+import { getErrorKey } from "../../utils/authUtils";
+import { Alert } from "@mui/material";
 
 const Snackbar = () => {
-  const { message, isOpen } = useAppSelector(selectSnackbarState);
+  const { isOpen, message, autoHideDuration, severity } = useAppSelector(selectSnackbarState);
   const dispatch = useAppDispatch();
+  const messageKey = message ? message : "";
+  const { t } = useTranslation();
+
+  const errorMessage =
+    ErrorMessage[getErrorKey(messageKey) as keyof typeof ErrorMessage];
 
   const handleClose = (
-    _event?: React.SyntheticEvent | Event,
+    event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -16,13 +25,16 @@ const Snackbar = () => {
     }
     dispatch(hideSnackbar());
   };
-  return (
-    <MuiSnackbar open={isOpen} onClick={handleClose} autoHideDuration={6000}>
-      <Alert severity="error" sx={{ width: "100%" }} onClose={handleClose}>
-        {message}
-      </Alert>
-    </MuiSnackbar>
-  );
-};
 
-export default Snackbar;
+  return (
+    <div>
+      <MuiSnackbar open={isOpen} autoHideDuration={autoHideDuration} onClose={handleClose}>
+        <Alert severity={severity} variant="filled" sx={{ width: "100%" }}>
+          {errorMessage ? t(errorMessage) : t("error.unknown")}
+        </Alert>
+      </MuiSnackbar>
+    </div>
+  );
+}
+
+export default Snackbar

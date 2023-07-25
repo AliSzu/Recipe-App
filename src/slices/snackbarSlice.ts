@@ -5,6 +5,8 @@ import { RootState } from "../store/store";
 const initialState: SnackbarState = {
   message: " ",
   isOpen: false,
+  autoHideDuration: null,
+  severity: "success",
 };
 
 export const snackbarSlice = createSlice({
@@ -12,10 +14,14 @@ export const snackbarSlice = createSlice({
   initialState,
   reducers: {
     showSnackbar: (state, action: PayloadAction<SnackbarInfo>) => {
-      (state.message = action.payload.message), (state.isOpen = true);
+      state.message = action.payload.message,
+      state.isOpen = true
+      state.autoHideDuration = action.payload.autoHideDuration,
+      state.severity = action.payload.severity
     },
     hideSnackbar: (state) => {
-      (state.message = ""), (state.isOpen = false);
+      state.message = '',
+      state.isOpen = false
     },
   },
 });

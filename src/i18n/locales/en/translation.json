@@ -17,15 +17,17 @@
     "login": "Log in",
     "signUp": "Sign up",
     "logOut": "Log Out",
-    "edit": "Edit"
+    "edit": "Edit",
+    "google": "Use Google"
   },
   "message": {
     "login": "Have an account already? <1>Log in</1>",
     "signUp": "Don't have an account? <1>Sign up</1>"
   },
-  "cardTitle": {
+  "card": {
     "login": "Log In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "or": "or"
   },
   "error": {
     "invalidPassword": "Invalid Password",

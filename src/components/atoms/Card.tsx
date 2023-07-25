@@ -5,7 +5,8 @@ interface CardProps {
 }
 
 const StyledCard = styled("div")(({ theme }) => ({
-  padding: "2rem",
+  padding: "3rem",
+  gap: "1rem",
   margin: "1rem",
   border: `1px solid ${theme.palette.secondary.main}`,
   borderRadius: "10px",
@@ -13,13 +14,13 @@ const StyledCard = styled("div")(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  maxWidth: "30rem",
+  maxWidth: "35rem",
   backgroundColor: theme.palette.secondary.light,
-  [theme.breakpoints.down('sm')] : {
+  [theme.breakpoints.down("sm")]: {
     padding: "1.5rem",
-    border: 'none',
-    margin: '0'
-  }
+    border: "none",
+    margin: "0",
+  },
 }));
 
 export default function Card({ children }: CardProps) {

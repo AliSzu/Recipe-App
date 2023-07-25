@@ -17,15 +17,17 @@
     "login": "Zaloguj się",
     "signUp": "Załóż konto",
     "logOut": "Wyloguj się",
-    "edit": "Edytuj"
+    "edit": "Edytuj",
+    "google": "Użyj Google"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
     "signUp": "Nie posiadasz konta? <1>Załóż konto</1>"
   },
-  "cardTitle": {
+  "card": {
     "login": "Logowanie",
-    "signUp": "Załóż Konto"
+    "signUp": "Załóż Konto",
+    "or": "lub"
   },
   "error": {
     "invalidPassword": "Niepoprawne hasło",

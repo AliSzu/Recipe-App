@@ -1,6 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 import Inter from "../fonts/Inter-VariableFont_slnt,wght.ttf";
 
+declare module "@mui/material/styles/createPalette" {
+  interface Palette {
+    google: Palette["primary"];
+  }
+  interface PaletteOptions {
+    google: PaletteOptions["primary"];
+  }
+}
+
 const globalTheme = createTheme({
   palette: {
     primary: {
@@ -12,10 +21,11 @@ const globalTheme = createTheme({
       main: "#efefef",
       light: "#ffffff",
     },
+    google: { main: "#DB4437", dark: "#BD2E22" },
   },
   typography: {
     fontFamily: "Inter",
-    fontSize: 16
+    fontSize: 16,
   },
 });
 
@@ -44,11 +54,9 @@ export const theme = createTheme(
           root: {
             padding: "0.8rem",
             fontSize: "1rem",
-            backgroundColor: globalTheme.palette.primary.main,
-            color: globalTheme.palette.primary.light,
-            "&:hover": {
-              backgroundColor: globalTheme.palette.secondary.main,
-            },
+          },
+          containedPrimary: {
+            color: globalTheme.palette.secondary.light,
           },
         },
       },
@@ -139,8 +147,8 @@ export const theme = createTheme(
         styleOverrides: {
           "@font-face": {
             fontFamily: "Inter",
-            fontStyle: 'normal',
-            fontWeight: '500',
+            fontStyle: "normal",
+            fontWeight: "500",
             src: `url(${Inter}) format("truetype")`,
           },
         },
@@ -149,5 +157,3 @@ export const theme = createTheme(
   },
   globalTheme
 );
-
-
