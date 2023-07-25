@@ -15,7 +15,13 @@ const RecipeContainer = () => {
   );
 
   if (isError) {
-    dispatch(showSnackbar({ message: error.code }));
+    dispatch(
+      showSnackbar({
+        message: error.code,
+        autoHideDuration: 6000,
+        severity: "error",
+      })
+    );
   }
 
   return (

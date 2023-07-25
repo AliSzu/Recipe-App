@@ -13,7 +13,7 @@ import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
 import { useSignIn } from "../../api/auth";
-import { showSnackbar } from "../../slices/snackbarSlice";
+import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -35,15 +35,22 @@ const LoginForm = () => {
             login({
               email: response.email,
               refreshToken: response.refreshToken,
-              uid: response.uid
+              uid: response.uid,
             })
           );
+          dispatch(hideSnackbar());
           navigate(ROUTES.HOME);
         },
         onError: (error) => {
-          dispatch(showSnackbar({message: error.code}))
-        }
-      },
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: null,
+              severity: "error",
+            })
+          );
+        },
+      }
     );
   };
 

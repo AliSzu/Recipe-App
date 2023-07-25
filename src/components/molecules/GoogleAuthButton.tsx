@@ -7,14 +7,14 @@ import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
 import { useTranslation } from "react-i18next";
-import { showSnackbar } from "../../slices/snackbarSlice";
+import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 
 const GoogleButton = styled(Button)(({ theme }) => ({
-    backgroundColor: theme.palette.google.main,
-    '&:hover': {
-        backgroundColor: theme.palette.google.dark
-    }
-  }));
+  backgroundColor: theme.palette.google.main,
+  "&:hover": {
+    backgroundColor: theme.palette.google.dark,
+  },
+}));
 
 const GoogleAuthButton = () => {
   const signInWithGoogleMutation = useSignInWithGoogle();
@@ -34,9 +34,16 @@ const GoogleAuthButton = () => {
           })
         );
         navigate(ROUTES.HOME);
+        dispatch(hideSnackbar());
       },
       onError: (error) => {
-        dispatch(showSnackbar({ message: error.code }));
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: null,
+            severity: "error",
+          })
+        );
       },
     });
   };

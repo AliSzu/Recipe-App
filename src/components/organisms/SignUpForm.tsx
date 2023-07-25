@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/Routes";
 import { useSignUp } from "../../api/auth";
-import { showSnackbar } from "../../slices/snackbarSlice";
+import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
@@ -41,9 +41,16 @@ const SignUpFrom = () => {
             })
           );
           navigate(ROUTES.HOME);
+          dispatch(hideSnackbar());
         },
         onError: (error) => {
-          dispatch(showSnackbar({ message: error.code }));
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: null,
+              severity: "error",
+            })
+          );
         },
       }
     );

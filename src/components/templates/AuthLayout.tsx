@@ -5,7 +5,6 @@ import Card from "../atoms/Card";
 import LanguageSwitcher from "../molecules/LanguageSwitcher";
 import GoogleAuthButton from "../molecules/GoogleAuthButton";
 import Snackbar from "../atoms/Snackbar";
-import AuthSnackbar from "../atoms/AuthSnackbar";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -59,7 +58,7 @@ const AuthLayout = ({
           <LanguageSwitcher />
         </LanguageSwitcherContainer>
         <Title>{t(titleTransKey)}</Title>
-        <AuthSnackbar />
+        <Snackbar/>
         {children}
         <Divider flexItem>{t("card.or")}</Divider>
         <GoogleAuthButton />
