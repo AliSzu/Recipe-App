@@ -1,5 +1,6 @@
 import { ImageListItem, ImageListItemBar, styled } from "@mui/material";
 import { Recipe } from "../../types/RecipeTypes";
+import { useNavigate } from "react-router-dom";
 
 const StyledImageListItemBar = styled(ImageListItemBar)({
   background:
@@ -14,19 +15,24 @@ const StyledImageListItem = styled(ImageListItem)({
   borderRadius: "5px",
 });
 
-const StyledImage = styled('img')({
-  maxHeight: '30rem',
-  height: '100%',
-  objectFit: 'cover'
-})
+const StyledImage = styled("img")({
+  maxHeight: "30rem",
+  height: "100%",
+  width: "100%",
+  objectFit: "cover",
+});
 
 interface TileProps {
   recipe: Recipe;
 }
 
 const Tile = ({ recipe }: TileProps) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/recipe/${recipe.recipeId}`);
+  };
   return (
-    <StyledImageListItem>
+    <StyledImageListItem onClick={handleClick}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
     </StyledImageListItem>

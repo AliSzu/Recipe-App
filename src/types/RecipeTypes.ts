@@ -4,5 +4,11 @@ export interface Recipe {
   title: string;
   time: string;
   imgSrc: string;
-  id: string;
+  description?: string;
+  ingredients?: Ingredient[];
+  preparing?: string[];
+}
+export interface Ingredient {
+  amount: string;
+  name: string;
 }

@@ -16,7 +16,8 @@
   "button": {
     "login": "Zaloguj się",
     "signUp": "Załóż konto",
-    "logOut": "Wyloguj się"
+    "logOut": "Wyloguj się",
+    "edit": "Edytuj"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
@@ -33,6 +34,10 @@
     "emailExists": "Konto z tym adresem email już istnieje",
     "unknown": "Coś poszło nie tak"
   },
-  "latestRecipes" : "Ostatnie Przepisy",
-  "emptyRecipes" : "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! "
+  "latestRecipes": "Ostatnie Przepisy",
+  "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
+  "recipe": {
+    "preparing": "Przygotowanie",
+    "ingredients": "Składniki"
+  }
 }

@@ -16,7 +16,8 @@
   "button": {
     "login": "Log in",
     "signUp": "Sign up",
-    "logOut": "Log Out"
+    "logOut": "Log Out",
+    "edit": "Edit"
   },
   "message": {
     "login": "Have an account already? <1>Log in</1>",
@@ -33,6 +34,10 @@
     "emailExists": "Account with this email address already exists",
     "unknown": "Something went wrong"
   },
-  "latestRecipes" : "Latest Recipes",
-  "emptyRecipes" : "There are no recipes here yet. Try adding first recipe!"
+  "latestRecipes": "Latest Recipes",
+  "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
+  "recipe": {
+    "preparing": "Preparing",
+    "ingredients": "Ingredients"
+  }
 }

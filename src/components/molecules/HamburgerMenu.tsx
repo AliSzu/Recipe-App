@@ -68,6 +68,10 @@ const HamburgerMenu = () => {
     setOpen(false);
   };
 
+  const onRouteChange = () => {
+    setOpen(false)
+  }
+
   const handleLogout = () => {
     signOutMutation.mutate(undefined, {
       onSuccess: () => {
@@ -91,7 +95,7 @@ const HamburgerMenu = () => {
         </DrawerHeader>
         <Divider />
         <StyledList>
-          <MenuItems />
+          <MenuItems onRouteChange={onRouteChange} />
           <ActionContainer>
             <Button onClick={handleLogout}>{t("button.logOut")}</Button>
             <LanguageSwitcherMobile />

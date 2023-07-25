@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Snackbar from "../components/atoms/Snackbar";
+import Recipe from "../pages/Recipe";
 
 const NavbarLayout = () => (
   <>
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             path: ROUTES.HOME,
             element: <Home />,
           },
+          {
+            path: '/recipe/:id',
+            element: <Recipe/>
+          }
         ],
       },
     ],

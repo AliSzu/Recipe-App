@@ -12,9 +12,10 @@ import MenuItems from "../atoms/MenuItems";
 
 const StyledNavbar = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
-  padding: "1rem",
+  padding: "0.5rem",
   color: theme.palette.secondary.light,
   boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
+  marginBottom: '1rem'
 }));
 
 const Elements = styled(Container)({
