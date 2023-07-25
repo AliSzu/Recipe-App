@@ -1,8 +1,10 @@
-import { styled } from "@mui/material";
+import { Divider, styled } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Card from "../atoms/Card";
 import LanguageSwitcher from "../molecules/LanguageSwitcher";
+import GoogleAuthButton from "../molecules/GoogleAuthButton";
+import Snackbar from "../atoms/Snackbar";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -19,9 +21,9 @@ const Wrapper = styled("div")(({ theme }) => ({
   flexDirection: "column",
   fontFamily: "Inter, sans-serif",
   backgroundColor: theme.palette.primary.light,
-  [theme.breakpoints.down('sm')] : {
+  [theme.breakpoints.down("sm")]: {
     backgroundColor: theme.palette.secondary.light,
-  }
+  },
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
@@ -34,14 +36,13 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const Title = styled("div")({
   fontSize: "2rem",
-  padding: "1rem",
 });
 
-const LanguageSwitcherContainer = styled('div')({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'flex-end',
-})
+const LanguageSwitcherContainer = styled("div")({
+  display: "flex",
+  width: "100%",
+  justifyContent: "flex-end",
+});
 
 const AuthLayout = ({
   children,
@@ -53,9 +54,13 @@ const AuthLayout = ({
   return (
     <Wrapper>
       <Card>
-        <LanguageSwitcherContainer><LanguageSwitcher/></LanguageSwitcherContainer>
+        <LanguageSwitcherContainer>
+          <LanguageSwitcher />
+        </LanguageSwitcherContainer>
         <Title>{t(titleTransKey)}</Title>
         {children}
+        <Divider flexItem>{t('card.or')}</Divider>
+          <GoogleAuthButton />
       </Card>
       <div>
         <Trans i18nKey={messageTransKey}>
@@ -63,6 +68,7 @@ const AuthLayout = ({
           <StyledLink to={messageRoute} />
         </Trans>
       </div>
+      <Snackbar />
     </Wrapper>
   );
 };

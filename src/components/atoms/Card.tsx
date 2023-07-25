@@ -6,6 +6,7 @@ interface CardProps {
 
 const StyledCard = styled("div")(({ theme }) => ({
   padding: "2rem",
+  gap: "1rem",
   margin: "1rem",
   border: `1px solid ${theme.palette.secondary.main}`,
   borderRadius: "10px",

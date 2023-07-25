@@ -9,21 +9,26 @@ interface AuthSnackbarProps {
 }
 
 const ErrorContainer = styled("div")({
-    marginBottom: '1.5rem',
-    width: '100%'
+  width: "100%",
 });
 
 const AuthSnackbar = ({ isError, message }: AuthSnackbarProps) => {
-  const messageKey = message ? message : ''
+  const messageKey = message ? message : "";
   const { t } = useTranslation();
 
   const errorMessage =
     ErrorMessage[getErrorKey(messageKey) as keyof typeof ErrorMessage];
 
   return (
-    <ErrorContainer>
-      {isError && <Alert severity="error">{errorMessage ? t(errorMessage) : t('error.unknown')}</Alert>}
-    </ErrorContainer>
+    <>
+      {isError && (
+        <ErrorContainer>
+          <Alert severity="error">
+            {errorMessage ? t(errorMessage) : t("error.unknown")}
+          </Alert>
+        </ErrorContainer>
+      )}
+    </>
   );
 };
 export default AuthSnackbar;
