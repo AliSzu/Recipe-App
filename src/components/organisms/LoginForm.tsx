@@ -12,8 +12,8 @@ import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
-import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignIn } from "../../api/auth";
+import { showSnackbar } from "../../slices/snackbarSlice";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -40,7 +40,10 @@ const LoginForm = () => {
           );
           navigate(ROUTES.HOME);
         },
-      }
+        onError: (error) => {
+          dispatch(showSnackbar({message: error.code}))
+        }
+      },
     );
   };
 
@@ -55,10 +58,6 @@ const LoginForm = () => {
         return error?.message;
       }}
     >
-      <AuthSnackbar
-        isError={signInMutation.isError}
-        message={signInMutation.error?.code}
-      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => {

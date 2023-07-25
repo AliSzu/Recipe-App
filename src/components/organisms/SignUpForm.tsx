@@ -12,8 +12,8 @@ import { useAppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/Routes";
-import AuthSnackbar from "../atoms/AuthSnackbar";
 import { useSignUp } from "../../api/auth";
+import { showSnackbar } from "../../slices/snackbarSlice";
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
@@ -37,10 +37,13 @@ const SignUpFrom = () => {
             login({
               email: response.email,
               refreshToken: response.refreshToken,
-              uid: response.uid
+              uid: response.uid,
             })
           );
           navigate(ROUTES.HOME);
+        },
+        onError: (error) => {
+          dispatch(showSnackbar({ message: error.code }));
         },
       }
     );
@@ -57,10 +60,6 @@ const SignUpFrom = () => {
         return error.message;
       }}
     >
-      <AuthSnackbar
-        isError={signUpMutation.isError}
-        message={signUpMutation.error?.code}
-      />
       <FormContainer
         formContext={formContext}
         onSuccess={(data) => handleSignUp(data)}
