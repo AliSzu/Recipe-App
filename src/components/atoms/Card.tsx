@@ -15,11 +15,11 @@ const StyledCard = styled("div")(({ theme }) => ({
   flexDirection: "column",
   maxWidth: "30rem",
   backgroundColor: theme.palette.secondary.light,
-  [theme.breakpoints.down('sm')] : {
+  [theme.breakpoints.down("sm")]: {
     padding: "1.5rem",
-    border: 'none',
-    margin: '0'
-  }
+    border: "none",
+    margin: "0",
+  },
 }));
 
 export default function Card({ children }: CardProps) {

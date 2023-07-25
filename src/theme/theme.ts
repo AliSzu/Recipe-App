@@ -44,12 +44,10 @@ export const theme = createTheme(
           root: {
             padding: "0.8rem",
             fontSize: "1rem",
-            backgroundColor: globalTheme.palette.primary.main,
-            color: globalTheme.palette.primary.light,
-            "&:hover": {
-              backgroundColor: globalTheme.palette.secondary.main,
-            },
           },
+          containedPrimary: {
+            color: globalTheme.palette.secondary.light
+          }
         },
       },
       MuiIconButton: {

@@ -78,7 +78,7 @@ const LoginForm = () => {
           fullWidth
           required
         />
-        <Button type="submit" fullWidth>
+        <Button type="submit" variant="contained" disableElevation fullWidth>
           {t("button.login")}
         </Button>
       </FormContainer>
