@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Snackbar from "../components/atoms/Snackbar";
 import Recipe from "../pages/Recipe";
+import AddRecipe from "../pages/AddRecipe";
 
 const NavbarLayout = () => (
   <>
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: '/recipe/:id',
+            path: `${ROUTES.RECIPE}/:id`,
             element: <Recipe/>
+          },
+          {
+            path: ROUTES.ADD_RECIPE,
+            element: <AddRecipe/>
           }
         ],
       },

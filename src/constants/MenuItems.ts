@@ -2,9 +2,9 @@ import { MenuItem } from "../types/MenuTypes";
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    title: "Sample 1",
-    route: 'HOME',
-    id: 'menu1'
+    title: "Add Recipe",
+    route: 'ADD_RECIPE',
+    id: 'addRecipe'
   },
   {
     title: "Sample 2",

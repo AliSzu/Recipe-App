@@ -15,7 +15,7 @@ const StyledNavbar = styled("div")(({ theme }) => ({
   padding: "0.5rem",
   color: theme.palette.secondary.light,
   boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
-  marginBottom: '1rem'
+  marginBottom: "1rem",
 }));
 
 const Elements = styled(Container)({
@@ -51,7 +51,13 @@ export const Navbar = () => {
         dispatch(logout());
       },
       onError: (error) => {
-        dispatch(showSnackbar({ message: error.message }));
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: null,
+            severity: "error",
+          })
+        );
       },
     });
   };
@@ -62,7 +68,7 @@ export const Navbar = () => {
         <NavbarIcon />
         <StyledList>
           <LanguageSwitcher />
-          <MenuItems/>
+          <MenuItems />
           <ListItemButton onClick={handleSignOut}>
             {t("button.logOut")}
           </ListItemButton>
