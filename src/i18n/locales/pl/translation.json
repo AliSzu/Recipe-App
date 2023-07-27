@@ -10,7 +10,12 @@
     "label": {
       "email": "Email",
       "password": "Hasło",
-      "confirmPassword": "Potwierdź hasło"
+      "confirmPassword": "Potwierdź hasło",
+      "name": "Nazwa",
+      "time": "Czas Przygotowania",
+      "description": "Opis",
+      "amount": "Ilość",
+      "step": "Krok"
     }
   },
   "button": {
@@ -18,7 +23,8 @@
     "signUp": "Załóż konto",
     "logOut": "Wyloguj się",
     "edit": "Edytuj",
-    "google": "Użyj Google"
+    "google": "Użyj Google",
+    "submit": "Wyślij"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
@@ -41,5 +47,13 @@
   "recipe": {
     "preparing": "Przygotowanie",
     "ingredients": "Składniki"
+  },
+  "form": {
+    "recipeInformation": "Informacje o Przepisie",
+    "ingredientList": "Lista Składników",
+    "preparingSteps": "Kroki Przygotowania"
+  },
+  "menu": {
+    "addRecipe": "Dodaj Przepis"
   }
 }

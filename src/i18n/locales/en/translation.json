@@ -10,7 +10,12 @@
     "label": {
       "email": "Email",
       "password": "Password",
-      "confirmPassword": "Confirm Password"
+      "confirmPassword": "Confirm Password",
+      "name": "Name",
+      "time": "Time",
+      "description": "Description",
+      "amount": "Amount",
+      "step": "Step"
     }
   },
   "button": {
@@ -18,7 +23,8 @@
     "signUp": "Sign up",
     "logOut": "Log Out",
     "edit": "Edit",
-    "google": "Use Google"
+    "google": "Use Google",
+    "submit": "Submit"
   },
   "message": {
     "login": "Have an account already? <1>Log in</1>",
@@ -41,5 +47,13 @@
   "recipe": {
     "preparing": "Preparing",
     "ingredients": "Ingredients"
+  },
+  "form": {
+    "recipeInformation": "Recipe Information",
+    "ingredientList": "Ingredient List",
+    "preparingSteps": "Preparing Steps"
+  },
+  "menu": {
+    "addRecipe": "Add Recipe"
   }
 }

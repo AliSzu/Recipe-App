@@ -1,13 +1,21 @@
 import { RecipeFormValues } from "../../types/FormTypes";
-import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  useFieldArray,
+  UseFormRegister,
+} from "react-hook-form";
 import { uniqueId } from "../../utils/recipeUtils";
-import { Button, styled, TextField } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrayFieldContainer from "../molecules/ArrayFieldContainer";
+import FormField from "../atoms/FormField";
+import { useTranslation } from "react-i18next";
 
 interface IngredientsListProps {
   control: Control<RecipeFormValues>;
   register: UseFormRegister<RecipeFormValues>;
+  errors: FieldErrors<RecipeFormValues>;
 }
 
 const TextFieldContainer = styled("div")({
@@ -15,11 +23,16 @@ const TextFieldContainer = styled("div")({
   columnGap: "1rem",
 });
 
-const IngredientsListForm = ({ control, register }: IngredientsListProps) => {
+const IngredientsListForm = ({
+  control,
+  register,
+  errors,
+}: IngredientsListProps) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "ingredients",
   });
+  const { t } = useTranslation();
   return (
     <>
       {fields.map((item, index) => {
@@ -31,19 +44,21 @@ const IngredientsListForm = ({ control, register }: IngredientsListProps) => {
             fieldsNumber={fields.length}
           >
             <TextFieldContainer>
-              <TextField
-                {...register(`ingredients.${index}.name` as const, {
-                  required: "This is required message",
-                })}
-                label="name"
-                fullWidth
+              <FormField
+                {...{ register, errors }}
+                field={`ingredients.${index}.name` as const}
+                isError={
+                  !!(errors.ingredients && errors.ingredients[index]?.name)
+                }
+                label={t("textField.label.name")}
               />
-              <TextField
-                {...register(`ingredients.${index}.amount` as const, {
-                  required: true,
-                })}
-                label="amount"
-                fullWidth
+              <FormField
+                {...{ register, errors }}
+                field={`ingredients.${index}.amount` as const}
+                isError={
+                  !!(errors.ingredients && errors.ingredients[index]?.amount)
+                }
+                label={t("textField.label.amount")}
               />
             </TextFieldContainer>
           </ArrayFieldContainer>

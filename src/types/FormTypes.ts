@@ -18,8 +18,8 @@ export interface Preparing {
 
 export interface RecipeFormValues {
   title: string,
-  time?: string,
-  description?: string,
+  time: string,
+  description: string,
   preparing: Preparing[],
   ingredients: Ingredient[];
 }
