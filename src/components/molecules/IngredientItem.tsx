@@ -1,80 +1,42 @@
 import { IconButton, TextField, styled } from "@mui/material";
-import { Ingredient } from "../../types/RecipeTypes";
-import { useForm } from "react-hook-form";
-import CheckIcon from "@mui/icons-material/Check";
-import EditIcon from "@mui/icons-material/Edit";
+import { UseFieldArrayRemove } from "react-hook-form";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { UseFormRegister } from "react-hook-form";
+import { RecipeFormProps } from "../../types/FormTypes";
+import ArrayFieldContainer from "./ArrayFieldContainer";
 interface IngredientProps {
-  ingredient: Ingredient;
-  isDisabled: boolean;
-  onIngredientEdit: (id: string) => void;
-  onIngredientChange: (newIngredient: Ingredient) => void;
-  onIngredientDelete: (id: string) => void;
+  index: number;
+  register: UseFormRegister<RecipeFormProps>;
+  remove: UseFieldArrayRemove;
+  fieldsNumber: number
 }
 
-interface IngredientsFormInput {
-  [key: string]: string;
-}
+const TextFieldContainer = styled("div")({
+  display: 'flex',
+  columnGap: '1rem'
+})
 
-const IngredientContainer = styled("form")({
-  display: "flex",
-  justifyContent: "space-between",
-});
-
-const IngredientItem = ({
-  ingredient,
-  isDisabled,
-  onIngredientEdit,
-  onIngredientChange,
-  onIngredientDelete,
-}: IngredientProps) => {
-  const { register, handleSubmit } = useForm<IngredientsFormInput>();
-  const nameId = `${ingredient.id}-name`;
-  const amountId = `${ingredient.id}-amount`;
-
-  const onSubmit = (data: IngredientsFormInput) => {
-    onIngredientChange({
-      name: data[nameId],
-      amount: data[amountId],
-      id: ingredient.id,
-    });
-  };
+const IngredientItem = ({ index, register, remove, fieldsNumber }: IngredientProps) => {
   return (
-    <IngredientContainer onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <ArrayFieldContainer  index={index} remove={remove} fieldsNumber={fieldsNumber}>
+      <TextFieldContainer>
         <TextField
+          {...register(`ingredients.${index}.name` as const, {
+            required: true,
+          })}
           label="name"
-          defaultValue={ingredient.name}
-          disabled={isDisabled}
-          {...register(nameId, { required: true })}
+          fullWidth
         />
+
         <TextField
+          {...register(`ingredients.${index}.amount` as const, {
+            required: true,
+          })}
           label="amount"
-          defaultValue={ingredient.amount}
-          disabled={isDisabled}
-          {...register(amountId, { required: true })}
+          fullWidth
         />
-      </div>
-      <div>
-        {isDisabled ? (
-          <>
-            <IconButton onClick={() => onIngredientEdit(ingredient.id)}>
-              <EditIcon />
-            </IconButton>
-          </>
-        ) : (
-          <>
-            <IconButton type="submit">
-              <CheckIcon />
-            </IconButton>
-          </>
-        )}
-        <IconButton onClick={() => onIngredientDelete(ingredient.id)}>
-          <DeleteIcon />
-        </IconButton>
-      </div>
-    </IngredientContainer>
+      </TextFieldContainer>
+    </ArrayFieldContainer>
   );
 };
 

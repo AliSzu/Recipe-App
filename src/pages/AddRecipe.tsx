@@ -1,9 +1,8 @@
-import AddRecipeForm from "../components/organisms/AddRecipeForm";
+import RecipeFormLayout from "../components/templates/RecipeFormLayout";
+import { recipeDefaultValues } from "../constants/RecipeDefaultValues";
 
 const AddRecipe = () => {
-  return (
-    <AddRecipeForm/>
-  );
+  return <RecipeFormLayout defaultValues={recipeDefaultValues} />;
 };
 
 export default AddRecipe;

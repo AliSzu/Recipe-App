@@ -6,8 +6,8 @@ import TwoColumnList from "../molecules/TwoColumnsList";
 import { useTranslation } from "react-i18next";
 import { Recipe } from "../../types/RecipeTypes";
 
-interface RecipeLayoutProps{
-  recipe: Recipe
+interface RecipeLayoutProps {
+  recipe: Recipe;
 }
 
 const GridItem = styled("div")({
@@ -37,24 +37,22 @@ const GridButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const RecipeLayout = ({recipe}: RecipeLayoutProps) => {
+const RecipeLayout = ({ recipe }: RecipeLayoutProps) => {
   const { t } = useTranslation();
   return (
     <Grid>
       <GridItem>
         <Tile recipe={recipe} />
-        <Typography>
-          {recipe.description}
-        </Typography>
+        <Typography>{recipe.description}</Typography>
       </GridItem>
       <GridItem>
-        <GridButton variant='outlined'>{t("button.edit")}</GridButton>
-        <CollapseList title={t('recipe.ingredients')}>
+        <GridButton variant="outlined">{t("button.edit")}</GridButton>
+        <CollapseList title={t("recipe.ingredients")}>
           <TwoColumnList items={recipe.ingredients} />
         </CollapseList>
       </GridItem>
       <GridItem>
-        <CollapseList title={t('recipe.preparing')}>
+        <CollapseList title={t("recipe.preparing")}>
           <NumberedList items={recipe.preparing} />
         </CollapseList>
       </GridItem>

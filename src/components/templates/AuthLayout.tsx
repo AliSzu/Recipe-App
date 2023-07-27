@@ -58,7 +58,7 @@ const AuthLayout = ({
           <LanguageSwitcher />
         </LanguageSwitcherContainer>
         <Title>{t(titleTransKey)}</Title>
-        <Snackbar/>
+        <Snackbar />
         {children}
         <Divider flexItem>{t("card.or")}</Divider>
         <GoogleAuthButton />
