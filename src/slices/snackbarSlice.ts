@@ -14,6 +14,7 @@ export const snackbarSlice = createSlice({
   initialState,
   reducers: {
     showSnackbar: (state, action: PayloadAction<SnackbarInfo>) => {
+      console.log(action.payload.message)
       state.message = action.payload.message,
       state.isOpen = true
       state.autoHideDuration = action.payload.autoHideDuration,

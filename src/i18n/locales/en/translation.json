@@ -43,6 +43,9 @@
     "emailExists": "Account with this email address already exists",
     "unknown": "Something went wrong"
   },
+  "success" : {
+    "post" : "Recipe created"
+  },
   "latestRecipes": "Latest Recipes",
   "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
   "recipe": {

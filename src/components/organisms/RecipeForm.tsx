@@ -6,6 +6,10 @@ import PreparingStepsList from "./PreparingStepsList";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
+import { usePostRecipe, useUploadImage } from "../../api/recipes";
+import { Recipe } from "../../types/RecipeTypes";
+import { useAppDispatch } from "../../store/store";
+import { showSnackbar } from "../../slices/snackbarSlice";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
@@ -28,12 +32,42 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
   const {
     handleSubmit,
     formState: { errors },
+    reset,
   } = methods;
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const postRecipeMutation = usePostRecipe();
+  const uploadImageMutation = useUploadImage();
 
   const onSubmit = (data: RecipeFormValues) => {
-    console.log(data);
-    // TODO: SEND RECIPE TO FIREBASE
+    uploadImageMutation.mutate(data.image[0], {
+      onSuccess: (url) => {
+        const { image, ...formRecipe } = data;
+        const recipe: Recipe = { ...formRecipe, imgSrc: url };
+        postRecipeMutation.mutate(recipe, {
+          onSuccess: () => {
+            dispatch(
+              showSnackbar({
+                message: "post-success",
+                severity: "success",
+                autoHideDuration: 6000,
+              })
+            );
+            reset();
+          },
+        });
+      },
+      onError: (error) => {
+        dispatch(
+          showSnackbar({
+            message: error.message,
+            severity: "success",
+            autoHideDuration: 6000,
+          })
+        );
+      },
+    });
   };
   return (
     <FormProvider {...methods}>

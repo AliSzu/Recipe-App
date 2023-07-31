@@ -1,15 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   DocumentData,
   getDocs,
   query,
   where,
   documentId,
+  collection,
+  addDoc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
-import { recipeCollection } from "../firebase";
+import { db, recipeCollection } from "../firebase";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { uniqueId } from "../utils/recipeUtils";
 
 export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
@@ -42,6 +46,29 @@ export function useFetchRecipeById(id?: string) {
       );
       const recipe: Recipe = Object.assign({}, ...recipeArray);
       return recipe;
+    },
+  });
+}
+
+export function useUploadImage() {
+  return useMutation<string, FirebaseError, File>({
+    mutationFn: async (image: File) => {
+      const storage = getStorage();
+      const storageRef = ref(storage, `recipe/${uniqueId()}`);
+      await uploadBytes(storageRef, image);
+      const url = await getDownloadURL(storageRef);
+      return url;
+    },
+  });
+}
+
+export function usePostRecipe() {
+  return useMutation<any, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      const response = await addDoc(collection(db, "recipes"), {
+        ...newRecipe,
+      });
+      return response
     },
   });
 }
