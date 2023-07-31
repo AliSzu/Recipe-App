@@ -16,12 +16,12 @@ const FileFieldContainer = styled("div")({
   alignItems: "center",
 });
 
-const Message = styled("p")({
+const Message = styled("p")(({ theme }) => ({
   padding: "0.5rem",
   margin: "0",
-  color: "#bf1650",
+  color: theme.palette.error.main,
   fontSize: "0.85rem",
-});
+}));
 
 const InputFileField = ({ field }: InputFileFieldProps) => {
   const {

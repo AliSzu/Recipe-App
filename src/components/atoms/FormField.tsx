@@ -33,7 +33,6 @@ const FormField = ({
     />
   );
 
-  console.log(field)
   return (
     <TextField
       label={label}

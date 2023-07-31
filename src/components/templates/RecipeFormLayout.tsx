@@ -23,7 +23,6 @@ const RecipeFormLayout = ({ defaultValues }: RecipeLayoutProps) => {
           type="submit"
           form="recipe-form"
           variant="contained"
-          disableElevation
         >
           {t("button.submit")}
         </Button>

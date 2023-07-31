@@ -59,6 +59,9 @@ export const theme = createTheme(
             color: globalTheme.palette.secondary.light,
           },
         },
+        defaultProps: {
+          disableElevation: true
+        }
       },
       MuiIconButton: {
         styleOverrides: {

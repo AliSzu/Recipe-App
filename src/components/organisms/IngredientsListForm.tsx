@@ -62,7 +62,6 @@ const IngredientsListForm = () => {
         }}
         fullWidth
         variant="contained"
-        disableElevation
       >
         <AddIcon />
       </Button>

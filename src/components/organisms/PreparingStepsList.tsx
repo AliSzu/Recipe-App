@@ -49,7 +49,6 @@ const PreparingStepsList = () => {
         }}
         fullWidth
         variant="contained"
-        disableElevation
       >
         <AddIcon />
       </Button>
