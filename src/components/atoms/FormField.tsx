@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 interface FormFieldProps {
   register: UseFormRegister<RecipeFormValues>;
   isError: boolean;
-  field: FieldPath<RecipeFormValues> | keyof RecipeFormValues;
+  field: FieldPath<RecipeFormValues>;
   multiline?: boolean;
   rows?: number;
   label: string;

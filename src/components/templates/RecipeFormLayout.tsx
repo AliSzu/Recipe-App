@@ -7,14 +7,6 @@ interface RecipeLayoutProps {
   defaultValues: RecipeFormValues;
 }
 
-const FormContainer = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-  flexDirection: "column",
-});
-
 const ButtonContainer = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
@@ -24,7 +16,7 @@ const ButtonContainer = styled("div")({
 const RecipeFormLayout = ({ defaultValues }: RecipeLayoutProps) => {
   const { t } = useTranslation();
   return (
-    <FormContainer>
+    <>
       <RecipeForm defaultValues={defaultValues} />
       <ButtonContainer>
         <Button
@@ -36,7 +28,7 @@ const RecipeFormLayout = ({ defaultValues }: RecipeLayoutProps) => {
           {t("button.submit")}
         </Button>
       </ButtonContainer>
-    </FormContainer>
+    </>
   );
 };
 export default RecipeFormLayout;

@@ -24,7 +24,8 @@
     "logOut": "Log Out",
     "edit": "Edit",
     "google": "Use Google",
-    "submit": "Submit"
+    "submit": "Submit",
+    "file": "Upload picture"
   },
   "message": {
     "login": "Have an account already? <1>Log in</1>",
@@ -55,5 +56,8 @@
   },
   "menu": {
     "addRecipe": "Add Recipe"
+  },
+  "file" : {
+    "empty" : "No file chosen"
   }
 }

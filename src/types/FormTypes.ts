@@ -20,6 +20,7 @@ export interface RecipeFormValues {
   title: string,
   time: string,
   description: string,
+  image: FileList,
   preparing: Preparing[],
   ingredients: Ingredient[];
 }
