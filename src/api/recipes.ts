@@ -63,12 +63,11 @@ export function useUploadImage() {
 }
 
 export function usePostRecipe() {
-  return useMutation<any, FirebaseError, Recipe>({
+  return useMutation<void, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
-      const response = await addDoc(collection(db, "recipes"), {
+      await addDoc(collection(db, "recipes"), {
         ...newRecipe,
       });
-      return response
     },
   });
 }

@@ -62,7 +62,7 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
         dispatch(
           showSnackbar({
             message: error.message,
-            severity: "success",
+            severity: "error",
             autoHideDuration: 6000,
           })
         );
