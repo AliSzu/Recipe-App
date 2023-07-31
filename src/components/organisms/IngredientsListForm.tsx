@@ -1,10 +1,5 @@
 import { RecipeFormValues } from "../../types/FormTypes";
-import {
-  Control,
-  FieldErrors,
-  useFieldArray,
-  UseFormRegister,
-} from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { uniqueId } from "../../utils/recipeUtils";
 import { Button, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -12,22 +7,16 @@ import ArrayFieldContainer from "../molecules/ArrayFieldContainer";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 
-interface IngredientsListProps {
-  control: Control<RecipeFormValues>;
-  register: UseFormRegister<RecipeFormValues>;
-  errors: FieldErrors<RecipeFormValues>;
-}
-
 const TextFieldContainer = styled("div")({
   display: "flex",
   columnGap: "1rem",
 });
 
-const IngredientsListForm = ({
-  control,
-  register,
-  errors,
-}: IngredientsListProps) => {
+const IngredientsListForm = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<RecipeFormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "ingredients",
@@ -45,7 +34,6 @@ const IngredientsListForm = ({
           >
             <TextFieldContainer>
               <FormField
-                {...{ register, errors }}
                 field={`ingredients.${index}.name` as const}
                 isError={
                   !!(errors.ingredients && errors.ingredients[index]?.name)
@@ -53,7 +41,6 @@ const IngredientsListForm = ({
                 label={t("textField.label.name")}
               />
               <FormField
-                {...{ register, errors }}
                 field={`ingredients.${index}.amount` as const}
                 isError={
                   !!(errors.ingredients && errors.ingredients[index]?.amount)

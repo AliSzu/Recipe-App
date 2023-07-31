@@ -1,11 +1,4 @@
-import {
-  Control,
-  FieldErrors,
-  FieldPath,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { FieldPath, useFormContext } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import { Button, styled } from "@mui/material";
 import FileWatched from "../atoms/FileWatched";
@@ -14,13 +7,7 @@ import { useTranslation } from "react-i18next";
 import { ErrorMessage } from "@hookform/error-message";
 
 interface InputFileFieldProps {
-  register: UseFormRegister<RecipeFormValues>;
   field: FieldPath<RecipeFormValues>;
-  control: Control<RecipeFormValues>;
-  setValue: UseFormSetValue<RecipeFormValues>;
-  isError: boolean;
-  errors: FieldErrors<RecipeFormValues>;
-  getValues: UseFormGetValues<RecipeFormValues>;
 }
 
 const FileFieldContainer = styled("div")({
@@ -36,12 +23,12 @@ const Message = styled("p")({
   fontSize: "0.85rem",
 });
 
-const InputFileField = ({
-  register,
-  field,
-  control,
-  errors,
-}: InputFileFieldProps) => {
+const InputFileField = ({ field }: InputFileFieldProps) => {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<RecipeFormValues>();
   const { t } = useTranslation();
   return (
     <>

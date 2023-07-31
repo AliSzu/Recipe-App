@@ -1,9 +1,4 @@
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  useFieldArray,
-} from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import { Button } from "@mui/material";
 import { uniqueId } from "../../utils/recipeUtils";
@@ -12,17 +7,11 @@ import ArrayFieldContainer from "../molecules/ArrayFieldContainer";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 
-interface PreparingListProps {
-  control: Control<RecipeFormValues>;
-  register: UseFormRegister<RecipeFormValues>;
-  errors: FieldErrors<RecipeFormValues>;
-}
-
-const PreparingStepsList = ({
-  control,
-  register,
-  errors,
-}: PreparingListProps) => {
+const PreparingStepsList = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<RecipeFormValues>();
   const {
     fields: preparingFields,
     append: preparingAppend,
@@ -43,7 +32,6 @@ const PreparingStepsList = ({
             index={index}
           >
             <FormField
-              {...{ register }}
               field={`preparing.${index}.step` as const}
               isError={!!(errors.preparing && errors.preparing[index]?.step)}
               label={t("textField.label.step")}

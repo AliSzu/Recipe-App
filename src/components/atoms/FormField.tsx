@@ -1,10 +1,10 @@
 import { TextField } from "@mui/material";
 import { RecipeFormValues } from "../../types/FormTypes";
-import { FieldPath, UseFormRegister } from "react-hook-form";
+import { FieldPath, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface FormFieldProps {
-  register: UseFormRegister<RecipeFormValues>;
   isError: boolean;
   field: FieldPath<RecipeFormValues>;
   multiline?: boolean;
@@ -13,7 +13,6 @@ interface FormFieldProps {
 }
 
 const FormField = ({
-  register,
   field,
   multiline,
   rows,
@@ -21,20 +20,32 @@ const FormField = ({
   label,
 }: FormFieldProps) => {
   const { t } = useTranslation();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<RecipeFormValues>();
+
+  const error = (
+    <ErrorMessage
+      errors={errors}
+      name={field}
+      render={({ message }) => <>{message}</>}
+    />
+  );
+
+  console.log(field)
   return (
-    <div>
-      <TextField
-        label={label}
-        {...register(field, {
-          required: true,
-        })}
-        fullWidth
-        helperText={isError ? t("textField.error.required") : ""}
-        multiline={multiline}
-        rows={rows ? rows : 1}
-        error={isError}
-      />
-    </div>
+    <TextField
+      label={label}
+      {...register(field, {
+        required: t("textField.error.required"),
+      })}
+      fullWidth
+      helperText={error}
+      multiline={multiline}
+      rows={rows ? rows : 1}
+      error={isError}
+    />
   );
 };
 
