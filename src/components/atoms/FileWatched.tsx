@@ -13,7 +13,7 @@ const FileWatched = ({ control }: FileWatchedProps) => {
     name: "image",
     defaultValue: undefined,
   });
-  return <>{image ? image[0].name : t("file.empty")}</>;
+  return <>{image && image[0] ? image[0].name : t("file.empty")}</>;
 };
 
 export default FileWatched;
