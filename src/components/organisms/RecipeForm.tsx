@@ -1,4 +1,4 @@
-import { Divider, styled } from "@mui/material";
+import { Button, Divider, styled } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import IngredientsListForm from "./IngredientsListForm";
@@ -18,6 +18,12 @@ const StyledForm = styled("form")({
   gap: "3rem",
 });
 
+const ButtonContainer = styled("div")({
+  display: "flex",
+  justifyContent: "flex-end",
+  width: "100%",
+});
+
 const StyledDivider = styled(Divider)({
   paddingBottom: "1rem",
   paddingTop: "1rem",
@@ -32,7 +38,6 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
   const { t } = useTranslation();
 
   const onSubmit = (data: RecipeFormValues) => {
-    console.log(data);
     // TODO: SEND RECIPE TO FIREBASE
   };
   return (
@@ -66,8 +71,17 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
           <PreparingStepsList />
         </div>
       </StyledForm>
+      <ButtonContainer>
+        <Button
+          type="submit"
+          variant="contained"
+        >
+          {t("button.submit")}
+        </Button>
+      </ButtonContainer>
     </FormProvider>
   );
 };
 
 export default RecipeForm;
+
