@@ -20,15 +20,15 @@ const StyledForm = styled("form")({
   gap: "3rem",
 });
 
-const StyledDivider = styled(Divider)({
-  paddingBottom: "1rem",
-  paddingTop: "1rem",
-});
-
 const ButtonContainer = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
   width: "100%",
+});
+
+const StyledDivider = styled(Divider)({
+  paddingBottom: "1rem",
+  paddingTop: "1rem",
 });
 
 const RecipeForm = ({
@@ -92,3 +92,4 @@ const RecipeForm = ({
 };
 
 export default RecipeForm;
+
