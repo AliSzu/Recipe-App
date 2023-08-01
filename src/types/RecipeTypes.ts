@@ -1,14 +1,19 @@
 export interface Recipe {
   id?: string;
+  imgSrc: string;
   title: string;
   time: string;
-  imgSrc: string;
   description: string;
+  preparing: Preparing[];
   ingredients: Ingredient[];
-  preparing: string[];
 }
 export interface Ingredient {
   amount: string;
   name: string;
+  id: string;
+}
+
+export interface Preparing {
+  step: string;
   id: string;
 }
