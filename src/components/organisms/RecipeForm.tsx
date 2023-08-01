@@ -38,6 +38,7 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
   const { t } = useTranslation();
 
   const onSubmit = (data: RecipeFormValues) => {
+    console.log(data)
     // TODO: SEND RECIPE TO FIREBASE
   };
   return (
@@ -75,6 +76,7 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
         <Button
           type="submit"
           variant="contained"
+          form="recipe-form"
         >
           {t("button.submit")}
         </Button>
