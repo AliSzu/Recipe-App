@@ -100,7 +100,7 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <Button variant="contained" disableElevation type="submit" fullWidth>
+        <Button variant="contained" type="submit" fullWidth>
           {t("button.signUp")}
         </Button>
       </FormContainer>

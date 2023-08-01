@@ -1,7 +1,8 @@
 import { List, ListItem, styled } from "@mui/material"
+import { Preparing } from "../../types/RecipeTypes"
 
 interface NumberedListProps {
-    items: string[]
+    items: Preparing[]
 }
 
 const StyledList = styled(List)({
@@ -16,7 +17,7 @@ const StyledListItem = styled(ListItem)({
 const NumberedList = ({items} : NumberedListProps) => {
     return (
         <StyledList>
-            {items.map((item: string) => <StyledListItem disableGutters={true} key={item}>{item}</StyledListItem>)}
+            {items.map((item: Preparing) => <StyledListItem disableGutters={true} key={item.id}>{item.step}</StyledListItem>)}
         </StyledList>
     )
 }

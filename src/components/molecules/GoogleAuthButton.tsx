@@ -51,7 +51,6 @@ const GoogleAuthButton = () => {
     <>
       <GoogleButton
         variant="contained"
-        disableElevation
         fullWidth
         startIcon={<GoogleIcon />}
         onClick={handleClick}
