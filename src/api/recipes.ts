@@ -7,6 +7,8 @@ import {
   documentId,
   collection,
   addDoc,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
@@ -70,4 +72,12 @@ export function usePostRecipe() {
       });
     },
   });
+}
+
+export function useDeleteRecipe() {
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (documentId: string) => {
+      await deleteDoc(doc(db, 'recipes', documentId))
+    }
+  })
 }

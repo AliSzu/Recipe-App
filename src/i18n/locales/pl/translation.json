@@ -25,7 +25,9 @@
     "edit": "Edytuj",
     "google": "Użyj Google",
     "submit": "Wyślij",
-    "file": "Prześlij zdjęcie"
+    "file": "Prześlij zdjęcie",
+    "cancel": "Anuluj",
+    "delete" : "Usuń"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
@@ -43,14 +45,17 @@
     "emailExists": "Konto z tym adresem email już istnieje",
     "unknown": "Coś poszło nie tak"
   },
-  "success" : {
-    "post" : "Utworzono przepis"
+  "success": {
+    "post": "Utworzono przepis",
+    "delete": "Usunięto przepis"
   },
   "latestRecipes": "Ostatnie Przepisy",
   "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
   "recipe": {
     "preparing": "Przygotowanie",
-    "ingredients": "Składniki"
+    "ingredients": "Składniki",
+    "name": "Przepis",
+    "notFound" : "Nie znaleziono przepisu"
   },
   "form": {
     "recipeInformation": "Informacje o Przepisie",
@@ -60,7 +65,13 @@
   "menu": {
     "addRecipe": "Dodaj Przepis"
   },
-  "file" : {
-    "empty" : "Nie wybrano pliku"
+  "file": {
+    "empty": "Nie wybrano pliku"
+  },
+  "dialog": {
+    "delete": {
+      "title": "Usuń {{item}}",
+      "message": "Jesteś pewny, że chcesz usunąć {{itemName}}?"
+    }
   }
 }
