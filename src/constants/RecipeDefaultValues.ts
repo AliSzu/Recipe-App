@@ -1,7 +1,6 @@
 import { RecipeFormValues } from "../types/FormTypes";
 import { uniqueId } from "../utils/recipeUtils";
 
-
 function createEmptyFileList(): FileList {
   const files: File[] = [];
   return {

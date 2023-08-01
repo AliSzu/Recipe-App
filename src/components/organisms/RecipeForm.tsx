@@ -1,4 +1,4 @@
-import { Divider, styled } from "@mui/material";
+import { Button, Divider, styled } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import IngredientsListForm from "./IngredientsListForm";
@@ -6,13 +6,11 @@ import PreparingStepsList from "./PreparingStepsList";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
-import { usePostRecipe, useUploadImage } from "../../api/recipes";
-import { Recipe } from "../../types/RecipeTypes";
-import { useAppDispatch } from "../../store/store";
-import { showSnackbar } from "../../slices/snackbarSlice";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
+  onFormSubmit: (formData: RecipeFormValues) => void;
+  isLoading: boolean;
 }
 
 const StyledForm = styled("form")({
@@ -22,52 +20,31 @@ const StyledForm = styled("form")({
   gap: "3rem",
 });
 
+const ButtonContainer = styled("div")({
+  display: "flex",
+  justifyContent: "flex-end",
+  width: "100%",
+});
+
 const StyledDivider = styled(Divider)({
   paddingBottom: "1rem",
   paddingTop: "1rem",
 });
 
-const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
+const RecipeForm = ({
+  defaultValues,
+  onFormSubmit,
+  isLoading,
+}: RecipeFormProps) => {
   const methods = useForm<RecipeFormValues>({ defaultValues });
   const {
     handleSubmit,
     formState: { errors },
-    reset,
   } = methods;
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-
-  const postRecipeMutation = usePostRecipe();
-  const uploadImageMutation = useUploadImage();
 
   const onSubmit = (data: RecipeFormValues) => {
-    uploadImageMutation.mutate(data.image[0], {
-      onSuccess: (url) => {
-        const { image, ...formRecipe } = data;
-        const recipe: Recipe = { ...formRecipe, imgSrc: url };
-        postRecipeMutation.mutate(recipe, {
-          onSuccess: () => {
-            dispatch(
-              showSnackbar({
-                message: "post-success",
-                severity: "success",
-                autoHideDuration: 6000,
-              })
-            );
-            reset();
-          },
-        });
-      },
-      onError: (error) => {
-        dispatch(
-          showSnackbar({
-            message: error.message,
-            severity: "error",
-            autoHideDuration: 6000,
-          })
-        );
-      },
-    });
+    onFormSubmit(data);
   };
   return (
     <FormProvider {...methods}>
@@ -100,8 +77,19 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
           <PreparingStepsList />
         </div>
       </StyledForm>
+      <ButtonContainer>
+        <Button
+          type="submit"
+          form="recipe-form"
+          variant="contained"
+          disabled={isLoading}
+        >
+          {t("button.submit")}
+        </Button>
+      </ButtonContainer>
     </FormProvider>
   );
 };
 
 export default RecipeForm;
+
