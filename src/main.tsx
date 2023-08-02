@@ -16,6 +16,7 @@ const queryClient = new QueryClient();
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <QueryClientProvider client={queryClient}>
@@ -26,4 +27,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </QueryClientProvider>
       </PersistGate>
     </Provider>
+  </React.StrictMode>
 );

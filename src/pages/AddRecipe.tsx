@@ -17,6 +17,7 @@ const AddRecipe = () => {
       onFormSubmit={handleFormSubmit}
       defaultValues={recipeDefaultValues}
       isLoading={isLoading}
+      isEditable={false}
     />
   );
 };

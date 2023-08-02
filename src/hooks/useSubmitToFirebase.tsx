@@ -1,10 +1,10 @@
 import { UseMutationResult } from "@tanstack/react-query";
-import { useDownloadUrl, useUploadImage } from "../api/recipes";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useAppDispatch } from "../store/store";
 import { RecipeFormValues } from "../types/FormTypes";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
+import { useDownloadUrl, useUploadImage } from "../api/files";
 
 export const useSubmitToFirebase = (
   submitMutation: UseMutationResult<void, FirebaseError, Recipe>
@@ -33,7 +33,7 @@ export const useSubmitToFirebase = (
   ) => {
     const { image, ...formRecipe } = formData;
 
-    uploadImageMutation.mutate(image[0], {
+    image && uploadImageMutation.mutate(image[0], {
       onSuccess: (storageRef) => {
         getDownloadUrlMutation.mutate(storageRef, {
           onSuccess: (url) => {

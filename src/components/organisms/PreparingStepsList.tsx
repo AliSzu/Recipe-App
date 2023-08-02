@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import { Button } from "@mui/material";
-import { uniqueId } from "../../utils/recipeUtils";
+import { uniqueId } from "../../utils/utils";
 import AddIcon from "@mui/icons-material/Add";
 import ArrayFieldContainer from "../molecules/ArrayFieldContainer";
 import FormField from "../atoms/FormField";

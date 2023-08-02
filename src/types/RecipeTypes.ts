@@ -17,3 +17,8 @@ export interface Preparing {
   step: string;
   id: string;
 }
+
+export interface RecipeEdit {
+  [key: string]: string | Preparing[] | Ingredient[];
+  id: string;
+}

@@ -1,13 +1,5 @@
 import { RecipeFormValues } from "../types/FormTypes";
-import { uniqueId } from "../utils/recipeUtils";
-
-function createEmptyFileList(): FileList {
-  const files: File[] = [];
-  return {
-    item: () => null,
-    ...files,
-  };
-}
+import { createEmptyFileList, uniqueId } from "../utils/utils";
 
 export const recipeDefaultValues: RecipeFormValues = {
   title: "",

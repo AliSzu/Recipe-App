@@ -6,6 +6,8 @@ import TwoColumnList from "../molecules/TwoColumnsList";
 import { useTranslation } from "react-i18next";
 import { Recipe } from "../../types/RecipeTypes";
 import DeleteModal from "../molecules/DeleteModal";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/Routes";
 
 interface RecipeLayoutProps {
   recipe: Recipe;
@@ -45,6 +47,11 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 
 const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleRecipeEdit = () => {
+    navigate(`${ROUTES.EDIT_RECIPE}/${recipe.id}`);
+  };
 
   return (
     <Grid>
@@ -54,7 +61,9 @@ const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
       </GridItem>
       <GridItem>
         <ButtonContainer>
-          <Button variant="outlined">{t("button.edit")}</Button>
+          <Button variant="outlined" onClick={handleRecipeEdit}>
+            {t("button.edit")}
+          </Button>
           <DeleteModal
             recipeId={recipe.id}
             onDeleteRecipe={onDeleteRecipe}

@@ -9,19 +9,12 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
-import { Recipe } from "../types/RecipeTypes";
+import { Recipe, RecipeEdit } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
-import {
-  StorageReference,
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
-import { uniqueId } from "../utils/recipeUtils";
 
 export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
@@ -58,26 +51,6 @@ export function useFetchRecipeById(id?: string) {
   });
 }
 
-export function useDownloadUrl() {
-  return useMutation<string, FirebaseError, StorageReference>({
-    mutationFn: async (storageRef: StorageReference) => {
-      const url = await getDownloadURL(storageRef);
-      return url;
-    },
-  });
-}
-
-export function useUploadImage() {
-  return useMutation<StorageReference, FirebaseError, File>({
-    mutationFn: async (image: File) => {
-      const storage = getStorage();
-      const storageRef = ref(storage, `recipe/${uniqueId()}`);
-      await uploadBytes(storageRef, image);
-      return storageRef
-    },
-  });
-}
-
 export function usePostRecipe() {
   return useMutation<void, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
@@ -91,7 +64,18 @@ export function usePostRecipe() {
 export function useDeleteRecipe() {
   return useMutation<void, FirebaseError, string>({
     mutationFn: async (documentId: string) => {
-      await deleteDoc(doc(db, 'recipes', documentId))
-    }
-  })
+      await deleteDoc(doc(db, "recipes", documentId));
+    },
+  });
+}
+
+export function useEditRecipe() {
+  return useMutation<void, FirebaseError, RecipeEdit>({
+    mutationFn: async (newRecipe: RecipeEdit) => {
+      const {id, ...recipe} = newRecipe
+      await updateDoc(doc(db, "recipes", id), {
+        ...recipe,
+      });
+    },
+  });
 }
