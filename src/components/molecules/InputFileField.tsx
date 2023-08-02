@@ -33,19 +33,22 @@ const InputFileField = ({ field }: InputFileFieldProps) => {
   return (
     <>
       <FileFieldContainer>
-        <Button
-          variant="contained"
-          component="label"
-          endIcon={<UploadFileIcon />}
-        >
-          {t("button.file")}
-          <input
-            accept="image/*"
-            type="file"
-            hidden
-            {...register("image", { required: t("textField.error.required") })}
-          />
-        </Button>
+        <input
+          accept="image/*"
+          hidden
+          id="raised-button-file"
+          type="file"
+          {...register("image", { required: t("textField.error.required") })}
+        />
+        <label htmlFor="raised-button-file">
+          <Button
+            variant="contained"
+            component="span"
+            endIcon={<UploadFileIcon />}
+          >
+            {t("button.file")}
+          </Button>
+        </label>
         <FileWatched control={control} />
       </FileFieldContainer>
       <ErrorMessage
