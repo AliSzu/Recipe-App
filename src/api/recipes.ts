@@ -12,7 +12,13 @@ import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  StorageReference,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { uniqueId } from "../utils/recipeUtils";
 
 export function useFetchRecipes() {
@@ -50,14 +56,22 @@ export function useFetchRecipeById(id?: string) {
   });
 }
 
+export function useDownloadUrl() {
+  return useMutation<string, FirebaseError, StorageReference>({
+    mutationFn: async (storageRef: StorageReference) => {
+      const url = await getDownloadURL(storageRef);
+      return url;
+    },
+  });
+}
+
 export function useUploadImage() {
-  return useMutation<string, FirebaseError, File>({
+  return useMutation<StorageReference, FirebaseError, File>({
     mutationFn: async (image: File) => {
       const storage = getStorage();
       const storageRef = ref(storage, `recipe/${uniqueId()}`);
       await uploadBytes(storageRef, image);
-      const url = await getDownloadURL(storageRef);
-      return url;
+      return storageRef
     },
   });
 }
