@@ -9,7 +9,6 @@ import { showSnackbar } from "../slices/snackbarSlice";
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  height: "100%",
   "& > *": {
     paddingTop: "1rem",
     [theme.breakpoints.down("sm")]: {
