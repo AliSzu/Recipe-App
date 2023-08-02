@@ -55,7 +55,8 @@
     "preparingSteps": "Kroki Przygotowania"
   },
   "menu": {
-    "addRecipe": "Dodaj Przepis"
+    "addRecipe": "Dodaj Przepis",
+    "shoppingList": "Lista zakupów"
   },
   "file" : {
     "empty" : "Nie wybrano pliku"

@@ -55,7 +55,8 @@
     "preparingSteps": "Preparing Steps"
   },
   "menu": {
-    "addRecipe": "Add Recipe"
+    "addRecipe": "Add Recipe",
+    "shoppingList": "Shopping List"
   },
   "file" : {
     "empty" : "No file chosen"

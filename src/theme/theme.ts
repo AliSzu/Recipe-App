@@ -75,6 +75,9 @@ export const theme = createTheme(
           root: {
             color: "inherit",
           },
+          input : {
+            textAlign: 'center'
+          }
         },
       },
       MuiSelect: {
