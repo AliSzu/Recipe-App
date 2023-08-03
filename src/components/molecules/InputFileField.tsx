@@ -13,7 +13,7 @@ interface InputFileFieldProps {
 const FileFieldContainer = styled("div")({
   display: "flex",
   gap: "1rem",
-  alignItems: "center",
+  flexDirection: 'column'
 });
 
 const Message = styled("p")(({ theme }) => ({
