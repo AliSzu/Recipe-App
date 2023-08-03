@@ -24,3 +24,8 @@ export interface RecipeFormValues {
   preparing: Preparing[],
   ingredients: Ingredient[];
 }
+
+export interface ShoppingItemFormValues {
+  name: string;
+  amount: number;
+}

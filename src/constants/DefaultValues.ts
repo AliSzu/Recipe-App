@@ -1,4 +1,4 @@
-import { RecipeFormValues } from "../types/FormTypes";
+import { RecipeFormValues, ShoppingItemFormValues } from "../types/FormTypes";
 import { uniqueId } from "../utils/recipeUtils";
 
 function createEmptyFileList(): FileList {
@@ -22,4 +22,9 @@ export const recipeDefaultValues: RecipeFormValues = {
     },
   ],
   preparing: [{ step: "", id: uniqueId() }],
+};
+
+export const shoppingItemDefaultValues: ShoppingItemFormValues = {
+  name: "",
+  amount: 1,
 };

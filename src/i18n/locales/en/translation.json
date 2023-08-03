@@ -58,7 +58,12 @@
     "addRecipe": "Add Recipe",
     "shoppingList": "Shopping List"
   },
-  "file" : {
-    "empty" : "No file chosen"
+  "file": {
+    "empty": "No file chosen"
+  },
+  "shoppingList": {
+    "item": {
+      "name": "Name"
+    }
   }
 }

@@ -58,7 +58,12 @@
     "addRecipe": "Dodaj Przepis",
     "shoppingList": "Lista zakupów"
   },
-  "file" : {
-    "empty" : "Nie wybrano pliku"
+  "file": {
+    "empty": "Nie wybrano pliku"
+  },
+  "shoppingList": {
+    "item": {
+      "name": "Nazwa"
+    }
   }
 }

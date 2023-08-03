@@ -7,3 +7,4 @@ export interface ShoppingItem {
   amount: number;
   id: string;
 }
+

@@ -1,8 +1,8 @@
-import { IconButton, ListItem, styled } from "@mui/material";
+import { IconButton, ListItem, debounce, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ShoppingItem } from "../../types/ShoppingListTypes";
 import AmountPicker from "../molecules/AmountPicker";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
@@ -18,18 +18,31 @@ const ItemActions = styled("div")({
 });
 
 const ShoppingItem = ({ item }: ShoppingListItemProps) => {
-    const [itemAmount, setItemAmount] = useState(item.amount)
+  const [itemAmount, setItemAmount] = useState(item.amount);
   const handleDelete = () => {
-    console.log("delete");
+    // TODO: DELETE ITEM FROM LIST
   };
-  const onAmountChange = (amount: number) => setItemAmount(amount)
+
+  const debounceEditAmount = useCallback(
+    debounce((newAmount: number) => {
+      editAmount(newAmount);
+    }, 800),
+    [debounce]
+  );
+
+  const editAmount = (newAmount: number) => {
+    console.log(newAmount)
+    // TODO: EDIT AMOUNT IN THE FIREBASE
+  };
+  const onAmountChange = (amount: number) => {
+    setItemAmount(amount);
+    debounceEditAmount(amount);
+  };
   return (
     <StyledListItem>
-      <div>
-        {item.name}
-      </div>
+      <div>{item.name}</div>
       <ItemActions>
-        <AmountPicker amount={itemAmount} onAmountChange={onAmountChange}/>
+        <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
         <IconButton onClick={handleDelete}>
           <DeleteIcon />
         </IconButton>

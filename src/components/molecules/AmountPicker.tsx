@@ -26,12 +26,16 @@ const StyledButton = styled(Button)({
 
 const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
   const handleAmountChange = (newAmount: number) => {
-    onAmountChange(newAmount);
+    const amount = newAmount < 1 ? 1 : newAmount;
+    onAmountChange(amount);
   };
 
   return (
     <>
-      <StyledButton onClick={() => handleAmountChange(amount - 1)}>
+      <StyledButton
+        onClick={() => handleAmountChange(amount - 1)}
+        disabled={amount <= 1}
+      >
         <RemoveIcon />
       </StyledButton>
       <StyledInput
@@ -40,7 +44,7 @@ const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
         disableUnderline={true}
         onChange={(e) => handleAmountChange(+e.target.value)}
       />
-      <StyledButton onClick={() => handleAmountChange(amount+1)}>
+      <StyledButton onClick={() => handleAmountChange(amount + 1)}>
         <AddIcon />
       </StyledButton>
     </>
