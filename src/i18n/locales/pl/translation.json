@@ -62,10 +62,11 @@
     "empty": "Nie wybrano pliku"
   },
   "shoppingList": {
+    "name": "Lista zakupów",
     "item": {
       "name": "Nazwa"
-    },
-    
+    }
+  },
   "popover": {
     "empty": "Podaj co najmniej jeden element"
   }

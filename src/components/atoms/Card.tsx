@@ -14,11 +14,9 @@ const StyledCard = styled("div")(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  // maxWidth: "35rem",
-  width: '60%',
   backgroundColor: theme.palette.secondary.light,
   [theme.breakpoints.down("sm")]: {
-    padding: "1.5rem",
+    padding: "0",
     border: "none",
     margin: "0",
   },

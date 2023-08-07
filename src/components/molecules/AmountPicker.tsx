@@ -7,7 +7,7 @@ interface AmountPickerProps {
   onAmountChange: (amount: number) => void;
 }
 
-const StyledInput = styled(Input)({
+const StyledInput = styled(Input)(({ theme }) => ({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
     display: "none",
   },
@@ -18,11 +18,17 @@ const StyledInput = styled(Input)({
     textAlign: "center",
   },
   width: "50px",
-});
+  [theme.breakpoints.down("sm")]: {
+    width: "10px",
+  },
+}));
 
-const StyledButton = styled(Button)({
+const StyledButton = styled(Button)(({ theme }) => ({
   width: "50px",
-});
+  [theme.breakpoints.down("sm")]: {
+    width: "10px",
+  },
+}));
 
 const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
   const handleAmountChange = (newAmount: number) => {

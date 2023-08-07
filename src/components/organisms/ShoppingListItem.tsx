@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
+  onDeleteItem: (itemId: string) => void;
 }
 
 const StyledListItem = styled(ListItem)({
@@ -17,21 +18,17 @@ const ItemActions = styled("div")({
   display: "flex",
 });
 
-const ShoppingItem = ({ item }: ShoppingListItemProps) => {
+const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
-  const handleDelete = () => {
-    // TODO: DELETE ITEM FROM LIST
-  };
 
   const debounceEditAmount = useCallback(
     debounce((newAmount: number) => {
       editAmount(newAmount);
     }, 800),
-    [debounce]
+    []
   );
 
   const editAmount = (newAmount: number) => {
-    console.log(newAmount)
     // TODO: EDIT AMOUNT IN THE FIREBASE
   };
   const onAmountChange = (amount: number) => {
@@ -43,7 +40,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
       <div>{item.name}</div>
       <ItemActions>
         <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
-        <IconButton onClick={handleDelete}>
+        <IconButton onClick={() => onDeleteItem(item.id)}>
           <DeleteIcon />
         </IconButton>
       </ItemActions>
