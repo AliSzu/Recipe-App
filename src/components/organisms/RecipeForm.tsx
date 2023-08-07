@@ -1,4 +1,4 @@
-import { Button, Divider, styled } from "@mui/material";
+import { Button, Divider, styled, useMediaQuery } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import IngredientsListForm from "./IngredientsListForm";
@@ -6,30 +6,45 @@ import PreparingStepsList from "./PreparingStepsList";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
+import { theme } from "../../theme/theme";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
+  onFormSubmit: (formData: RecipeFormValues) => void;
+  isLoading: boolean;
 }
 
-const StyledForm = styled("form")({
+const StyledForm = styled("form")(({ theme }) => ({
   display: "grid",
   width: "100%",
   gridTemplateColumns: "1fr 1fr",
   gap: "3rem",
-});
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+  },
+}));
 
-const ButtonContainer = styled("div")({
+const ButtonContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   width: "100%",
-});
+  paddingTop: "1rem",
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "center",
+  },
+}));
 
 const StyledDivider = styled(Divider)({
   paddingBottom: "1rem",
   paddingTop: "1rem",
 });
 
-const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
+const RecipeForm = ({
+  defaultValues,
+  onFormSubmit,
+  isLoading,
+}: RecipeFormProps) => {
+  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const methods = useForm<RecipeFormValues>({ defaultValues });
   const {
     handleSubmit,
@@ -38,8 +53,7 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
   const { t } = useTranslation();
 
   const onSubmit = (data: RecipeFormValues) => {
-    console.log(data)
-    // TODO: SEND RECIPE TO FIREBASE
+    onFormSubmit(data);
   };
   return (
     <FormProvider {...methods}>
@@ -63,27 +77,28 @@ const RecipeForm = ({ defaultValues }: RecipeFormProps) => {
             isError={!!errors.description}
             label={t("textField.label.description")}
           />
-          <InputFileField field="image" />
+          <InputFileField />
         </div>
         <div>
           <StyledDivider>{t("form.ingredientList")}</StyledDivider>
           <IngredientsListForm />
           <StyledDivider>{t("form.preparingSteps")}</StyledDivider>
           <PreparingStepsList />
+          <ButtonContainer>
+            <Button
+              type="submit"
+              form="recipe-form"
+              variant="contained"
+              disabled={isLoading}
+              fullWidth={matchDownSm}
+            >
+              {t("button.submit")}
+            </Button>
+          </ButtonContainer>
         </div>
       </StyledForm>
-      <ButtonContainer>
-        <Button
-          type="submit"
-          variant="contained"
-          form="recipe-form"
-        >
-          {t("button.submit")}
-        </Button>
-      </ButtonContainer>
     </FormProvider>
   );
 };
 
 export default RecipeForm;
-

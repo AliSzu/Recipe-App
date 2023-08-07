@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   DocumentData,
   getDocs,
   query,
   where,
   documentId,
+  addDoc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
@@ -42,6 +43,16 @@ export function useFetchRecipeById(id?: string) {
       );
       const recipe: Recipe = Object.assign({}, ...recipeArray);
       return recipe;
+    },
+  });
+}
+
+export function usePostRecipe() {
+  return useMutation<void, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      await addDoc(recipeCollection, {
+        ...newRecipe,
+      });
     },
   });
 }

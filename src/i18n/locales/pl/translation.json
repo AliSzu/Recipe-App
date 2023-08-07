@@ -43,6 +43,9 @@
     "emailExists": "Konto z tym adresem email już istnieje",
     "unknown": "Coś poszło nie tak"
   },
+  "success" : {
+    "post" : "Utworzono przepis"
+  },
   "latestRecipes": "Ostatnie Przepisy",
   "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
   "recipe": {
