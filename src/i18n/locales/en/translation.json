@@ -65,5 +65,8 @@
     "item": {
       "name": "Name"
     }
+  },
+  "popover": {
+    "empty": "Please provide at least one element"
   }
 }

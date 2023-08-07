@@ -64,6 +64,9 @@
   "shoppingList": {
     "item": {
       "name": "Nazwa"
-    }
+    },
+    
+  "popover": {
+    "empty": "Podaj co najmniej jeden element"
   }
 }
