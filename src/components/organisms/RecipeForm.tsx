@@ -69,7 +69,7 @@ const RecipeForm = ({
             isError={!!errors.description}
             label={t("textField.label.description")}
           />
-          <InputFileField field="image" />
+          <InputFileField/>
         </div>
         <div>
           <StyledDivider>{t("form.ingredientList")}</StyledDivider>
