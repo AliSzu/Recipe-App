@@ -69,13 +69,13 @@
   "file": {
     "empty": "Nie wybrano pliku"
   },
+  "popover": {
+    "empty": "Podaj co najmniej jeden element"
+  },
   "dialog": {
     "delete": {
       "title": "Usuń {{item}}",
-      "message": "Jesteś pewny, że chcesz usunąć {{itemName}}?"
+      "message": "Czy na pewno chcesz usunąć {{itemName}}?"
     }
-  },
-  "popover": {
-    "empty": "Podaj co najmniej jeden element"
   }
 }

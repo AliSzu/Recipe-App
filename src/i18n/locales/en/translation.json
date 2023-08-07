@@ -69,13 +69,13 @@
   "file": {
     "empty": "No file chosen"
   },
+  "popover": {
+    "empty": "Please provide at least one element"
+  },
   "dialog": {
     "delete": {
       "title": "Delete {{item}}",
       "message": "Are you sure you want to delete {{itemName}}?"
     }
-  },
-  "popover": {
-    "empty": "Please provide at least one element"
   }
 }
