@@ -7,7 +7,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { uniqueId } from "../utils/recipeUtils";
+import { uniqueId } from "../utils/utils";
 
 const uploadAndGetUrl = async (storageRef: StorageReference, image: File) => {
     await uploadBytes(storageRef, image)

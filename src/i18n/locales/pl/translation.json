@@ -47,7 +47,8 @@
   },
   "success": {
     "post": "Utworzono przepis",
-    "delete": "Usunięto przepis"
+    "delete": "Usunięto przepis",
+    "edit": "Edytowano przepis"
   },
   "latestRecipes": "Ostatnie Przepisy",
   "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
@@ -72,9 +73,9 @@
     "delete": {
       "title": "Usuń {{item}}",
       "message": "Jesteś pewny, że chcesz usunąć {{itemName}}?"
-    },
-    "popover": {
-      "empty": "Podaj co najmniej jeden element"
     }
+  },
+  "popover": {
+    "empty": "Podaj co najmniej jeden element"
   }
 }

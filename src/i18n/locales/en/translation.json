@@ -47,7 +47,8 @@
   },
   "success": {
     "post": "Recipe created",
-    "delete": "Recipe deleted"
+    "delete": "Recipe deleted",
+    "edit": "Recipe edited"
   },
   "latestRecipes": "Latest Recipes",
   "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
@@ -72,9 +73,9 @@
     "delete": {
       "title": "Delete {{item}}",
       "message": "Are you sure you want to delete {{itemName}}?"
-    },
-    "popover": {
-      "empty": "Please provide at least one element"
     }
+  },
+  "popover": {
+    "empty": "Please provide at least one element"
   }
 }

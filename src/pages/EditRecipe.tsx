@@ -4,37 +4,29 @@ import CenteredCircularProgress from "../components/atoms/CenteredCircularProgre
 import RecipeForm from "../components/organisms/RecipeForm";
 import { RecipeFormValues } from "../types/FormTypes";
 import { useTranslation } from "react-i18next";
-import { ROUTES } from "../constants/Routes";
-import { RecipeEdit } from "../types/RecipeTypes";
-import { useDispatch } from "react-redux";
-import { showSnackbar } from "../slices/snackbarSlice";
-import { createEmptyFileList } from "../utils/utils";
+import { useSubmitWithFile } from "../hooks/useSubmitWithFile";
+import { useSubmit } from "../hooks/useSubmit";
 
 const EditRecipe = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
   const editRecipeMutation = useEditRecipe();
+  const { submitToFirebase: submitWithFile, isLoading: isLoadingWithFile } =
+    useSubmitWithFile(editRecipeMutation);
+  const {
+    submitToFirebase: submitWithoutFile,
+    isLoading: isLoadingWithoutFile,
+  } = useSubmit(editRecipeMutation);
 
   const handleSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
-    if (!id) return
-    const recipe: RecipeEdit = { ...formRecipe, id: id };
-    editRecipeMutation.mutate(recipe, {
-      onSuccess: () => {
-        dispatch(
-          showSnackbar({
-            message: "edit-success",
-            severity: "success",
-            autoHideDuration: 6000,
-          })
-        );
-        navigate(`${ROUTES.RECIPE}/${recipe.id}`);
-      },
-    });
+    if (image && image[0]) {
+      submitWithFile(image[0], formRecipe, "edit-success");
+    } else {
+      submitWithoutFile(formRecipe, "edit-success");
+    }
   };
 
   return (
@@ -43,9 +35,9 @@ const EditRecipe = () => {
         <CenteredCircularProgress />
       ) : recipeData && Object.keys(recipeData).length !== 0 ? (
         <RecipeForm
-          defaultValues={{ ...recipeData, image: createEmptyFileList() }}
+          defaultValues={{ ...recipeData }}
           onFormSubmit={handleSubmit}
-          isEditable={true}
+          isLoading={isLoadingWithFile || isLoadingWithoutFile}
         />
       ) : (
         <div>{t("recipe.notFound")}</div>

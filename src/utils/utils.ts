@@ -16,10 +16,3 @@ export const uniqueId = () => {
   return (Date.now() * Math.floor(Math.random() * 10000)).toString();
 };
 
-export const createEmptyFileList = () => {
-  const files: File[] = [];
-  return {
-    item: () => null,
-    ...files,
-  };
-}

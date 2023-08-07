@@ -4,5 +4,6 @@ export const SnackbarMessage = {
   "too-many-requests": "error.tooManyAttemptsTryLater",
   "email-already-in-use": "error.emailExists",
   "post-success": "success.post",
+  'edit-success': "success.edit",
   "delete-success": "success.delete",
 };

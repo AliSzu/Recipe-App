@@ -10,7 +10,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { Recipe, RecipeEdit } from "../types/RecipeTypes";
+import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
@@ -69,9 +69,10 @@ export function useDeleteRecipe() {
 }
 
 export function useEditRecipe() {
-  return useMutation<void, FirebaseError, RecipeEdit>({
-    mutationFn: async (newRecipe: RecipeEdit) => {
-      const {id, ...recipe} = newRecipe
+  return useMutation<void, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      const { id, ...recipe } = newRecipe;
+      if (!id) return;
       await updateDoc(doc(db, "recipes", id), {
         ...recipe,
       });
