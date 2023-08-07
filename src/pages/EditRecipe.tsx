@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEditRecipe, useFetchRecipeById } from "../api/recipes";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import RecipeForm from "../components/organisms/RecipeForm";
@@ -23,9 +23,9 @@ const EditRecipe = () => {
   const handleSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
     if (image && image[0]) {
-      submitWithFile(image[0], formRecipe, "edit-success");
+      submitWithFile(image[0], formRecipe, "edit-success", id);
     } else {
-      submitWithoutFile(formRecipe, "edit-success");
+      submitWithoutFile(formRecipe, "edit-success", id);
     }
   };
 

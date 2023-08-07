@@ -29,6 +29,7 @@ export const useSubmitWithFile = (
     image: File,
     recipe: Recipe,
     successCode: string,
+    documentId?: string
   ) => {
     uploadImageMutation.mutate(image, {
       onSuccess: (url) => {
@@ -43,7 +44,11 @@ export const useSubmitWithFile = (
                   autoHideDuration: 6000,
                 })
               );
-              navigate(`${ROUTES.RECIPE}/${id}`)
+              if (id) {
+                navigate(`${ROUTES.RECIPE}/${id}`);
+              } else if (documentId) {
+                navigate(`${ROUTES.RECIPE}/${documentId}`);
+              }
             },
             onError: (error) => {
               dispatchError(error.code);
