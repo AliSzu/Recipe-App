@@ -1,8 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
-import { Button, styled } from "@mui/material";
+import { Button, styled, useMediaQuery } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useTranslation } from "react-i18next";
+import { theme } from "../../theme/theme";
 
 const FileFieldContainer = styled("div")({
   display: "flex",
@@ -10,14 +11,18 @@ const FileFieldContainer = styled("div")({
   flexDirection: "column",
 });
 
-const StyledImage = styled("img")({
+const StyledImage = styled("img")(({theme}) => ({
   width: "20rem",
   height: "100%",
   objectFit: "cover",
   borderRadius: "20px",
-});
+  [theme.breakpoints.down('sm')] : {
+    width: '100%'
+  }
+}));
 
 const InputFileField = () => {
+  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const { register, getValues, watch } = useFormContext<RecipeFormValues>();
 
   const watchedFileImage = watch("image");
@@ -40,6 +45,7 @@ const InputFileField = () => {
             variant="contained"
             component="span"
             endIcon={<UploadFileIcon />}
+            fullWidth={matchDownSm}
           >
             {t("button.file")}
           </Button>
