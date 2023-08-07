@@ -59,5 +59,8 @@
   },
   "file" : {
     "empty" : "Nie wybrano pliku"
+  },
+  "popover" : {
+    "empty" : "Podaj co najmniej jeden element"
   }
 }
