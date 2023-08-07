@@ -21,11 +21,6 @@ const StyledAmountPicker = styled(AmountPicker)({
   color: "red",
 });
 
-const StyledInput = styled(TextField)({
-  padding: 0,
-  margin: 0,
-});
-
 const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
   const { t } = useTranslation();
   const { register, handleSubmit, setValue, watch, reset } =
@@ -43,7 +38,7 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <StyledInput
+      <TextField
         label={t("shoppingList.item.name")}
         {...register("name", { required: true })}
       />

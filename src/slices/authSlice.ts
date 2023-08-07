@@ -38,3 +38,6 @@ export const { login, logout } = authSlice.actions;
 
 export const selectIsLoggedIn = (state: RootState): boolean =>
   state.auth.isLoggedIn;
+
+export const selectUserUid = (state: RootState): string =>
+  state.auth.userInfo.uid;

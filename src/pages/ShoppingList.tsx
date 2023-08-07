@@ -1,13 +1,20 @@
 import { Divider, List, styled } from "@mui/material";
 import Card from "../components/atoms/Card";
-import { MOCK_SHOPPING_LIST } from "../constants/mocks/ShoppingList";
 import ShoppingListItem from "../components/organisms/ShoppingListItem";
 import { ShoppingItem } from "../types/ShoppingListTypes";
 import ShoppingItemForm from "../components/organisms/ShoppingItemForm";
 import { ShoppingItemFormValues } from "../types/FormTypes";
-import React, { useState } from "react";
-import { uniqueId } from "../utils/recipeUtils";
 import { useTranslation } from "react-i18next";
+import {
+  useAddItemToShoppingList,
+  useFetchShoppingList,
+} from "../api/shoppingList";
+import { useAppSelector } from "../store/store";
+import { selectUserUid } from "../slices/authSlice";
+import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../enums/QueryKeys";
+import React from "react";
 
 const ShoppingListContainer = styled("div")({
   display: "flex",
@@ -17,7 +24,6 @@ const ShoppingListContainer = styled("div")({
 
 const StyledList = styled(List)({
   width: "100%",
-  paddingBottom: "0",
 });
 
 const Title = styled("h1")({
@@ -25,20 +31,33 @@ const Title = styled("h1")({
 });
 
 const ShoppingList = () => {
-  const [list, setList] = useState(MOCK_SHOPPING_LIST);
+  const userUid = useAppSelector(selectUserUid);
   const { t } = useTranslation();
+  const addItemToShoppingListMutation = useAddItemToShoppingList();
+  const { data: shoppingList, isFetching } = useFetchShoppingList(userUid);
+  const queryClient = useQueryClient();
+
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    const newItem: ShoppingItem = {
-      ...formData,
-      id: uniqueId(),
-    };
-    setList([newItem, ...list]);
+    addItemToShoppingListMutation.mutate(formData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
+      },
+    });
   };
 
   const onDeleteItem = (itemId: string) => {
-    const newItems = list.filter((item: ShoppingItem) => item.id !== itemId);
-    setList(newItems);
+    // TODO: DELETE RECIPE
   };
+
+  const shoppingData =
+    shoppingList &&
+    shoppingList.length !== 0 &&
+    shoppingList.map((item: ShoppingItem) => (
+      <React.Fragment key={item.id}>
+        <Divider />
+        <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
+      </React.Fragment>
+    ));
 
   return (
     <ShoppingListContainer>
@@ -46,12 +65,13 @@ const ShoppingList = () => {
       <Card>
         <StyledList>
           <ShoppingItemForm onFormSubmit={onFormSubmit} />
-          {list.map((item: ShoppingItem) => (
-            <React.Fragment key={item.id}>
-              <Divider />
-              <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
-            </React.Fragment>
-          ))}
+          {isFetching ? (
+            <CenteredCircularProgress />
+          ) : shoppingData ? (
+            shoppingData
+          ) : (
+            <div>{t("empty.shoppingList")}</div>
+          )}
         </StyledList>
       </Card>
     </ShoppingListContainer>

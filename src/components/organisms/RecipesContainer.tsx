@@ -31,7 +31,7 @@ const RecipeContainer = () => {
       ) : recipesData ? (
         recipesData
       ) : (
-        <div>{t("emptyRecipes")}</div>
+        <div>{t("empty.recipes")}</div>
       )}
     </>
   );

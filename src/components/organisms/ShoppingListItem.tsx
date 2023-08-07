@@ -40,7 +40,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
       <div>{item.name}</div>
       <ItemActions>
         <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
-        <IconButton onClick={() => onDeleteItem(item.id)}>
+        <IconButton onClick={() => onDeleteItem(item.id!)}>
           <DeleteIcon />
         </IconButton>
       </ItemActions>
