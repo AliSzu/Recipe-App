@@ -4,12 +4,15 @@ import { useAppDispatch } from "../store/store";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { useUploadImage } from "../api/file";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../constants/Routes";
 
 export const useSubmitWithFile = (
-  submitMutation: UseMutationResult<void, FirebaseError, Recipe>
+  submitMutation: UseMutationResult<string | void, FirebaseError, Recipe>
 ) => {
   const uploadImageMutation = useUploadImage();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isLoading = submitMutation.isLoading || uploadImageMutation.isLoading;
 
   const dispatchError = (errorCode: string) => {
@@ -25,14 +28,14 @@ export const useSubmitWithFile = (
   const submitToFirebase = (
     image: File,
     recipe: Recipe,
-    successCode: string
+    successCode: string,
   ) => {
     uploadImageMutation.mutate(image, {
       onSuccess: (url) => {
         submitMutation.mutate(
           { ...recipe, imgSrc: url },
           {
-            onSuccess: () => {
+            onSuccess: (id) => {
               dispatch(
                 showSnackbar({
                   message: successCode,
@@ -40,6 +43,7 @@ export const useSubmitWithFile = (
                   autoHideDuration: 6000,
                 })
               );
+              navigate(`${ROUTES.RECIPE}/${id}`)
             },
             onError: (error) => {
               dispatchError(error.code);

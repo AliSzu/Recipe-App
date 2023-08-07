@@ -12,7 +12,7 @@ import {
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
-import { recipeCollection } from "../firebase";
+import { db, recipeCollection } from "../firebase";
 
 export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
@@ -50,11 +50,12 @@ export function useFetchRecipeById(id?: string) {
 }
 
 export function usePostRecipe() {
-  return useMutation<void, FirebaseError, Recipe>({
+  return useMutation<string, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
-      await addDoc(recipeCollection, {
+      const docRef = await addDoc(recipeCollection, {
         ...newRecipe,
       });
+      return docRef.id
     },
   });
 }
