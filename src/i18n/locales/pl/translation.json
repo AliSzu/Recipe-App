@@ -27,7 +27,7 @@
     "submit": "Wyślij",
     "file": "Prześlij zdjęcie",
     "cancel": "Anuluj",
-    "delete" : "Usuń"
+    "delete": "Usuń"
   },
   "message": {
     "login": "Posiadasz już konto? <1>Zaloguj się</1>",
@@ -55,7 +55,7 @@
     "preparing": "Przygotowanie",
     "ingredients": "Składniki",
     "name": "Przepis",
-    "notFound" : "Nie znaleziono przepisu"
+    "notFound": "Nie znaleziono przepisu"
   },
   "form": {
     "recipeInformation": "Informacje o Przepisie",
@@ -72,6 +72,9 @@
     "delete": {
       "title": "Usuń {{item}}",
       "message": "Jesteś pewny, że chcesz usunąć {{itemName}}?"
+    },
+    "popover": {
+      "empty": "Podaj co najmniej jeden element"
     }
   }
 }
