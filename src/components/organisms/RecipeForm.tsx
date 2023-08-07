@@ -1,4 +1,4 @@
-import { Button, Divider, styled } from "@mui/material";
+import { Button, Divider, styled, useMediaQuery } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import IngredientsListForm from "./IngredientsListForm";
@@ -6,6 +6,7 @@ import PreparingStepsList from "./PreparingStepsList";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
+import { theme } from "../../theme/theme";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
@@ -13,19 +14,25 @@ interface RecipeFormProps {
   isLoading: boolean;
 }
 
-const StyledForm = styled("form")({
+const StyledForm = styled("form")(({ theme }) => ({
   display: "grid",
   width: "100%",
   gridTemplateColumns: "1fr 1fr",
   gap: "3rem",
-});
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+  },
+}));
 
-const ButtonContainer = styled("div")({
+const ButtonContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   width: "100%",
   paddingTop: "1rem",
-});
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "center",
+  },
+}));
 
 const StyledDivider = styled(Divider)({
   paddingBottom: "1rem",
@@ -37,6 +44,7 @@ const RecipeForm = ({
   onFormSubmit,
   isLoading,
 }: RecipeFormProps) => {
+  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const methods = useForm<RecipeFormValues>({ defaultValues });
   const {
     handleSubmit,
@@ -69,7 +77,7 @@ const RecipeForm = ({
             isError={!!errors.description}
             label={t("textField.label.description")}
           />
-          <InputFileField/>
+          <InputFileField />
         </div>
         <div>
           <StyledDivider>{t("form.ingredientList")}</StyledDivider>
@@ -82,6 +90,7 @@ const RecipeForm = ({
               form="recipe-form"
               variant="contained"
               disabled={isLoading}
+              fullWidth={matchDownSm}
             >
               {t("button.submit")}
             </Button>
