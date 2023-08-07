@@ -5,7 +5,6 @@ import {
   query,
   where,
   documentId,
-  collection,
   addDoc,
   deleteDoc,
   doc,
@@ -13,9 +12,7 @@ import {
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
-import { db, recipeCollection } from "../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { uniqueId } from "../utils/recipeUtils";
+import { recipeCollection } from "../firebase";
 
 export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
@@ -52,22 +49,10 @@ export function useFetchRecipeById(id?: string) {
   });
 }
 
-export function useUploadImage() {
-  return useMutation<string, FirebaseError, File>({
-    mutationFn: async (image: File) => {
-      const storage = getStorage();
-      const storageRef = ref(storage, `recipe/${uniqueId()}`);
-      await uploadBytes(storageRef, image);
-      const url = await getDownloadURL(storageRef);
-      return url;
-    },
-  });
-}
-
 export function usePostRecipe() {
   return useMutation<void, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
-      await addDoc(collection(db, "recipes"), {
+      await addDoc(recipeCollection, {
         ...newRecipe,
       });
     },

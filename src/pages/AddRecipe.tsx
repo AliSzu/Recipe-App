@@ -1,51 +1,29 @@
-import { usePostRecipe, useUploadImage } from "../api/recipes";
+import { usePostRecipe } from "../api/recipes";
 import RecipeForm from "../components/organisms/RecipeForm";
 import { recipeDefaultValues } from "../constants/RecipeDefaultValues";
-import { showSnackbar } from "../slices/snackbarSlice";
-import { useAppDispatch } from "../store/store";
+import { useSubmit } from "../hooks/useSubmit";
 import { RecipeFormValues } from "../types/FormTypes";
-import { Recipe } from "../types/RecipeTypes";
+import { useSubmitWithFile } from "../hooks/useSubmitWithFile";
 
 const AddRecipe = () => {
-  const dispatch = useAppDispatch();
-
   const postRecipeMutation = usePostRecipe();
-  const uploadImageMutation = useUploadImage();
+  const { submitToFirebase: submitWithFile, isLoading: isLoadingWithFile } = useSubmitWithFile(postRecipeMutation);
+  const { submitToFirebase: submitWithoutFile, isLoading: isLoadingWithoutFile } = useSubmit(postRecipeMutation);
 
   const handleFormSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
-    uploadImageMutation.mutate(image[0], {
-      onSuccess: (url) => {
-        const recipe: Recipe = { ...formRecipe, imgSrc: url };
-        postRecipeMutation.mutate(recipe, {
-          onSuccess: () => {
-            dispatch(
-              showSnackbar({
-                message: "post-success",
-                severity: "success",
-                autoHideDuration: 6000,
-              })
-            );
-          },
-        });
-      },
-      onError: (error) => {
-        dispatch(
-          showSnackbar({
-            message: error.message,
-            severity: "error",
-            autoHideDuration: 6000,
-          })
-        );
-      },
-    });
+    if (image && image[0]) {
+      submitWithFile(image[0], formRecipe, "post-success");
+    } else {
+      submitWithoutFile(formRecipe, "post-success");
+    }
   };
 
   return (
     <RecipeForm
       onFormSubmit={handleFormSubmit}
       defaultValues={recipeDefaultValues}
-      isLoading={postRecipeMutation.isLoading || uploadImageMutation.isLoading}
+      isLoading={isLoadingWithFile || isLoadingWithoutFile}
     />
   );
 };

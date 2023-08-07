@@ -55,7 +55,7 @@
     "preparing": "Preparing",
     "ingredients": "Ingredients",
     "name": "Recipe",
-    "notFound" : "Recipe not found"
+    "notFound": "Recipe not found"
   },
   "form": {
     "recipeInformation": "Recipe Information",
@@ -67,6 +67,9 @@
   },
   "file": {
     "empty": "No file chosen"
+  },
+  "popover": {
+    "empty": "Please provide at least one element"
   },
   "dialog": {
     "delete": {

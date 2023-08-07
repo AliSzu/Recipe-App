@@ -1,59 +1,51 @@
-import { FieldPath, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import { Button, styled } from "@mui/material";
-import FileWatched from "../atoms/FileWatched";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useTranslation } from "react-i18next";
-import { ErrorMessage } from "@hookform/error-message";
-
-interface InputFileFieldProps {
-  field: FieldPath<RecipeFormValues>;
-}
 
 const FileFieldContainer = styled("div")({
   display: "flex",
   gap: "1rem",
-  alignItems: "center",
+  flexDirection: "column",
 });
 
-const Message = styled("p")(({ theme }) => ({
-  padding: "0.5rem",
-  margin: "0",
-  color: theme.palette.error.main,
-  fontSize: "0.85rem",
-}));
+const StyledImage = styled("img")({
+  width: "20rem",
+  height: "100%",
+  objectFit: "cover",
+  borderRadius: "20px",
+});
 
-const InputFileField = ({ field }: InputFileFieldProps) => {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<RecipeFormValues>();
+const InputFileField = () => {
+  const { register, getValues, watch } = useFormContext<RecipeFormValues>();
+
+  const watchedFileImage = watch("image");
+  const imageUrl = watchedFileImage && watchedFileImage[0]
+    ? URL.createObjectURL(watchedFileImage[0])
+    : getValues("imgSrc");
+
   const { t } = useTranslation();
   return (
-    <>
       <FileFieldContainer>
-        <Button
-          variant="contained"
-          component="label"
-          endIcon={<UploadFileIcon />}
-        >
-          {t("button.file")}
-          <input
-            accept="image/*"
-            type="file"
-            hidden
-            {...register("image", { required: t("textField.error.required") })}
-          />
-        </Button>
-        <FileWatched control={control} />
+        <input
+          accept="image/*"
+          hidden
+          id="image-file-input"
+          type="file"
+          {...register("image")}
+        />
+        <label htmlFor="image-file-input">
+          <Button
+            variant="contained"
+            component="span"
+            endIcon={<UploadFileIcon />}
+          >
+            {t("button.file")}
+          </Button>
+        </label>
+        <StyledImage src={imageUrl}/>
       </FileFieldContainer>
-      <ErrorMessage
-        errors={errors}
-        name={field}
-        render={({ message }) => <Message>{message}</Message>}
-      />
-    </>
   );
 };
 

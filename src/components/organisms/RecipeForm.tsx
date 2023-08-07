@@ -24,6 +24,7 @@ const ButtonContainer = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
   width: "100%",
+  paddingTop: "1rem",
 });
 
 const StyledDivider = styled(Divider)({
@@ -68,28 +69,27 @@ const RecipeForm = ({
             isError={!!errors.description}
             label={t("textField.label.description")}
           />
-          <InputFileField field="image" />
+          <InputFileField/>
         </div>
         <div>
           <StyledDivider>{t("form.ingredientList")}</StyledDivider>
           <IngredientsListForm />
           <StyledDivider>{t("form.preparingSteps")}</StyledDivider>
           <PreparingStepsList />
+          <ButtonContainer>
+            <Button
+              type="submit"
+              form="recipe-form"
+              variant="contained"
+              disabled={isLoading}
+            >
+              {t("button.submit")}
+            </Button>
+          </ButtonContainer>
         </div>
       </StyledForm>
-      <ButtonContainer>
-        <Button
-          type="submit"
-          form="recipe-form"
-          variant="contained"
-          disabled={isLoading}
-        >
-          {t("button.submit")}
-        </Button>
-      </ButtonContainer>
     </FormProvider>
   );
 };
 
 export default RecipeForm;
-
