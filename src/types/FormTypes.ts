@@ -14,7 +14,8 @@ export interface RecipeFormValues {
   title: string,
   time: string,
   description: string,
-  image: FileList,
+  image?: FileList,
   preparing: Preparing[],
   ingredients: Ingredient[];
+  imgSrc: string
 }

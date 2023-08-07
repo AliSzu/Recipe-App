@@ -5,7 +5,6 @@ import {
   query,
   where,
   documentId,
-  collection,
   addDoc,
   deleteDoc,
   doc,
@@ -54,7 +53,7 @@ export function useFetchRecipeById(id?: string) {
 export function usePostRecipe() {
   return useMutation<void, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
-      await addDoc(collection(db, "recipes"), {
+      await addDoc(recipeCollection, {
         ...newRecipe,
       });
     },

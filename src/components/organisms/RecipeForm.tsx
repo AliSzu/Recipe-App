@@ -11,7 +11,6 @@ interface RecipeFormProps {
   defaultValues: RecipeFormValues;
   onFormSubmit: (formData: RecipeFormValues) => void;
   isLoading?: boolean;
-  isEditable: boolean
 }
 
 const StyledForm = styled("form")({
@@ -37,7 +36,6 @@ const RecipeForm = ({
   defaultValues,
   onFormSubmit,
   isLoading,
-  isEditable
 }: RecipeFormProps) => {
   const methods = useForm<RecipeFormValues>({ defaultValues });
   const {
@@ -71,7 +69,7 @@ const RecipeForm = ({
             isError={!!errors.description}
             label={t("textField.label.description")}
           />
-          {!isEditable && <InputFileField field="image" />}
+          <InputFileField/>
         </div>
         <div>
           <StyledDivider>{t("form.ingredientList")}</StyledDivider>
