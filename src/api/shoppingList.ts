@@ -4,6 +4,7 @@ import {
   DocumentData,
   Timestamp,
   addDoc,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -66,6 +67,14 @@ export function useEditShoppingListItem() {
         ...item,
         updatedAt: Timestamp.fromDate(new Date()),
       });
+    },
+  });
+}
+
+export function useDeleteShoppingListItem() {
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (itemId: string) => {
+      await deleteDoc(doc(db, Collections.shoppingList, itemId));
     },
   });
 }

@@ -45,18 +45,13 @@ const ShoppingList = () => {
     });
   };
 
-  const onDeleteItem = (itemId: string) => {
-    // TODO: DELETE RECIPE
-  };
-  
-
   const shoppingData =
     shoppingList &&
     shoppingList.length !== 0 &&
     shoppingList.map((item: ShoppingItem) => (
       <React.Fragment key={item.id}>
         <Divider />
-        <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
+        <ShoppingListItem item={item}/>
       </React.Fragment>
     ));
 

@@ -3,7 +3,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { ShoppingItem } from "../../types/ShoppingListTypes";
 import AmountPicker from "../molecules/AmountPicker";
 import { useCallback, useState } from "react";
-import { useEditShoppingListItem } from "../../api/shoppingList";
+import {
+  useDeleteShoppingListItem,
+  useEditShoppingListItem,
+} from "../../api/shoppingList";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/QueryKeys";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -12,7 +15,6 @@ import { showSnackbar } from "../../slices/snackbarSlice";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
-  onDeleteItem: (itemId: string) => void;
 }
 
 const StyledListItem = styled(ListItem)({
@@ -24,11 +26,12 @@ const ItemActions = styled("div")({
   display: "flex",
 });
 
-const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
+const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
 
   const queryClient = useQueryClient();
   const editShoppingListItemMutation = useEditShoppingListItem();
+  const deleteShoppingListItemMutation = useDeleteShoppingListItem();
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
@@ -64,12 +67,30 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
     setItemAmount(amount);
     debounceEditAmount(amount);
   };
+
+  const handleDeleteItem = () => {
+    if (!item.id) return;
+    deleteShoppingListItemMutation.mutate(item.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
+      },
+      onError: (error) => {
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: 6000,
+            severity: "error",
+          })
+        );
+      },
+    });
+  };
   return (
     <StyledListItem>
       <div>{item.name}</div>
       <ItemActions>
         <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
-        <IconButton onClick={() => onDeleteItem(item.id!)}>
+        <IconButton onClick={handleDeleteItem}>
           <DeleteIcon />
         </IconButton>
       </ItemActions>
