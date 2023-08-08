@@ -17,14 +17,27 @@ interface ShoppingListItemProps {
   item: ShoppingItem;
 }
 
-const StyledListItem = styled(ListItem)({
+const StyledListItem = styled(ListItem)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
-});
+  gap: '3rem',
+  padding: '1rem',
+  wordBreak: 'break-all',
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: '1rem',
+  },
+}));
 
-const ItemActions = styled("div")({
+const ItemActions = styled("div")(({ theme }) => ({
   display: "flex",
-});
+  gap: '1rem',
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+    justifyContent: "space-between",
+  },
+}));
 
 const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
@@ -39,7 +52,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
     debounce((newAmount: number) => {
       editAmount(newAmount);
     }, 800),
-    []
+    [debounce]
   );
 
   const editAmount = (newAmount: number) => {

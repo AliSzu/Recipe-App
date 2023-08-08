@@ -15,10 +15,14 @@ const StyledCard = styled("div")(({ theme }) => ({
   alignItems: "center",
   flexDirection: "column",
   backgroundColor: theme.palette.secondary.light,
+  [theme.breakpoints.down('md')] : {
+    width: '80%'
+  },
   [theme.breakpoints.down("sm")]: {
     padding: "0",
     border: "none",
     margin: "0",
+    width: '100%'
   },
 }));
 

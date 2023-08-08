@@ -1,4 +1,4 @@
-import { Button, Input, styled } from "@mui/material";
+import { IconButton, Input, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
@@ -7,7 +7,7 @@ interface AmountPickerProps {
   onAmountChange: (amount: number) => void;
 }
 
-const StyledInput = styled(Input)(({ theme }) => ({
+const StyledInput = styled(Input)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
     display: "none",
   },
@@ -18,16 +18,17 @@ const StyledInput = styled(Input)(({ theme }) => ({
     textAlign: "center",
   },
   width: "50px",
-  [theme.breakpoints.down("sm")]: {
-    width: "10px",
-  },
-}));
+});
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  width: "50px",
-  [theme.breakpoints.down("sm")]: {
-    width: "10px",
-  },
+const AmountContainer = styled("div")({
+  display: "flex",
+});
+
+const StyledButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.main,
+  ":disabled" : {
+    backgroundColor: theme.palette.secondary.main,
+  }
 }));
 
 const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
@@ -37,10 +38,11 @@ const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
   };
 
   return (
-    <>
+    <AmountContainer>
       <StyledButton
         onClick={() => handleAmountChange(amount - 1)}
         disabled={amount <= 1}
+        size="small"
       >
         <RemoveIcon />
       </StyledButton>
@@ -50,10 +52,10 @@ const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {
         disableUnderline={true}
         onChange={(e) => handleAmountChange(+e.target.value)}
       />
-      <StyledButton onClick={() => handleAmountChange(amount + 1)}>
+      <StyledButton onClick={() => handleAmountChange(amount + 1)} size="small">
         <AddIcon />
       </StyledButton>
-    </>
+    </AmountContainer>
   );
 };
 
