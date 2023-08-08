@@ -32,7 +32,6 @@ export function useDeleteImage() {
     mutationFn: async (imageUrl: string) => {
       const storage = getStorage();
       const imageReference = ref(storage, imageUrl)
-      console.log(imageReference)
       await deleteObject(imageReference)
     }
   })

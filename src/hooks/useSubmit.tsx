@@ -26,7 +26,6 @@ export const useSubmit = (
   const submitToFirebase = (
     recipe: Recipe,
     successCode: string,
-    documentId?: string
   ) => {
     submitMutation.mutate(recipe, {
       onSuccess: (id) => {
@@ -34,13 +33,13 @@ export const useSubmit = (
           showSnackbar({
             message: successCode,
             severity: "success",
-            autoHideDuration: 6000,
+            autoHideDuration: 1000,
           })
         );
         if (id) {
           navigate(`${ROUTES.RECIPE}/${id}`);
-        } else if (documentId) {
-          navigate(`${ROUTES.RECIPE}/${documentId}`);
+        } else {
+          navigate(`${ROUTES.RECIPE}/${recipe.id}`);
         }
       },
       onError: (error) => {

@@ -10,6 +10,7 @@ import { useSubmit } from "../hooks/useSubmit";
 const EditRecipe = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
   const editRecipeMutation = useEditRecipe();
@@ -23,9 +24,9 @@ const EditRecipe = () => {
   const handleSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
     if (image && image[0]) {
-      submitWithFile(image[0], formRecipe, "edit-success", id);
+      submitWithFile(image[0], formRecipe, "edit-success");
     } else {
-      submitWithoutFile(formRecipe, "edit-success", id);
+      submitWithoutFile(formRecipe, "edit-success");
     }
   };
 
