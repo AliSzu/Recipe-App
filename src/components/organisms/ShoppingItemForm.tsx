@@ -1,11 +1,9 @@
-import { IconButton, TextField, styled, useMediaQuery } from "@mui/material";
+import { IconButton, InputAdornment, TextField, styled } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { ShoppingItemFormValues } from "../../types/FormTypes";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import AmountPicker from "../molecules/AmountPicker";
 import { useTranslation } from "react-i18next";
 import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
-import { theme } from "../../theme/theme";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
@@ -17,19 +15,16 @@ const StyledForm = styled("form")({
   justifyContent: "space-between",
 });
 
-const StyledAmountPicker = styled(AmountPicker)({
-  color: "red",
+const StyledInput = styled(TextField)({
+  padding: 0,
+  margin: 0,
 });
 
 const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, setValue, watch, reset } =
-    useForm<ShoppingItemFormValues>({
-      defaultValues: shoppingItemDefaultValues,
-    });
-
-  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
-  const onAmountChange = (amount: number) => setValue("amount", amount);
+  const { register, handleSubmit, reset } = useForm<ShoppingItemFormValues>({
+    defaultValues: shoppingItemDefaultValues,
+  });
 
   const onSubmit = (data: ShoppingItemFormValues) => {
     onFormSubmit(data);
@@ -38,21 +33,21 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <TextField
+      <StyledInput
+        id="input-with-icon-textfield"
         label={t("shoppingList.item.name")}
         {...register("name", { required: true })}
+        fullWidth
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="start">
+              <IconButton type="submit">
+                <AddCircleIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
-      <div>
-        {!matchDownSm && (
-          <StyledAmountPicker
-            amount={watch("amount")}
-            onAmountChange={onAmountChange}
-          />
-        )}
-        <IconButton type="submit">
-          <AddCircleIcon />
-        </IconButton>
-      </div>
     </StyledForm>
   );
 };
