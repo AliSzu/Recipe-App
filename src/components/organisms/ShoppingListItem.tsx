@@ -9,14 +9,27 @@ interface ShoppingListItemProps {
   onDeleteItem: (itemId: string) => void;
 }
 
-const StyledListItem = styled(ListItem)({
+const StyledListItem = styled(ListItem)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
-});
+  gap: '3rem',
+  padding: '1rem',
+  wordBreak: 'break-all',
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: '1rem',
+  },
+}));
 
-const ItemActions = styled("div")({
+const ItemActions = styled("div")(({ theme }) => ({
   display: "flex",
-});
+  gap: '1rem',
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+    justifyContent: "space-between",
+  },
+}));
 
 const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
@@ -25,7 +38,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
     debounce((newAmount: number) => {
       editAmount(newAmount);
     }, 800),
-    []
+    [debounce]
   );
 
   const editAmount = (newAmount: number) => {
@@ -39,7 +52,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
     <StyledListItem>
       <div>{item.name}</div>
       <ItemActions>
-        <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
+          <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
         <IconButton onClick={() => onDeleteItem(item.id)}>
           <DeleteIcon />
         </IconButton>

@@ -48,7 +48,7 @@ const ShoppingList = () => {
           <ShoppingItemForm onFormSubmit={onFormSubmit} />
           {list.map((item: ShoppingItem) => (
             <React.Fragment key={item.id}>
-              <Divider />
+              <Divider/>
               <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
             </React.Fragment>
           ))}
