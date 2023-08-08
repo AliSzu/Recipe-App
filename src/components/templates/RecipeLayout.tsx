@@ -11,7 +11,7 @@ import { ROUTES } from "../../constants/Routes";
 
 interface RecipeLayoutProps {
   recipe: Recipe;
-  onDeleteRecipe: (id: string) => void;
+  onDeleteRecipe: () => void;
 }
 
 const GridItem = styled("div")({

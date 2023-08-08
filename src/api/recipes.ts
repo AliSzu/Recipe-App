@@ -8,6 +8,8 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  Timestamp,
+  orderBy,
   updateDoc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
@@ -19,7 +21,8 @@ export function useFetchRecipes() {
   return useQuery<Recipe[], FirebaseError>({
     queryKey: [QueryKeys.recipesData],
     queryFn: async () => {
-      const recipeSnap = await getDocs(recipeCollection);
+      const recipeQuery = query(recipeCollection, orderBy("createdAt", "desc"));
+      const recipeSnap = await getDocs(recipeQuery);
       const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => ({
         id: item.id,
         ...item.data(),
@@ -55,8 +58,10 @@ export function usePostRecipe() {
     mutationFn: async (newRecipe: Recipe) => {
       const docRef = await addDoc(recipeCollection, {
         ...newRecipe,
+        createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: Timestamp.fromDate(new Date()),
       });
-      return docRef.id
+      return docRef.id;
     },
   });
 }
@@ -76,6 +81,7 @@ export function useEditRecipe() {
       if (!id) return;
       await updateDoc(doc(db, "recipes", id), {
         ...recipe,
+        updatedAt: Timestamp.fromDate(new Date()),
       });
     },
   });
