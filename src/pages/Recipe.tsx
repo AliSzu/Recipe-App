@@ -6,6 +6,9 @@ import { ROUTES } from "../constants/Routes";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useTranslation } from "react-i18next";
+import { DEFAULT_IMAGE } from "../constants/RecipeDefaultValues";
+import { useDeleteImage } from "../api/file";
+import { FirebaseError } from "firebase/app";
 
 const Recipe = () => {
   const { id } = useParams();
@@ -13,31 +16,55 @@ const Recipe = () => {
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
   const deleteRecipeMutation = useDeleteRecipe();
+  const deleteImageMutation = useDeleteImage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleDeleteRecipe = (recipeId: string) => {
-    deleteRecipeMutation.mutate(recipeId, {
-      onSuccess: () => {
-        dispatch(
-          showSnackbar({
-            message: "delete-success",
-            severity: "success",
-            autoHideDuration: 6000,
-          })
-        );
-        navigate(ROUTES.HOME);
-      },
-      onError: (error) => {
-        dispatch(
-          showSnackbar({
-            message: error.code,
-            severity: "error",
-            autoHideDuration: 6000,
-          })
-        );
-      },
-    });
+  const showErrorSnackbar = (errorCode: string) => {
+    dispatch(
+      showSnackbar({
+        message: errorCode,
+        severity: "error",
+        autoHideDuration: 6000,
+      })
+    );
+  };
+
+  const showSuccessSnackbar = () => {
+    navigate(ROUTES.HOME);
+    dispatch(
+      showSnackbar({
+        message: "delete-success",
+        severity: "success",
+        autoHideDuration: 6000,
+      })
+    );
+  };
+
+  const handleDeleteRecipe = async () => {
+    if (!id) return;
+    if (recipeData?.imgSrc && recipeData?.imgSrc !== DEFAULT_IMAGE) {
+      const deleteRecipePromise = deleteRecipeMutation.mutateAsync(id);
+      const deleteImagePromise = deleteImageMutation.mutateAsync(
+        recipeData.imgSrc
+      );
+      try {
+        await Promise.all([deleteImagePromise, deleteRecipePromise]);
+        showSuccessSnackbar();
+      } catch (error) {
+        const errorResponse = error as FirebaseError;
+        showErrorSnackbar(errorResponse.code);
+      }
+    } else {
+      deleteRecipeMutation.mutate(id, {
+        onSuccess: () => {
+          showSuccessSnackbar();
+        },
+        onError: (error) => {
+          showErrorSnackbar(error.code);
+        },
+      });
+    }
   };
   return (
     <>
@@ -46,7 +73,7 @@ const Recipe = () => {
       ) : recipeData && Object.keys(recipeData).length !== 0 ? (
         <RecipeLayout onDeleteRecipe={handleDeleteRecipe} recipe={recipeData} />
       ) : (
-        <div>{t('recipe.notFound')}</div>
+        <div>{t("recipe.notFound")}</div>
       )}
     </>
   );

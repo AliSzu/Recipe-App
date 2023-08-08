@@ -146,6 +146,19 @@ export const theme = createTheme(
           anchor: "right",
         },
       },
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            width: '50%',
+            height: '20%',
+            [globalTheme.breakpoints.down("sm")]: {
+              width: 'auto',
+              height: 'auto',
+              margin: '1rem'
+            },
+          }
+        }
+      },
       MuiCssBaseline: {
         styleOverrides: {
           "@font-face": {

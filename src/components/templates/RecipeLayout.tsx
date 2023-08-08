@@ -9,7 +9,7 @@ import DeleteModal from "../molecules/DeleteModal";
 
 interface RecipeLayoutProps {
   recipe: Recipe;
-  onDeleteRecipe: (id: string) => void;
+  onDeleteRecipe: () => void;
 }
 
 const GridItem = styled("div")({
