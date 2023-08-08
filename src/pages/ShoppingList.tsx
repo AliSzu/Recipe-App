@@ -20,11 +20,15 @@ const ShoppingListContainer = styled("div")({
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
+  width: '100%'
 });
 
-const StyledList = styled(List)({
-  width: "100%",
-});
+const StyledList = styled(List)(({theme}) => ({
+  width: '40rem',
+  [theme.breakpoints.down('md')] : {
+    width: '100%'
+  }
+}));
 
 const Title = styled("h1")({
   margin: "0",
