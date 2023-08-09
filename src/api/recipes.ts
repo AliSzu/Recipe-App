@@ -17,6 +17,8 @@ import { recipeCollection } from "../firebase";
 export function useFetchRecipes( sortProperty: string, sortOrder?: OrderByDirection) {
   return useQuery<Recipe[], FirebaseError>({
     queryKey: [QueryKeys.recipesData, sortOrder, sortProperty],
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
     queryFn: async () => {
       const recipeQuery = query(recipeCollection, orderBy(sortProperty, sortOrder));
       const recipeSnap = await getDocs(recipeQuery);
