@@ -6,17 +6,20 @@ import {
   where,
   documentId,
   addDoc,
+  orderBy,
+  OrderByDirection,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { recipeCollection } from "../firebase";
 
-export function useFetchRecipes() {
+export function useFetchRecipes( sortProperty: string, sortOrder?: OrderByDirection) {
   return useQuery<Recipe[], FirebaseError>({
-    queryKey: [QueryKeys.recipesData],
+    queryKey: [QueryKeys.recipesData, sortOrder, sortProperty],
     queryFn: async () => {
-      const recipeSnap = await getDocs(recipeCollection);
+      const recipeQuery = query(recipeCollection, orderBy(sortProperty, sortOrder));
+      const recipeSnap = await getDocs(recipeQuery);
       const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => ({
         id: item.id,
         ...item.data(),
