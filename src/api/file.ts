@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
 import {
   StorageReference,
+  deleteObject,
   getDownloadURL,
   getStorage,
   ref,
@@ -24,4 +25,15 @@ export function useUploadImage() {
       return url
     },
   });
+}
+
+export function useDeleteImage() {
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (imageUrl: string) => {
+      const storage = getStorage();
+      const imageReference = ref(storage, imageUrl)
+      console.log(imageReference)
+      await deleteObject(imageReference)
+    }
+  })
 }

@@ -3,7 +3,7 @@ import MuiSnackbar from "@mui/material/Snackbar";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { hideSnackbar, selectSnackbarState } from "../../slices/snackbarSlice";
 import { useTranslation } from "react-i18next";
-import { SnackbarMessage } from "../../constants/ErrorMessage";
+import { SnackbarMessage } from "../../constants/SnackbarMessage";
 import { getMessageKey } from "../../utils/authUtils";
 import { Alert } from "@mui/material";
 
