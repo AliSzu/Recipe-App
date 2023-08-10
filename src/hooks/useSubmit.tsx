@@ -33,7 +33,7 @@ export const useSubmit = (
           showSnackbar({
             message: successCode,
             severity: "success",
-            autoHideDuration: 1000,
+            autoHideDuration: 6000,
           })
         );
         if (id) {
