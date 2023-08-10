@@ -1,14 +1,16 @@
-import { styled } from "@mui/material";
+import { ImageList, styled, useMediaQuery } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useFetchRecipes } from "../api/recipes";
-import RecipesList from "../components/organisms/RecipesList";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import SortSelector from "../components/organisms/SortSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { OrderByDirection } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
+import { useInView } from "react-intersection-observer";
+import { theme } from "../theme/theme";
+import Tile from "../components/atoms/Tile";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -34,16 +36,24 @@ const SortButtonContainer = styled("div")({
 });
 
 const Home = () => {
-  const [sortOrder, setSortOrder] = useState<OrderByDirection>();
+  const [sortOrder, setSortOrder] = useState<OrderByDirection>("desc");
   const [sortProperty, setSortProperty] = useState<keyof Recipe>("createdAt");
 
   const { t } = useTranslation();
-  const { data, isError, error, isFetching } = useFetchRecipes(
+  const { ref, inView } = useInView();
+  const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes(
     sortProperty,
     sortOrder
   );
 
+  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
 
   const handleSort = (
     sortType: OrderByDirection,
@@ -53,9 +63,14 @@ const Home = () => {
     setSortProperty(sortProperty);
   };
 
-  const recipesData = data && data.length !== 0 && (
-    <RecipesList recipes={data} />
-  );
+  const recipesData =
+    data &&
+    data.pages &&
+    data.pages.map((page) =>
+      page.recipes.map((recipe: Recipe) => (
+        <Tile recipe={recipe} key={recipe.id} />
+      ))
+    );
 
   if (isError) {
     dispatch(
@@ -75,13 +90,10 @@ const Home = () => {
         <SortSelector onSort={handleSort} sortProperty="updatedAt" />
         <SortSelector onSort={handleSort} sortProperty="time" />
       </SortButtonContainer>
-      {isFetching ? (
-        <CenteredCircularProgress />
-      ) : recipesData ? (
-        recipesData
-      ) : (
-        <div>{t("emptyRecipes")}</div>
-      )}
+      <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
+        {recipesData}
+        {isFetching ? <CenteredCircularProgress /> : <div ref={ref} />}
+      </ImageList>
     </HomeContainer>
   );
 };

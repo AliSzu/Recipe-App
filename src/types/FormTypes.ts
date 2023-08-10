@@ -11,11 +11,11 @@ export interface SignUpFormProps {
   confirmPassword: string;
 }
 export interface RecipeFormValues {
-  title: string,
-  time: string,
-  description: string,
-  image?: FileList,
-  preparing: Preparing[],
+  title: string;
+  time: string;
+  description: string;
+  image?: FileList;
+  preparing: Preparing[];
   ingredients: Ingredient[];
-  imgSrc: string
+  imgSrc: string;
 }
