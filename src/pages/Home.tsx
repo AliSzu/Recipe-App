@@ -5,6 +5,7 @@ import RecipesList from "../components/molecules/RecipesList";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
+import { useEffect } from "react";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -29,19 +30,21 @@ const Home = () => {
   const { data, isError, error, isFetching } = useFetchRecipes();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (isError) {
+      dispatch(
+        showSnackbar({
+          message: error.code,
+          autoHideDuration: 6000,
+          severity: "error",
+        })
+      );
+    }
+  }, [dispatch, error, isError]);
+
   const recipesData = data && data.length !== 0 && (
     <RecipesList recipes={data} />
   );
-
-  if (isError) {
-    dispatch(
-      showSnackbar({
-        message: error.code,
-        autoHideDuration: 6000,
-        severity: "error",
-      })
-    );
-  }
 
   return (
     <HomeContainer>
