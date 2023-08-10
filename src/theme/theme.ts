@@ -20,14 +20,22 @@ const globalTheme = createTheme({
     secondary: {
       main: "#efefef",
       light: "#ffffff",
+      dark: "#d7d7d7",
     },
     google: { main: "#DB4437", dark: "#BD2E22" },
   },
-  typography: {
-    fontFamily: "Inter",
+});
+
+globalTheme.typography.body1 = {
+  fontFamily: "Inter",
+  fontSize: 20,
+  [globalTheme.breakpoints.down('md')] : {
+    fontSize: 18
+  },
+  [globalTheme.breakpoints.down("sm")]: {
     fontSize: 16,
   },
-});
+};
 
 export const theme = createTheme(
   {
@@ -60,8 +68,8 @@ export const theme = createTheme(
           },
         },
         defaultProps: {
-          disableElevation: true
-        }
+          disableElevation: true,
+        },
       },
       MuiIconButton: {
         styleOverrides: {
@@ -75,9 +83,9 @@ export const theme = createTheme(
           root: {
             color: "inherit",
           },
-          input : {
-            textAlign: 'center'
-          }
+          input: {
+            textAlign: "center",
+          },
         },
       },
       MuiSelect: {
