@@ -1,4 +1,4 @@
-export const getErrorKey = (message: string) => {
+export const getMessageKey = (message: string) => {
   const messageSplit = message.split("/");
-  return messageSplit[1];
+  return messageSplit.length > 1 ? messageSplit[1] : messageSplit[0];
 };
