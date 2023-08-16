@@ -6,7 +6,7 @@ import { FirebaseError } from "firebase/app";
 import { useDeleteImage, useUploadImage } from "../api/files";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../constants/Routes";
-import { DEFAULT_IMAGE } from "../constants/RecipeDefaultValues";
+import { DEFAULT_IMAGE } from "../constants/DefaultValues";
 
 export const useSubmitWithFile = (
   submitMutation: UseMutationResult<string | void, FirebaseError, Recipe>

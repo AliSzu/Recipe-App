@@ -1,9 +1,9 @@
 import { usePostRecipe } from "../api/recipes";
 import RecipeForm from "../components/organisms/RecipeForm";
-import { recipeDefaultValues } from "../constants/RecipeDefaultValues";
 import { useSubmit } from "../hooks/useSubmit";
 import { RecipeFormValues } from "../types/FormTypes";
 import { useSubmitWithFile } from "../hooks/useSubmitWithFile";
+import { recipeDefaultValues } from "../constants/DefaultValues";
 
 const AddRecipe = () => {
   const postRecipeMutation = usePostRecipe();
