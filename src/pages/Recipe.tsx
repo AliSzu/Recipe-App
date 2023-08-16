@@ -6,7 +6,7 @@ import { ROUTES } from "../constants/Routes";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useTranslation } from "react-i18next";
-import { useDeleteImage } from "../api/file";
+import { useDeleteImage } from "../api/files";
 import { FirebaseError } from "firebase/app";
 import { DEFAULT_IMAGE } from "../constants/DefaultValues";
 

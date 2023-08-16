@@ -5,7 +5,7 @@ import { ShoppingItem } from "../types/ShoppingListTypes";
 import ShoppingItemForm from "../components/organisms/ShoppingItemForm";
 import { ShoppingItemFormValues } from "../types/FormTypes";
 import React, { useState } from "react";
-import { uniqueId } from "../utils/recipeUtils";
+import { uniqueId } from "../utils/utils";
 import { useTranslation } from "react-i18next";
 
 const ShoppingListContainer = styled("div")({

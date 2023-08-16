@@ -1,4 +1,4 @@
-import { RecipeFormValues } from "../types/FormTypes";
+import { RecipeFormValues, ShoppingItemFormValues } from "../types/FormTypes";
 import { uniqueId } from "../utils/utils";
 
 export const DEFAULT_IMAGE =
