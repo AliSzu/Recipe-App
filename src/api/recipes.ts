@@ -10,6 +10,7 @@ import {
   doc,
   Timestamp,
   orderBy,
+  updateDoc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
@@ -69,6 +70,19 @@ export function useDeleteRecipe() {
   return useMutation<void, FirebaseError, string>({
     mutationFn: async (documentId: string) => {
       await deleteDoc(doc(db, "recipes", documentId));
+    },
+  });
+}
+
+export function useEditRecipe() {
+  return useMutation<void, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      const { id, ...recipe } = newRecipe;
+      if (!id) return;
+      await updateDoc(doc(db, "recipes", id), {
+        ...recipe,
+        updatedAt: Timestamp.fromDate(new Date()),
+      });
     },
   });
 }

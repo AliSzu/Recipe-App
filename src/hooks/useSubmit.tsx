@@ -25,7 +25,7 @@ export const useSubmit = (
 
   const submitToFirebase = (
     recipe: Recipe,
-    successCode: string
+    successCode: string,
   ) => {
     submitMutation.mutate(recipe, {
       onSuccess: (id) => {
@@ -36,7 +36,11 @@ export const useSubmit = (
             autoHideDuration: 6000,
           })
         );
-        navigate(`${ROUTES.RECIPE}/${id}`)
+        if (id) {
+          navigate(`${ROUTES.RECIPE}/${id}`);
+        } else {
+          navigate(`${ROUTES.RECIPE}/${recipe.id}`);
+        }
       },
       onError: (error) => {
         dispatchError(error.code);

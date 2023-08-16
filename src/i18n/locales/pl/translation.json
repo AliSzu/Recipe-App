@@ -47,7 +47,8 @@
   },
   "success": {
     "post": "Utworzono przepis",
-    "delete": "Usunięto przepis"
+    "delete": "Usunięto przepis",
+    "edit": "Edytowano przepis"
   },
   "latestRecipes": "Ostatnie Przepisy",
   "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
