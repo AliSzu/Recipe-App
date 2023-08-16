@@ -65,5 +65,11 @@
   },
   "popover" : {
     "empty" : "Please provide at least one element"
+  },
+  "sort": {
+    "name": "Sort",
+    "time": "By preparing time",
+    "alphabetically": "Alphabetically",
+    "updated": "Newest"
   }
 }

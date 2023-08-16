@@ -6,7 +6,6 @@ import {
   where,
   documentId,
   addDoc,
-  OrderByDirection,
   limit,
   startAfter,
   orderBy,
@@ -16,12 +15,9 @@ import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { recipeCollection } from "../firebase";
 
-export function useFetchRecipes(
-  sortProperty: string,
-  sortOrder?: OrderByDirection
-) {
+export function useFetchRecipes(sortProperty: string) {
   return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
-    queryKey: [QueryKeys.recipesData, sortOrder, sortProperty],
+    queryKey: [QueryKeys.recipesData, sortProperty],
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
@@ -31,16 +27,12 @@ export function useFetchRecipes(
       if (pageParam) {
         recipeQuery = query(
           recipeCollection,
-          orderBy(sortProperty, sortOrder),
+          orderBy(sortProperty),
           startAfter(pageParam),
           limit(10)
         );
       } else {
-        recipeQuery = query(
-          recipeCollection,
-          limit(10),
-          orderBy(sortProperty, sortOrder)
-        );
+        recipeQuery = query(recipeCollection, limit(10), orderBy(sortProperty));
       }
 
       const recipeSnap = await getDocs(recipeQuery);

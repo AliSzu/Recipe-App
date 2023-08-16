@@ -65,5 +65,11 @@
   },
   "popover" : {
     "empty" : "Podaj co najmniej jeden element"
+  },
+  "sort": {
+    "name": "Sortuj",
+    "time": "Po czasie wykonania",
+    "alphabetically": "Alfabetycznie",
+    "updated": "Najnowsze"
   }
 }
