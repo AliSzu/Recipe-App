@@ -51,7 +51,10 @@
     "edit": "Recipe edited"
   },
   "latestRecipes": "Latest Recipes",
-  "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
+  "empty": {
+    "recipes": "There are no recipes here yet. Try adding first recipe! ",
+    "shoppingList": "Add you first list item!"
+  },
   "recipe": {
     "preparing": "Preparing",
     "ingredients": "Ingredients",

@@ -23,3 +23,5 @@ export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
   amount: 1,
 };
+
+export const DEBOUNCE_TIME = 800;
