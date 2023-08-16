@@ -4,6 +4,7 @@ import AmountPicker from "../molecules/AmountPicker";
 import { useCallback, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
+import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
@@ -66,7 +67,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
   const debounceEditAmount = useCallback(
     debounce((newAmount: number) => {
       editAmount(newAmount);
-    }, 800),
+    }, DEBOUNCE_TIME),
     [debounce]
   );
 
