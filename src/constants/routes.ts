@@ -4,5 +4,6 @@ export const ROUTES = {
   SIGNUP: "/signup",
   RECIPE: "/recipe",
   ADD_RECIPE: '/add-recipe',
-  SHOPPING_LIST: '/shopping-list'
+  SHOPPING_LIST: '/shopping-list',
+  EDIT_RECIPE: '/edit'
 };

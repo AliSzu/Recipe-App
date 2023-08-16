@@ -7,7 +7,7 @@ interface AmountPickerProps {
   onAmountChange: (amount: number) => void;
 }
 
-const StyledInput = styled(Input)({
+const StyledInput = styled(Input)(({ theme }) => ({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
     display: "none",
   },
@@ -18,17 +18,26 @@ const StyledInput = styled(Input)({
     textAlign: "center",
   },
   width: "50px",
-});
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
 
 const AmountContainer = styled("div")({
   display: "flex",
 });
 
 const StyledButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
-  ":disabled" : {
-    backgroundColor: theme.palette.secondary.main,
-  }
+  color: theme.palette.primary.dark,
+  backgroundColor: "transparent",
+  ":disabled": {
+    backgroundColor: "transparent",
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& svg": {
+      fontSize: "1.2rem",
+    },
+  },
 }));
 
 const AmountPicker = ({ amount, onAmountChange }: AmountPickerProps) => {

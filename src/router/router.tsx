@@ -10,6 +10,7 @@ import Snackbar from "../components/atoms/Snackbar";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
 import ShoppingList from "../pages/ShoppingList";
+import EditRecipe from "../pages/EditRecipe";
 
 const NavbarLayout = () => (
   <>
@@ -36,16 +37,20 @@ const router = createBrowserRouter([
           },
           {
             path: `${ROUTES.RECIPE}/:id`,
-            element: <Recipe/>
+            element: <Recipe />,
           },
           {
             path: ROUTES.ADD_RECIPE,
-            element: <AddRecipe/>
+            element: <AddRecipe />,
           },
           {
             path: ROUTES.SHOPPING_LIST,
-            element: <ShoppingList/>
-          }
+            element: <ShoppingList />,
+          },
+          {
+            path: `${ROUTES.EDIT_RECIPE}/:id`,
+            element: <EditRecipe />,
+          },
         ],
       },
     ],
