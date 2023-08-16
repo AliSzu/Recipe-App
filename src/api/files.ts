@@ -8,7 +8,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { uniqueId } from "../utils/recipeUtils";
+import { uniqueId } from "../utils/utils";
 
 const uploadAndGetUrl = async (storageRef: StorageReference, image: File) => {
     await uploadBytes(storageRef, image)
@@ -32,7 +32,6 @@ export function useDeleteImage() {
     mutationFn: async (imageUrl: string) => {
       const storage = getStorage();
       const imageReference = ref(storage, imageUrl)
-      console.log(imageReference)
       await deleteObject(imageReference)
     }
   })

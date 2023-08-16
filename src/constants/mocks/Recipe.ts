@@ -1,4 +1,5 @@
 import { Recipe } from "../../types/RecipeTypes";
+import { uniqueId } from "../../utils/utils";
 
 export const MOCK_RECIPE: Recipe = {
   title: "Pancakes",
@@ -44,14 +45,18 @@ export const MOCK_RECIPE: Recipe = {
     },
   ],
   preparing: [
-    "In a large mixing bowl, whisk together 1 1/2 cups all-purpose flour, 3 1/2 teaspoons baking powder, 1/4 teaspoon salt, and 2 tablespoons granulated sugar.",
-    "In a separate bowl, whisk 1 1/4 cups milk, 1/4 cup melted unsalted butter, and 1 large egg.",
-    "Pour the wet ingredients into the dry ingredients and stir until just combined. It's okay if there are some lumps; overmixing can result in tough pancakes.",
-    "Preheat a non-stick skillet or griddle over medium heat. Lightly grease the surface with butter or cooking spray.",
-    "Pour 1/4 cup of batter onto the skillet for each pancake. Cook until bubbles form on the surface, then flip and cook the other side until golden brown.",
-    "Transfer the cooked pancakes to a plate and keep warm while cooking the remaining batter.",
-    "Serve the pancakes warm with your favorite toppings such as maple syrup, fresh berries, or whipped cream.",
-    "Enjoy your delicious homemade pancakes!",
+    {
+      step: "In a large mixing bowl, whisk together 1 1/2 cups all-purpose flour, 3 1/2 teaspoons baking powder, 1/4 teaspoon salt, and 2 tablespoons granulated sugar.",
+      id: uniqueId()
+    },
+    {
+      step: "In a large mixing bowl, whisk together 1 1/2 cups all-purpose flour, 3 1/2 teaspoons baking powder, 1/4 teaspoon salt, and 2 tablespoons granulated sugar.",
+      id: uniqueId()
+    },
+    {
+      step: "In a large mixing bowl, whisk together 1 1/2 cups all-purpose flour, 3 1/2 teaspoons baking powder, 1/4 teaspoon salt, and 2 tablespoons granulated sugar.",
+      id: uniqueId()
+    },
   ],
   description:
     "Pancakes are soft, fluffy breakfast treats made from a simple batter, cooked until golden-brown. They're perfect for stacking and customizing with delicious toppings like syrup and fresh fruits,offering a comforting and delightful morning indulgence.",
