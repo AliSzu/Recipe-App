@@ -1,4 +1,4 @@
-import { Divider, List, styled } from "@mui/material";
+import { List, styled } from "@mui/material";
 import ShoppingListItem from "../components/organisms/ShoppingListItem";
 import { ShoppingItem } from "../types/ShoppingListTypes";
 import ShoppingItemForm from "../components/organisms/ShoppingItemForm";
@@ -18,20 +18,20 @@ import { QueryKeys } from "../enums/QueryKeys";
 const ShoppingListContainer = styled("div")({
   display: "flex",
   alignItems: "center",
-  justifyContent: 'center',
+  justifyContent: "center",
   flexDirection: "column",
-  gap: '1rem',
+  gap: "1rem",
 });
 
-const StyledList = styled(List)(({theme}) => ({
-  borderRadius: '20px',
+const StyledList = styled(List)(({ theme }) => ({
+  borderRadius: "20px",
   width: "80%",
-  maxWidth: '60rem',
-  padding: '1rem',
-  [theme.breakpoints.down('sm')] : {
-    width: '100%',
-    padding: '0'
-  }
+  maxWidth: "60rem",
+  padding: "1rem",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    padding: "0",
+  },
 }));
 
 const Title = styled("h1")({
@@ -69,16 +69,16 @@ const ShoppingList = () => {
   return (
     <ShoppingListContainer>
       <Title>{t("shoppingList.name")}</Title>
-        <StyledList>
-          <ShoppingItemForm onFormSubmit={onFormSubmit} />
-          {isFetching ? (
-            <CenteredCircularProgress />
-          ) : shoppingData ? (
-            shoppingData
-          ) : (
-            <div>{t("empty.shoppingList")}</div>
-          )}
-        </StyledList>
+      <StyledList>
+        <ShoppingItemForm onFormSubmit={onFormSubmit} />
+        {isFetching ? (
+          <CenteredCircularProgress />
+        ) : shoppingData ? (
+          shoppingData
+        ) : (
+          <div>{t("empty.shoppingList")}</div>
+        )}
+      </StyledList>
     </ShoppingListContainer>
   );
 };

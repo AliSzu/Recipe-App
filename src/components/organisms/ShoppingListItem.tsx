@@ -82,7 +82,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
       <StyledCard>
         <StyledCardContent>
           <ItemActions >
-            <StyledIcon disableRipple={true} size="small" onClick={() => onDeleteItem(item.id)}>
+            <StyledIcon disableRipple={true} size="small" onClick={() => onDeleteItem(item.id!)}>
               <CloseIcon />
             </StyledIcon>
           </ItemActions>
