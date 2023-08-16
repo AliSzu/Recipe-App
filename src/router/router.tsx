@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import Snackbar from "../components/atoms/Snackbar";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
+import NotFound from "../pages/NotFound";
 
 const NavbarLayout = () => (
   <>
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
           {
             path: ROUTES.ADD_RECIPE,
             element: <AddRecipe/>
+          },
+          {
+            path: ROUTES.NOT_FOUND,
+            element: <NotFound/>
           }
         ],
       },

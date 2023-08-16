@@ -60,8 +60,8 @@ export const theme = createTheme(
           },
         },
         defaultProps: {
-          disableElevation: true
-        }
+          disableElevation: true,
+        },
       },
       MuiIconButton: {
         styleOverrides: {
@@ -149,15 +149,15 @@ export const theme = createTheme(
       MuiDialog: {
         styleOverrides: {
           paper: {
-            width: '50%',
-            height: '20%',
+            width: "50%",
+            height: "20%",
             [globalTheme.breakpoints.down("sm")]: {
-              width: 'auto',
-              height: 'auto',
-              margin: '1rem'
+              width: "auto",
+              height: "auto",
+              margin: "1rem",
             },
-          }
-        }
+          },
+        },
       },
       MuiCssBaseline: {
         styleOverrides: {

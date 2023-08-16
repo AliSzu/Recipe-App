@@ -43,7 +43,8 @@
     "userNotFound": "Nie znaleziono użytkownika",
     "tooManyAttemptsTryLater": "Dostęp do konta zostal tymczasowo zablokowany z powodu wielu nieudanych prób logowania. Proszę spróbować ponownie później",
     "emailExists": "Konto z tym adresem email już istnieje",
-    "unknown": "Coś poszło nie tak"
+    "unknown": "Coś poszło nie tak",
+    "pageNotFound" : "Ups, nie odnaleziono strony"
   },
   "success": {
     "post": "Utworzono przepis",
