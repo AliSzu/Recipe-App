@@ -50,19 +50,3 @@ export function useAddItemToShoppingList() {
   });
 }
 
-// queryFn: async () => {
-//     const recipeQuery = query(
-//       recipeCollection,
-//       where(documentId(), "==", id)
-//     );
-//     const shoppingListSnap = await getDocs(recipeQuery);
-//     const recipeArray: Recipe[] = shoppingListSnap.docs.map(
-//       (item: DocumentData) => ({
-//         id: item.id,
-//         ...item.data(),
-//       })
-//     );
-//     const recipe: Recipe = Object.assign({}, ...recipeArray);
-//     return recipe;
-//   },
-// });
