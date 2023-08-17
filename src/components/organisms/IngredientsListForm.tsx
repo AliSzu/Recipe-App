@@ -1,6 +1,6 @@
 import { RecipeFormValues } from "../../types/FormTypes";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { uniqueId } from "../../utils/recipeUtils";
+import { uniqueId } from "../../utils/utils";
 import { Button, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrayFieldContainer from "../molecules/ArrayFieldContainer";

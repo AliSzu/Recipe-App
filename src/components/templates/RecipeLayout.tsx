@@ -5,9 +5,13 @@ import NumberedList from "../molecules/NumberedList";
 import TwoColumnList from "../molecules/TwoColumnsList";
 import { useTranslation } from "react-i18next";
 import { Recipe } from "../../types/RecipeTypes";
+import DeleteModal from "../molecules/DeleteModal";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/Routes";
 
 interface RecipeLayoutProps {
   recipe: Recipe;
+  onDeleteRecipe: () => void;
 }
 
 const GridItem = styled("div")({
@@ -30,15 +34,25 @@ const Grid = styled("div")(({ theme }) => ({
   },
 }));
 
-const GridButton = styled(Button)(({ theme }) => ({
-  width: "30%",
-  [theme.breakpoints.down("sm")]: {
-    width: "100%",
+const ButtonContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: "1rem",
+  "& Button": {
+    width: "30%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
 }));
 
-const RecipeLayout = ({ recipe }: RecipeLayoutProps) => {
+const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleRecipeEdit = () => {
+    navigate(`${ROUTES.EDIT_RECIPE}/${recipe.id}`);
+  };
+
   return (
     <Grid>
       <GridItem>
@@ -46,7 +60,16 @@ const RecipeLayout = ({ recipe }: RecipeLayoutProps) => {
         <Typography>{recipe.description}</Typography>
       </GridItem>
       <GridItem>
-        <GridButton variant="outlined">{t("button.edit")}</GridButton>
+        <ButtonContainer>
+          <Button variant="outlined" onClick={handleRecipeEdit}>
+            {t("button.edit")}
+          </Button>
+          <DeleteModal
+            recipeId={recipe.id}
+            onDeleteRecipe={onDeleteRecipe}
+            recipeName={recipe.title}
+          />
+        </ButtonContainer>
         <CollapseList title={t("recipe.ingredients")}>
           <TwoColumnList items={recipe.ingredients} />
         </CollapseList>
