@@ -107,12 +107,17 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
     setItemAmount(amount);
     debounceEditAmount(amount);
   };
+
   return (
     <StyledListItem>
       <StyledCard>
         <StyledCardContent>
-          <ItemActions >
-            <StyledIcon disableRipple={true} size="small" onClick={() => onDeleteItem(item.id!)}>
+          <ItemActions>
+            <StyledIcon
+              disableRipple={true}
+              size="small"
+              onClick={() => onDeleteItem(item.id!)}
+            >
               <CloseIcon />
             </StyledIcon>
           </ItemActions>

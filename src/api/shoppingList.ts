@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAuth } from "firebase/auth";
 import {
   DocumentData,
   Timestamp,
@@ -17,8 +16,10 @@ import { QueryKeys } from "../enums/QueryKeys";
 import { ShoppingItem } from "../types/ShoppingListTypes";
 import { db, shoppingListCollection } from "../firebase";
 import { Collections } from "../enums/Collections";
+import { useAuthGuard } from "../hooks/useAuthGuard";
 
 export function useFetchShoppingList(userUid: string) {
+  useAuthGuard();
   return useQuery<ShoppingItem[], FirebaseError>({
     queryKey: [QueryKeys.shoppingListData, userUid],
     queryFn: async () => {
@@ -40,15 +41,11 @@ export function useFetchShoppingList(userUid: string) {
 }
 
 export function useAddItemToShoppingList() {
+  useAuthGuard();
   return useMutation<void, FirebaseError, ShoppingItemFormValues>({
     mutationFn: async (shoppingItem: ShoppingItemFormValues) => {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (!user) return;
-
       await addDoc(shoppingListCollection, {
         ...shoppingItem,
-        owner: user?.uid,
         createdAt: Timestamp.fromDate(new Date()),
         updatedAt: Timestamp.fromDate(new Date()),
       });
