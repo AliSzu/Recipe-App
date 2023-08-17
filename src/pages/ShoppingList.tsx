@@ -10,10 +10,10 @@ import {
   useFetchShoppingList,
 } from "../api/shoppingList";
 import { useAppSelector } from "../store/store";
-import { selectUserUid } from "../slices/authSlice";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/QueryKeys";
+import { selectUserUid } from "../slices/authSlice";
 
 const ShoppingListContainer = styled("div")({
   display: "flex",
@@ -41,12 +41,12 @@ const Title = styled("h1")({
 const ShoppingList = () => {
   const userUid = useAppSelector(selectUserUid);
   const { t } = useTranslation();
-  const addItemToShoppingListMutation = useAddItemToShoppingList();
+  const { mutate } = useAddItemToShoppingList();
   const { data: shoppingList, isFetching } = useFetchShoppingList(userUid);
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    addItemToShoppingListMutation.mutate(formData, {
+    mutate(formData, {
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.shoppingListData]);
       },

@@ -3,12 +3,8 @@ import { AuthState, UserInfo } from "../types/AuthTypes";
 import { RootState } from "../store/store";
 
 const initialState: AuthState = {
-  userInfo: {
-    email: "",
-    refreshToken: "",
-    uid: "",
-  },
   isLoggedIn: false,
+  userUid: "",
 };
 
 export const authSlice = createSlice({
@@ -17,19 +13,11 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<UserInfo>) => {
       state.isLoggedIn = true;
-      state.userInfo = {
-        email: action.payload.email,
-        refreshToken: action.payload.refreshToken,
-        uid: action.payload.uid,
-      };
+      state.userUid = action.payload.uid;
     },
     logout: (state) => {
-      (state.isLoggedIn = false),
-        (state.userInfo = {
-          email: "",
-          refreshToken: "",
-          uid: "",
-        });
+      state.isLoggedIn = false;
+      state.userUid = "";
     },
   },
 });
@@ -39,5 +27,4 @@ export const { login, logout } = authSlice.actions;
 export const selectIsLoggedIn = (state: RootState): boolean =>
   state.auth.isLoggedIn;
 
-export const selectUserUid = (state: RootState): string =>
-  state.auth.userInfo.uid;
+export const selectUserUid = (state: RootState): string => state.auth.userUid;
