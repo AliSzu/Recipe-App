@@ -2,6 +2,7 @@ export interface Recipe {
   id?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  owner: string;
   imgSrc: string;
   title: string;
   time: string;
