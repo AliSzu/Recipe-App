@@ -46,11 +46,14 @@ const ShoppingList = () => {
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    mutate({...formData, owner: userUid}, {
-      onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
-      },
-    });
+    mutate(
+      { ...formData, owner: userUid },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
+        },
+      }
+    );
   };
 
   const shoppingData =
@@ -58,11 +61,13 @@ const ShoppingList = () => {
     shoppingList.length !== 0 &&
     shoppingList.map((item: ShoppingItem) => (
       <React.Fragment key={item.id}>
-        <ShoppingListItem item={item}/>
+        <ShoppingListItem item={item} />
       </React.Fragment>
     ));
 
+
   return (
+    <>
     <ShoppingListContainer>
       <Title>{t("shoppingList.name")}</Title>
       <StyledList>
@@ -76,6 +81,7 @@ const ShoppingList = () => {
         )}
       </StyledList>
     </ShoppingListContainer>
+    </>
   );
 };
 

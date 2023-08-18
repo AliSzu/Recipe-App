@@ -115,7 +115,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
     if (!item.id) return;
     deleteMutate(item.id, {
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
+        queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
       },
       onError: (error) => {
         dispatch(

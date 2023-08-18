@@ -9,8 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import Snackbar from "../components/atoms/Snackbar";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
-import ShoppingList from "../pages/ShoppingList";
 import EditRecipe from "../pages/EditRecipe";
+import ShoppingList from "../pages/ShoppingList";
 
 const NavbarLayout = () => (
   <>
