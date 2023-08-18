@@ -1,17 +1,15 @@
 export interface UserInfo {
-  email: string | null;
-  refreshToken: string;
   uid: string
 }
 
 export interface UserResponse {
   data: {
-    userInfo: UserInfo;
+    uid: string
   };
 }
 
 export interface AuthState {
-  userInfo: UserInfo;
+  userUid: string,
   isLoggedIn: boolean;
 }
 

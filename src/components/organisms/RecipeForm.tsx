@@ -11,7 +11,7 @@ import { theme } from "../../theme/theme";
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
   onFormSubmit: (formData: RecipeFormValues) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const StyledForm = styled("form")(({ theme }) => ({

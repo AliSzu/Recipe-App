@@ -6,4 +6,9 @@ export const MENU_ITEMS: MenuItem[] = [
     route: 'ADD_RECIPE',
     id: 'addRecipe'
   },
+  {
+    title: 'menu.shoppingList',
+    route: 'SHOPPING_LIST',
+    id: 'shoppingList'
+  }
 ];

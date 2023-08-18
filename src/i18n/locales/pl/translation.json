@@ -48,10 +48,14 @@
   },
   "success": {
     "post": "Utworzono przepis",
-    "delete": "Usunięto przepis"
+    "delete": "Usunięto przepis",
+    "edit": "Edytowano przepis"
   },
   "latestRecipes": "Ostatnie Przepisy",
-  "emptyRecipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
+  "empty": {
+    "recipes": "Nie ma tu jeszcze żadnych przepisów. Spróbuj dodać pierwszy przepis! ",
+    "shoppingList": "Dodaj swoje pierwsze składniki!"
+  },
   "recipe": {
     "preparing": "Przygotowanie",
     "ingredients": "Składniki",
@@ -64,10 +68,17 @@
     "preparingSteps": "Kroki Przygotowania"
   },
   "menu": {
-    "addRecipe": "Dodaj Przepis"
+    "addRecipe": "Dodaj Przepis",
+    "shoppingList": "Lista zakupów"
   },
   "file": {
     "empty": "Nie wybrano pliku"
+  },
+  "shoppingList": {
+    "name": "Lista zakupów",
+    "item": {
+      "name": "Nazwa"
+    }
   },
   "popover": {
     "empty": "Podaj co najmniej jeden element"

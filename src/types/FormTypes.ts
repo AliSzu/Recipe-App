@@ -19,3 +19,9 @@ export interface RecipeFormValues {
   ingredients: Ingredient[];
   imgSrc: string
 }
+
+export interface ShoppingItemFormValues {
+  name: string;
+  amount: number;
+  owner: string;
+}

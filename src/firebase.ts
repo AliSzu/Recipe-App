@@ -3,7 +3,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { Recipe } from "./types/RecipeTypes";
 import { Collections } from "./enums/Collections";
-import { createCollection } from "./utils/recipeUtils";
+import { ShoppingItem } from "./types/ShoppingListTypes";
+import { createCollection } from "./utils/utils";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -18,6 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const recipeCollection = createCollection<Recipe>(Collections.recipes);
+export const shoppingListCollection  = createCollection<ShoppingItem>(Collections.shoppingList)
 
 export default app;
 export const auth = getAuth(app);

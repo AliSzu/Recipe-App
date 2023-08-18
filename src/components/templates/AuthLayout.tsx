@@ -20,9 +20,11 @@ const Wrapper = styled("div")(({ theme }) => ({
   height: "100%",
   flexDirection: "column",
   fontFamily: "Inter, sans-serif",
+  textAlign: 'center',
   backgroundColor: theme.palette.primary.light,
   [theme.breakpoints.down("sm")]: {
     backgroundColor: theme.palette.secondary.light,
+    padding: '1rem'
   },
 }));
 

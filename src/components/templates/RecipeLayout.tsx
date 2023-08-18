@@ -6,6 +6,10 @@ import TwoColumnList from "../molecules/TwoColumnsList";
 import { useTranslation } from "react-i18next";
 import { Recipe } from "../../types/RecipeTypes";
 import DeleteModal from "../molecules/DeleteModal";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/Routes";
+import { useAppSelector } from "../../store/store";
+import { selectUserUid } from "../../slices/authSlice";
 
 interface RecipeLayoutProps {
   recipe: Recipe;
@@ -45,6 +49,12 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 
 const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const userUid = useAppSelector(selectUserUid);
+
+  const handleRecipeEdit = () => {
+    navigate(`${ROUTES.EDIT_RECIPE}/${recipe.id}`);
+  };
 
   return (
     <Grid>
@@ -53,14 +63,18 @@ const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
         <Typography>{recipe.description}</Typography>
       </GridItem>
       <GridItem>
-        <ButtonContainer>
-          <Button variant="outlined">{t("button.edit")}</Button>
-          <DeleteModal
-            recipeId={recipe.id}
-            onDeleteRecipe={onDeleteRecipe}
-            recipeName={recipe.title}
-          />
-        </ButtonContainer>
+        {userUid === recipe.owner && (
+          <ButtonContainer>
+            <Button variant="outlined" onClick={handleRecipeEdit}>
+              {t("button.edit")}
+            </Button>
+            <DeleteModal
+              recipeId={recipe.id}
+              onDeleteRecipe={onDeleteRecipe}
+              recipeName={recipe.title}
+            />
+          </ButtonContainer>
+        )}
         <CollapseList title={t("recipe.ingredients")}>
           <TwoColumnList items={recipe.ingredients} />
         </CollapseList>

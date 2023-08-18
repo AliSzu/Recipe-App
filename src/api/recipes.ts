@@ -10,13 +10,17 @@ import {
   doc,
   Timestamp,
   orderBy,
+  updateDoc,
 } from "firebase/firestore";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
+import { useAuthGuard } from "../hooks/useAuthGuard";
+import { Collections } from "../enums/Collections";
 
 export function useFetchRecipes() {
+  useAuthGuard();
   return useQuery<Recipe[], FirebaseError>({
     queryKey: [QueryKeys.recipesData],
     queryFn: async () => {
@@ -32,6 +36,7 @@ export function useFetchRecipes() {
 }
 
 export function useFetchRecipeById(id?: string) {
+  useAuthGuard();
   return useQuery<Recipe, FirebaseError>({
     queryKey: [QueryKeys.recipeById, id],
     queryFn: async () => {
@@ -53,6 +58,7 @@ export function useFetchRecipeById(id?: string) {
 }
 
 export function usePostRecipe() {
+  useAuthGuard();
   return useMutation<string, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
       const docRef = await addDoc(recipeCollection, {
@@ -66,9 +72,24 @@ export function usePostRecipe() {
 }
 
 export function useDeleteRecipe() {
+  useAuthGuard();
   return useMutation<void, FirebaseError, string>({
     mutationFn: async (documentId: string) => {
-      await deleteDoc(doc(db, "recipes", documentId));
+      await deleteDoc(doc(db, Collections.recipes, documentId));
+    },
+  });
+}
+
+export function useEditRecipe() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      const { id, ...recipe } = newRecipe;
+      if (!id) return;
+      await updateDoc(doc(db, Collections.recipes, id), {
+        ...recipe,
+        updatedAt: Timestamp.fromDate(new Date()),
+      });
     },
   });
 }

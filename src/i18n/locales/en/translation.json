@@ -48,10 +48,14 @@
   },
   "success": {
     "post": "Recipe created",
-    "delete": "Recipe deleted"
+    "delete": "Recipe deleted",
+    "edit": "Recipe edited"
   },
   "latestRecipes": "Latest Recipes",
-  "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
+  "empty": {
+    "recipes": "There are no recipes here yet. Try adding first recipe! ",
+    "shoppingList": "Add you first list item!"
+  },
   "recipe": {
     "preparing": "Preparing",
     "ingredients": "Ingredients",
@@ -64,14 +68,22 @@
     "preparingSteps": "Preparing Steps"
   },
   "menu": {
-    "addRecipe": "Add Recipe"
+    "addRecipe": "Add Recipe",
+    "shoppingList": "Shopping List"
   },
   "file": {
     "empty": "No file chosen"
   },
+  "shoppingList": {
+    "name": "Shopping List",
+    "item": {
+      "name": "Name"
+    }
+  },
   "popover": {
     "empty": "Please provide at least one element"
   },
+
   "dialog": {
     "delete": {
       "title": "Delete {{item}}",
