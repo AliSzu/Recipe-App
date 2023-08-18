@@ -1,26 +1,14 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import { ROUTES } from "../constants/Routes";
-import { Navbar } from "../components/organisms/Navbar";
-import { Container } from "@mui/material";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
-import Snackbar from "../components/atoms/Snackbar";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
 import ShoppingList from "../pages/ShoppingList";
 import EditRecipe from "../pages/EditRecipe";
-
-const NavbarLayout = () => (
-  <>
-    <Navbar />
-    <Container>
-      <Outlet />
-      <Snackbar />
-    </Container>
-  </>
-);
+import RootContainer from "./RootContainer";
 
 const router = createBrowserRouter([
   {
@@ -28,26 +16,30 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        path: ROUTES.HOME,
-        element: <NavbarLayout />,
+        element: <RootContainer />,
         children: [
           {
+            index: true,
             path: ROUTES.HOME,
             element: <Home />,
           },
           {
+            index: true,
             path: `${ROUTES.RECIPE}/:id`,
             element: <Recipe />,
           },
           {
+            index: true,
             path: ROUTES.ADD_RECIPE,
             element: <AddRecipe />,
           },
           {
+            index: true,
             path: ROUTES.SHOPPING_LIST,
             element: <ShoppingList />,
           },
           {
+            index: true,
             path: `${ROUTES.EDIT_RECIPE}/:id`,
             element: <EditRecipe />,
           },
