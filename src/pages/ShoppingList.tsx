@@ -46,9 +46,9 @@ const ShoppingList = () => {
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    mutate(formData, {
+    mutate({...formData, owner: userUid}, {
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
+        queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
       },
     });
   };
