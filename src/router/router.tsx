@@ -1,4 +1,4 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createHashRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import { ROUTES } from "../constants/Routes";
 import { Navbar } from "../components/organisms/Navbar";
@@ -22,7 +22,7 @@ const NavbarLayout = () => (
   </>
 );
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: ROUTES.HOME,
     element: <PrivateRoute />,
