@@ -6,10 +6,13 @@ import { RecipeFormValues } from "../types/FormTypes";
 import { useTranslation } from "react-i18next";
 import { useSubmitWithFile } from "../hooks/useSubmitWithFile";
 import { useSubmit } from "../hooks/useSubmit";
+import { useAppSelector } from "../store/store";
+import { selectUserUid } from "../slices/authSlice";
 
 const EditRecipe = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+  const userUid = useAppSelector(selectUserUid)
 
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
@@ -24,9 +27,9 @@ const EditRecipe = () => {
   const handleSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
     if (image && image[0]) {
-      submitWithFile(image[0], formRecipe, "edit-success");
+      submitWithFile(image[0], {...formRecipe, owner: userUid }, "edit-success");
     } else {
-      submitWithoutFile(formRecipe, "edit-success");
+      submitWithoutFile({...formRecipe, owner: userUid}, "edit-success");
     }
   };
 
