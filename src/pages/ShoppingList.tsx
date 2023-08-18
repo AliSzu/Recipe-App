@@ -56,6 +56,7 @@ const ShoppingList = () => {
   const onDeleteItem = (itemId: string) => {
     // TODO: DELETE RECIPE
   };
+  
 
   const shoppingData =
     shoppingList &&
