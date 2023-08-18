@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const StyledImage = styled("img")(({ theme }) => ({
   height: "20rem",
   filter:
-    "invert(71%) sepia(0%) saturate(3%) hue-rotate(151deg) brightness(89%) contrast(85%)",
+    "invert(94%) sepia(0%) saturate(0%) hue-rotate(148deg) brightness(93%) contrast(90%)",
   [theme.breakpoints.down("md")]: {
     height: "10rem",
   },
