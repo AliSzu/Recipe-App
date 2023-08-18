@@ -13,6 +13,7 @@ import { selectUserUid } from "../../slices/authSlice";
 import { showSnackbar } from "../../slices/snackbarSlice";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
+import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
@@ -80,7 +81,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const debounceEditAmount = useCallback(
     debounce((newAmount: number) => {
       editAmount(newAmount);
-    }, 800),
+    }, DEBOUNCE_TIME),
     [debounce]
   );
 
