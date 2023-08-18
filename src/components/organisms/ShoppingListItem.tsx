@@ -73,8 +73,8 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
 
   const queryClient = useQueryClient();
-  const editShoppingListItemMutation = useEditShoppingListItem();
-  const deleteShoppingListItemMutation = useDeleteShoppingListItem();
+  const {mutate: editMutate} = useEditShoppingListItem();
+  const {mutate: deleteMutate} = useDeleteShoppingListItem();
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
@@ -88,7 +88,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const editAmount = (newAmount: number) => {
     if (!item.id) return;
     const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
-    editShoppingListItemMutation.mutate(newItem, {
+    editMutate(newItem, {
       onSuccess: () => {
         queryClient.setQueryData(
           [QueryKeys.shoppingListData, { userUid: userUid }],
@@ -113,7 +113,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
 
   const handleDeleteItem = () => {
     if (!item.id) return;
-    deleteShoppingListItemMutation.mutate(item.id, {
+    deleteMutate(item.id, {
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.shoppingListData]);
       },
