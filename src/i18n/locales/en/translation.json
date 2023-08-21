@@ -93,5 +93,8 @@
       "title": "Delete {{item}}",
       "message": "Are you sure you want to delete {{itemName}}?"
     }
-  }
+  },
+  "category": "Category",
+  "vegan": "Vegan",
+  "breakfast": "Breakfast"
 }

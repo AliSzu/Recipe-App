@@ -61,6 +61,7 @@ const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
       <GridItem>
         <Tile recipe={recipe} />
         <Typography>{recipe.description}</Typography>
+        {t('category')} : {t(recipe.category)}
       </GridItem>
       <GridItem>
         {userUid === recipe.owner && (

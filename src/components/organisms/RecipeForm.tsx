@@ -7,6 +7,7 @@ import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
 import { theme } from "../../theme/theme";
+import CategorySelect from "../molecules/CategorySelect";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
@@ -84,6 +85,7 @@ const RecipeForm = ({
           <IngredientsListForm />
           <StyledDivider>{t("form.preparingSteps")}</StyledDivider>
           <PreparingStepsList />
+          <CategorySelect/>
           <ButtonContainer>
             <Button
               type="submit"

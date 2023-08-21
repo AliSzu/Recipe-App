@@ -1,3 +1,4 @@
+import { Category } from "../enums/Category";
 import { Ingredient, Preparing } from "./RecipeTypes";
 
 export interface LoginFormProps {
@@ -14,6 +15,7 @@ export interface RecipeFormValues {
   title: string;
   time: string;
   description: string;
+  category: Category;
   image?: FileList;
   preparing: Preparing[];
   ingredients: Ingredient[];

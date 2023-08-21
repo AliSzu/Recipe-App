@@ -93,5 +93,8 @@
       "title": "Usuń {{item}}",
       "message": "Czy na pewno chcesz usunąć {{itemName}}?"
     }
-  }
+  },
+  "category": "Kategoria",
+  "vegan": "Wegańskie",
+  "breakfast": "Śniadanie"
 }

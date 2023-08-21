@@ -4,7 +4,7 @@ import { useFetchRecipes } from "../api/recipes";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
-import SortSelector from "../components/organisms/SortSelector";
+import SortSelector from "../components/organisms/Selector";
 import { useEffect, useState } from "react";
 import { Order, Recipe } from "../types/RecipeTypes";
 import { useInView } from "react-intersection-observer";

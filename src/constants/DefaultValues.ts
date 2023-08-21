@@ -1,3 +1,4 @@
+import { Category } from "../enums/Category";
 import { RecipeFormValues, ShoppingItemFormValues } from "../types/FormTypes";
 import { uniqueId } from "../utils/utils";
 
@@ -9,6 +10,7 @@ export const recipeDefaultValues: RecipeFormValues = {
   time: "",
   description: "",
   imgSrc: DEFAULT_IMAGE,
+  category: Category.vegan,
   ingredients: [
     {
       amount: "",
