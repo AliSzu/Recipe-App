@@ -3,11 +3,14 @@ import { showSnackbar } from "../slices/snackbarSlice";
 import { useAppDispatch } from "../store/store";
 import { Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../constants/Routes";
 
 export const useSubmit = (
-  submitMutation: UseMutationResult<void, FirebaseError, Recipe>
+  submitMutation: UseMutationResult<string | void, FirebaseError, Recipe>
 ) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isLoading = submitMutation.isLoading;
 
   const dispatchError = (errorCode: string) => {
@@ -22,10 +25,10 @@ export const useSubmit = (
 
   const submitToFirebase = (
     recipe: Recipe,
-    successCode: string
+    successCode: string,
   ) => {
     submitMutation.mutate(recipe, {
-      onSuccess: () => {
+      onSuccess: (id) => {
         dispatch(
           showSnackbar({
             message: successCode,
@@ -33,6 +36,11 @@ export const useSubmit = (
             autoHideDuration: 6000,
           })
         );
+        if (id) {
+          navigate(`${ROUTES.RECIPE}/${id}`);
+        } else {
+          navigate(`${ROUTES.RECIPE}/${recipe.id}`);
+        }
       },
       onError: (error) => {
         dispatchError(error.code);

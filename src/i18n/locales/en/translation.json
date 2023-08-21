@@ -25,7 +25,9 @@
     "edit": "Edit",
     "google": "Use Google",
     "submit": "Submit",
-    "file": "Upload picture"
+    "file": "Upload picture",
+    "cancel": "Cancel",
+    "delete": "Delete"
   },
   "message": {
     "login": "Have an account already? <1>Log in</1>",
@@ -43,14 +45,21 @@
     "emailExists": "Account with this email address already exists",
     "unknown": "Something went wrong"
   },
-  "success" : {
-    "post" : "Recipe created"
+  "success": {
+    "post": "Recipe created",
+    "delete": "Recipe deleted",
+    "edit": "Recipe edited"
   },
   "latestRecipes": "Latest Recipes",
-  "emptyRecipes": "There are no recipes here yet. Try adding first recipe!",
+  "empty": {
+    "recipes": "There are no recipes here yet. Try adding first recipe! ",
+    "shoppingList": "Add you first list item!"
+  },
   "recipe": {
     "preparing": "Preparing",
-    "ingredients": "Ingredients"
+    "ingredients": "Ingredients",
+    "name": "Recipe",
+    "notFound": "Recipe not found"
   },
   "form": {
     "recipeInformation": "Recipe Information",
@@ -58,18 +67,31 @@
     "preparingSteps": "Preparing Steps"
   },
   "menu": {
-    "addRecipe": "Add Recipe"
+    "addRecipe": "Add Recipe",
+    "shoppingList": "Shopping List"
   },
-  "file" : {
-    "empty" : "No file chosen"
+  "file": {
+    "empty": "No file chosen"
   },
-  "popover" : {
-    "empty" : "Please provide at least one element"
+  "popover": {
+    "empty": "Please provide at least one element"
   },
   "sort": {
     "name": "Sort",
     "time": "By preparing time",
     "alphabetically": "Alphabetically",
     "updated": "Newest"
+  },
+  "shoppingList": {
+    "name": "Shopping List",
+    "item": {
+      "name": "Name"
+    }
+  },
+  "dialog": {
+    "delete": {
+      "title": "Delete {{item}}",
+      "message": "Are you sure you want to delete {{itemName}}?"
+    }
   }
 }

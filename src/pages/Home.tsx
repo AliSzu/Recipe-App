@@ -51,6 +51,19 @@ const Home = () => {
     }
   }, [fetchNextPage, inView]);
 
+  useEffect(() => {
+    if(isError){
+      dispatch(
+        showSnackbar({
+          message: error.code,
+          autoHideDuration: 6000,
+          severity: "error",
+        })
+      );
+    }
+  }, [isError, dispatch, showSnackbar])
+
+
   const handleSort = (sortProperty: keyof Recipe) => {
     setSortProperty(sortProperty);
   };
@@ -64,15 +77,6 @@ const Home = () => {
       ))
     );
 
-  if (isError) {
-    dispatch(
-      showSnackbar({
-        message: error.code,
-        autoHideDuration: 6000,
-        severity: "error",
-      })
-    );
-  }
 
   return (
     <HomeContainer>

@@ -9,11 +9,17 @@ import {
   limit,
   startAfter,
   orderBy,
+  deleteDoc,
+  doc,
+  Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { InfiniteRecipe, Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
-import { recipeCollection } from "../firebase";
+import { db, recipeCollection } from "../firebase";
+import { useAuthGuard } from "../hooks/useAuthGuard";
+import { Collections } from "../enums/Collections";
 
 export function useFetchRecipes(sortProperty: string) {
   return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
@@ -49,6 +55,7 @@ export function useFetchRecipes(sortProperty: string) {
 }
 
 export function useFetchRecipeById(id?: string) {
+  useAuthGuard();
   return useQuery<Recipe, FirebaseError>({
     queryKey: [QueryKeys.recipeById, id],
     queryFn: async () => {
@@ -70,10 +77,37 @@ export function useFetchRecipeById(id?: string) {
 }
 
 export function usePostRecipe() {
+  useAuthGuard();
+  return useMutation<string, FirebaseError, Recipe>({
+    mutationFn: async (newRecipe: Recipe) => {
+      const docRef = await addDoc(recipeCollection, {
+        ...newRecipe,
+        createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: Timestamp.fromDate(new Date()),
+      });
+      return docRef.id;
+    },
+  });
+}
+
+export function useDeleteRecipe() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (documentId: string) => {
+      await deleteDoc(doc(db, Collections.recipes, documentId));
+    },
+  });
+}
+
+export function useEditRecipe() {
+  useAuthGuard();
   return useMutation<void, FirebaseError, Recipe>({
     mutationFn: async (newRecipe: Recipe) => {
-      await addDoc(recipeCollection, {
-        ...newRecipe,
+      const { id, ...recipe } = newRecipe;
+      if (!id) return;
+      await updateDoc(doc(db, Collections.recipes, id), {
+        ...recipe,
+        updatedAt: Timestamp.fromDate(new Date()),
       });
     },
   });
