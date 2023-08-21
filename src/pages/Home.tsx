@@ -79,13 +79,10 @@ const Home = () => {
       <Title>{t("latestRecipes")}</Title>
       <SortButtonContainer>
         <SortSelector  onSort={handleSort}/>
-        {/* <SortSelector onSort={handleSort} sortProperty="title" />
-        <SortSelector onSort={handleSort} sortProperty="updatedAt" />
-        <SortSelector onSort={handleSort} sortProperty="time" /> */}
       </SortButtonContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}
-        {isFetching ? <CenteredCircularProgress /> : <div ref={ref} />}
+        {isFetching && !recipesData ? <CenteredCircularProgress /> : <div ref={ref} />}
       </ImageList>
     </HomeContainer>
   );
