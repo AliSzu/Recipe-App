@@ -6,7 +6,7 @@ import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import SortSelector from "../components/organisms/SortSelector";
 import { useEffect, useState } from "react";
-import { Recipe } from "../types/RecipeTypes";
+import { Order, Recipe } from "../types/RecipeTypes";
 import { useInView } from "react-intersection-observer";
 import { theme } from "../theme/theme";
 import Tile from "../components/atoms/Tile";
@@ -35,7 +35,10 @@ const SortButtonContainer = styled("div")({
 });
 
 const Home = () => {
-  const [sortProperty, setSortProperty] = useState<keyof Recipe>("createdAt");
+  const [sortProperty, setSortProperty] = useState<Order>({
+    sort: 'updatedAt',
+    direction: 'desc'
+  });
 
   const { t } = useTranslation();
   const { ref, inView } = useInView();
@@ -52,7 +55,7 @@ const Home = () => {
   }, [fetchNextPage, inView]);
 
   useEffect(() => {
-    if(isError){
+    if (isError) {
       dispatch(
         showSnackbar({
           message: error.code,
@@ -61,11 +64,10 @@ const Home = () => {
         })
       );
     }
-  }, [isError, dispatch, showSnackbar])
+  }, [isError, dispatch, showSnackbar]);
 
-
-  const handleSort = (sortProperty: keyof Recipe) => {
-    setSortProperty(sortProperty);
+  const handleSort = (orderElements: Order) => {
+    setSortProperty(orderElements);
   };
 
   const recipesData =
@@ -77,16 +79,15 @@ const Home = () => {
       ))
     );
 
-
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
       <SortButtonContainer>
-        <SortSelector  onSort={handleSort}/>
+        <SortSelector onSort={handleSort} />
       </SortButtonContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}
-        {isFetching && !recipesData ? <CenteredCircularProgress /> : <div ref={ref} />}
+        {isFetching && data ? <CenteredCircularProgress /> : <div ref={ref}/>}
       </ImageList>
     </HomeContainer>
   );

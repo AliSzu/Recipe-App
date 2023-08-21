@@ -22,6 +22,7 @@ export const recipeDefaultValues: RecipeFormValues = {
 export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
   amount: 1,
+  owner: "",
 };
 
 export const DEBOUNCE_TIME = 800;

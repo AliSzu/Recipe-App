@@ -1,4 +1,4 @@
-import { UseMutationResult } from "@tanstack/react-query";
+import { UseMutationResult, useQueryClient } from "@tanstack/react-query";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useAppDispatch } from "../store/store";
 import { Recipe } from "../types/RecipeTypes";
@@ -7,6 +7,7 @@ import { useDeleteImage, useUploadImage } from "../api/files";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../constants/Routes";
 import { DEFAULT_IMAGE } from "../constants/DefaultValues";
+import { QueryKeys } from "../enums/QueryKeys";
 
 export const useSubmitWithFile = (
   submitMutation: UseMutationResult<string | void, FirebaseError, Recipe>
@@ -16,6 +17,7 @@ export const useSubmitWithFile = (
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = submitMutation.isLoading || uploadImageMutation.isLoading;
+  const queryClient = useQueryClient();
 
   const dispatchError = (errorCode: string) => {
     dispatch(
@@ -50,8 +52,8 @@ export const useSubmitWithFile = (
             { ...recipe, imgSrc: url },
             {
               onSuccess: (id) => {
-                const navigateId = id ? id : recipe.id
-                dispatchSuccess(successCode, navigateId)
+                const navigateId = id ? id : recipe.id;
+                dispatchSuccess(successCode, navigateId);
               },
               onError: (error) => {
                 dispatchError(error.code);
@@ -68,7 +70,8 @@ export const useSubmitWithFile = (
           );
           try {
             await Promise.all([submitPromise, deleteImagePromise]);
-            dispatchSuccess(successCode, recipe.id)
+            dispatchSuccess(successCode, recipe.id);
+            queryClient.invalidateQueries([QueryKeys.recipesData]);
           } catch (error) {
             const errorResponse = error as FirebaseError;
             dispatchError(errorResponse.code);

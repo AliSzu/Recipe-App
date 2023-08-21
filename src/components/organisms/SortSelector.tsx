@@ -4,11 +4,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
-import { Recipe } from "../../types/RecipeTypes";
+import { Order, SortItems } from "../../types/RecipeTypes";
 import { useTranslation } from "react-i18next";
+import { SORT_ITEMS } from "../../constants/SortItems";
 
 interface SortSelectorProps {
-  onSort: (sortProperty: keyof Recipe) => void;
+  onSort: (orderElements: Order) => void;
 }
 
 const StyledMenu = styled(Menu)({
@@ -27,9 +28,9 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (sortProperty: keyof Recipe) => {
+  const handleClose = (orderElements: Order) => {
     setAnchorEl(null);
-    onSort(sortProperty);
+    onSort(orderElements);
   };
   return (
     <div>
@@ -39,7 +40,7 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        {t('sort.name')}
+        {t("sort.name")}
       </Button>
       <StyledMenu
         elevation={0}
@@ -55,15 +56,11 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
         open={open}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => handleClose("title")} disableRipple>
-          {t('sort.alphabetically')}
-        </MenuItem>
-        <MenuItem onClick={() => handleClose("time")} disableRipple>
-          {t('sort.time')}
-        </MenuItem>
-        <MenuItem onClick={() => handleClose("updatedAt")} disableRipple>
-          {t('sort.updated')}
-        </MenuItem>
+        {SORT_ITEMS.map((item: SortItems) => (
+          <MenuItem onClick={() => handleClose(item.order)} disableRipple key={item.id}>
+            {t(item.name)}
+          </MenuItem>
+        ))}
       </StyledMenu>
     </div>
   );

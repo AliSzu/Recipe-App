@@ -4,6 +4,7 @@ import { uniqueId } from "../../utils/utils";
 export const MOCK_RECIPE: Recipe = {
   title: "Pancakes",
   time: "50min",
+  owner: '',
   imgSrc:
     "https://wszystkiegoslodkiego.pl/storage/images/202111/puszyste-pancakes.jpg",
   id: "mock1",
