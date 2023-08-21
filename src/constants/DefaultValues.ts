@@ -11,7 +11,7 @@ export const recipeDefaultValues: RecipeFormValues = {
   imgSrc: DEFAULT_IMAGE,
   ingredients: [
     {
-      amount: "",
+      amount: 1,
       name: "",
       id: uniqueId(),
     },
@@ -22,6 +22,7 @@ export const recipeDefaultValues: RecipeFormValues = {
 export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
   amount: 1,
+  owner: ''
 };
 
 export const DEBOUNCE_TIME = 800;

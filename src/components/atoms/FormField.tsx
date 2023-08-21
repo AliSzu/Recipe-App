@@ -10,6 +10,7 @@ interface FormFieldProps {
   multiline?: boolean;
   rows?: number;
   label: string;
+  type?: string;
 }
 
 const FormField = ({
@@ -18,6 +19,7 @@ const FormField = ({
   rows,
   isError,
   label,
+  type,
 }: FormFieldProps) => {
   const { t } = useTranslation();
   const {
@@ -44,6 +46,7 @@ const FormField = ({
       multiline={multiline}
       rows={rows ? rows : 1}
       error={isError}
+      type={type}
     />
   );
 };

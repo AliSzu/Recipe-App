@@ -6,7 +6,7 @@ import { ShoppingItemFormValues } from "../types/FormTypes";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
-  useAddItemToShoppingList,
+  useAddNewItemToShoppingList,
   useFetchShoppingList,
 } from "../api/shoppingList";
 import { useAppSelector } from "../store/store";
@@ -41,12 +41,12 @@ const Title = styled("h1")({
 const ShoppingList = () => {
   const userUid = useAppSelector(selectUserUid);
   const { t } = useTranslation();
-  const { mutate } = useAddItemToShoppingList();
+  const { mutate } = useAddNewItemToShoppingList();
   const { data: shoppingList, isFetching } = useFetchShoppingList(userUid);
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    mutate(formData, {
+    mutate({...formData, owner: userUid}, {
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.shoppingListData]);
       },
