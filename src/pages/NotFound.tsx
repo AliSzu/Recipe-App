@@ -1,18 +1,18 @@
 import { styled } from "@mui/material";
-import emptyPlate from "../assets/images/plate.svg";
+import {ReactComponent as EmptyPlateIcon } from "../assets/images/plate.svg";
 import { useTranslation } from "react-i18next";
 
-const StyledImage = styled("img")(({ theme }) => ({
-  height: "20rem",
-  filter:
-    "invert(94%) sepia(0%) saturate(0%) hue-rotate(148deg) brightness(93%) contrast(90%)",
+const StyledSvgIcon = styled(EmptyPlateIcon)(({theme}) => ({
+  color: theme.palette.secondary.dark,
+  height: '20rem',
+  width: 'auto',
   [theme.breakpoints.down("md")]: {
     height: "10rem",
   },
   [theme.breakpoints.down("sm")]: {
     height: "5rem",
   },
-}));
+}))
 
 const ErrorImage = styled("div")(({ theme }) => ({
   color: theme.palette.secondary.dark,
@@ -47,7 +47,7 @@ const NotFound = () => {
   return (
     <Container>
       <ErrorImage>
-        4<StyledImage src={emptyPlate} />4
+        4<StyledSvgIcon/>4
       </ErrorImage>
       <Message>{t("error.pageNotFound")}</Message>
     </Container>
