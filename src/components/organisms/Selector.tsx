@@ -4,12 +4,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
-import { Order, SortItems } from "../../types/RecipeTypes";
+import { SelectItem } from "../../types/RecipeTypes";
 import { useTranslation } from "react-i18next";
-import { SORT_ITEMS } from "../../constants/SortItems";
+import { OrderByDirection } from "firebase/firestore";
 
-interface SortSelectorProps {
-  onSort: (orderElements: Order) => void;
+interface SelectorProps {
+  onSelect: (property: string, order?: OrderByDirection) => void;
+  selectItems: SelectItem[];
+  name: string;
 }
 
 const StyledMenu = styled(Menu)({
@@ -20,7 +22,7 @@ const StyledMenu = styled(Menu)({
   },
 });
 
-const SortSelector = ({ onSort }: SortSelectorProps) => {
+const Selector = ({ onSelect, selectItems, name }: SelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
@@ -28,10 +30,11 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (orderElements: Order) => {
+  const handleClose = (property: string, order?: OrderByDirection) => {
     setAnchorEl(null);
-    onSort(orderElements);
+    onSelect(property, order);
   };
+
   return (
     <div>
       <Button
@@ -40,7 +43,7 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        {t("sort.name")}
+        {t(name)}
       </Button>
       <StyledMenu
         elevation={0}
@@ -56,8 +59,12 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
         open={open}
         onClose={() => setAnchorEl(null)}
       >
-        {SORT_ITEMS.map((item: SortItems) => (
-          <MenuItem onClick={() => handleClose(item.order)} disableRipple key={item.id}>
+        {selectItems.map((item: SelectItem) => (
+          <MenuItem
+            onClick={() => handleClose(item.propertyName, item.orderDirection)}
+            disableRipple
+            key={item.id}
+          >
             {t(item.name)}
           </MenuItem>
         ))}
@@ -66,4 +73,4 @@ const SortSelector = ({ onSort }: SortSelectorProps) => {
   );
 };
 
-export default SortSelector;
+export default Selector;

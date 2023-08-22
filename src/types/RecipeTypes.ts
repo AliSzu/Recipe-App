@@ -1,4 +1,8 @@
-import { DocumentData, OrderByDirection, QueryDocumentSnapshot } from "firebase/firestore";
+import {
+  DocumentData,
+  OrderByDirection,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { Category } from "../enums/Category";
 
 export interface Recipe {
@@ -35,8 +39,9 @@ export interface Order {
   direction: OrderByDirection;
 }
 
-export interface SortItems {
+export interface SelectItem {
   name: string;
-  order: Order;
   id: string;
+  propertyName: string;
+  orderDirection?: OrderByDirection;
 }

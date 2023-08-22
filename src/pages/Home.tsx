@@ -4,12 +4,16 @@ import { useFetchRecipes } from "../api/recipes";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useAppDispatch } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
-import SortSelector from "../components/organisms/Selector";
 import { useEffect, useState } from "react";
-import { Order, Recipe } from "../types/RecipeTypes";
+import { Order, Recipe, SelectItem } from "../types/RecipeTypes";
 import { useInView } from "react-intersection-observer";
 import { theme } from "../theme/theme";
 import Tile from "../components/atoms/Tile";
+import { SORT_ITEMS } from "../constants/SortItems";
+import { uniqueId } from "../utils/utils";
+import { Category } from "../enums/Category";
+import { OrderByDirection } from "firebase/firestore";
+import Selector from "../components/organisms/Selector";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -36,14 +40,17 @@ const SortButtonContainer = styled("div")({
 
 const Home = () => {
   const [sortProperty, setSortProperty] = useState<Order>({
-    sort: 'updatedAt',
-    direction: 'desc'
+    sort: "updatedAt",
+    direction: "desc",
   });
+  const [filter, setFilter] = useState<string>();
 
   const { t } = useTranslation();
   const { ref, inView } = useInView();
-  const { data, isError, error, isFetching, fetchNextPage } =
-    useFetchRecipes(sortProperty);
+  const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes(
+    sortProperty,
+    filter
+  );
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
@@ -66,8 +73,13 @@ const Home = () => {
     }
   }, [isError, dispatch, showSnackbar]);
 
-  const handleSort = (orderElements: Order) => {
-    setSortProperty(orderElements);
+  const handleSort = (property: string, order?: OrderByDirection) => {
+    if (!order) return;
+    setSortProperty({ sort: property, direction: order });
+  };
+
+  const handleFilter = (property: string) => {
+    setFilter(property);
   };
 
   const recipesData =
@@ -79,15 +91,24 @@ const Home = () => {
       ))
     );
 
+  const categoryOptions: SelectItem[] = Object.keys(Category).map(
+    (category) => ({
+      id: uniqueId(),
+      name: category,
+      propertyName: category,
+    })
+  );
+
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
       <SortButtonContainer>
-        <SortSelector onSort={handleSort} />
+        <Selector onSelect={handleSort} selectItems={SORT_ITEMS} name="sort.name" />
+        <Selector onSelect={handleFilter} selectItems={categoryOptions} name="filter" />
       </SortButtonContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}
-        {isFetching && data ? <CenteredCircularProgress /> : <div ref={ref}/>}
+        {isFetching && data ? <CenteredCircularProgress /> : <div ref={ref} />}
       </ImageList>
     </HomeContainer>
   );

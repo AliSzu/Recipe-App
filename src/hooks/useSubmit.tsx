@@ -35,10 +35,7 @@ export const useSubmit = (
             autoHideDuration: 6000,
           })
         );
-        queryClient.invalidateQueries([
-          QueryKeys.recipesData,
-          { sort: "updatedAt", direction: "desc" },
-        ]);
+        queryClient.invalidateQueries([QueryKeys.recipesData]);
         if (id) {
           navigate(`${ROUTES.RECIPE}/${id}`);
         } else {
