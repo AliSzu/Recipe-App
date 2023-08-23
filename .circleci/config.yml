@@ -9,8 +9,10 @@ jobs:
 
       # Restore cached dependencies
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run: npm install
+      # save any changes to the cache
 
       # Run Tests
       - run: npm test
@@ -27,14 +29,18 @@ jobs:
 
       # Restore cached dependencies
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run: npm install
+      # save any changes to the cache 
 
       # Build
       - run: npm run build
 
       # Deploy
-      - run: './node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN'
+      - run:
+          name: Deploy to Firebase
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN 
 
       # Save dependencies cache
       - save_cache:
