@@ -1,4 +1,3 @@
-import * as React from "react";
 import MuiSnackbar from "@mui/material/Snackbar";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { hideSnackbar, selectSnackbarState } from "../../slices/snackbarSlice";
