@@ -3,6 +3,7 @@ import {
   DocumentData,
   Timestamp,
   addDoc,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -54,6 +55,7 @@ export function useAddItemToShoppingList() {
 }
 
 export function useEditShoppingListItem() {
+  useAuthGuard();
   return useMutation<void, FirebaseError, ShoppingItem>({
     mutationFn: async (ShoppingItem: ShoppingItem) => {
       const { id, ...item } = ShoppingItem;
@@ -63,6 +65,15 @@ export function useEditShoppingListItem() {
         ...item,
         updatedAt: Timestamp.fromDate(new Date()),
       });
+    },
+  });
+}
+
+export function useDeleteShoppingListItem() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (itemId: string) => {
+      await deleteDoc(doc(db, Collections.shoppingList, itemId));
     },
   });
 }

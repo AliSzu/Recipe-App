@@ -18,6 +18,7 @@ const StyledForm = styled("form")({
 });
 
 const StyledInput = styled(TextField)({
+  width: '100%',
   padding: 0,
   margin: 0,
 });
