@@ -6,23 +6,16 @@ jobs:
 
     steps:
       - checkout
-      # Download and cache dependencies
+
+      # Restore cached dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
 
-      #Install dependencies
-      - run: npm install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      #Run Tests
+      # Run Tests
       - run: npm test
 
-      #Run Linter
+      # Run Linter
       - run: npm run lint
 
   build:
@@ -31,28 +24,26 @@ jobs:
 
     steps:
       - checkout
-      # Download and cache dependencies
+
+      # Restore cached dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
 
-      #Install dependencies
-      - run: npm install
+      # Build
+      - run: npm run build
 
+      # Deploy
+      - run: './node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN'
+
+      # Save dependencies cache
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      #Build
-      - run: npm run build
-
-      #Deploy
-      - run: './node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN'
 
 workflows:
   build_and_test:
     jobs:
       - test
       - build
-
