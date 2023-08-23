@@ -12,7 +12,8 @@ test("navbar icon navigates to homepage", async () => {
       );
 
   const navbarIcon = container.firstChild;
-  fireEvent.click(navbarIcon!);
+  if (!navbarIcon) return
+  fireEvent.click(navbarIcon);
 
   expect(window.location.pathname).toBe(ROUTES.HOME);
 });

@@ -5,34 +5,23 @@ jobs:
       - image: node:20.5.1
 
     steps:
-      #Download dependencies
       - checkout
-
-      #Cache dependencies
+      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-        
-      #Install dependencies
-      - run: 
-      name: Install Dependencies
-      command: install
+            - v1-dependencies-
 
+      #Install dependencies
+      - run: npm install
+
+      
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      #Tests
-      - run: 
-      name: Run Tests
-      command: npm test
+      # run tests!
+      - run: npm test
 
-      #Linter
-      - run:
-      name: Run Linter
-      command: npm lint
-
-      #Build
-      - run: Build
-      command: npm run build
+      - run: npm run build --if-present

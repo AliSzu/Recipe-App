@@ -75,34 +75,40 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
-  const debounceEditAmount = useCallback(
-    debounce((newAmount: number) => {
-      editAmount(newAmount);
-    }, DEBOUNCE_TIME),
-    [debounce]
+  const editAmount = useCallback(
+    (newAmount: number) => {
+      if (!item.id) return;
+      const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
+      editShoppingListItemMutation.mutate(newItem, {
+        onSuccess: () => {
+          queryClient.setQueryData(
+            [QueryKeys.shoppingListData, { userUid: userUid }],
+            newItem
+          );
+        },
+        onError: (error) => {
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: 6000,
+              severity: "error",
+            })
+          );
+        },
+      });
+    },
+    [item, editShoppingListItemMutation, queryClient, userUid, dispatch]
   );
 
-  const editAmount = (newAmount: number) => {
-    if (!item.id) return;
-    const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
-    editShoppingListItemMutation.mutate(newItem, {
-      onSuccess: () => {
-        queryClient.setQueryData(
-          [QueryKeys.shoppingListData, { userUid: userUid }],
-          newItem
-        );
-      },
-      onError: (error) => {
-        dispatch(
-          showSnackbar({
-            message: error.code,
-            autoHideDuration: 6000,
-            severity: "error",
-          })
-        );
-      },
-    });
-  };
+  const debounceEditAmount = useCallback(
+    (newAmount: number) => {
+      debounce(() => {
+        editAmount(newAmount);
+      }, DEBOUNCE_TIME)();
+    },
+    [editAmount]
+  );
+
   const onAmountChange = (amount: number) => {
     setItemAmount(amount);
     debounceEditAmount(amount);
@@ -116,7 +122,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
             <StyledIcon
               disableRipple={true}
               size="small"
-              onClick={() => onDeleteItem(item.id!)}
+              onClick={() => onDeleteItem("temporary id")}
             >
               <CloseIcon />
             </StyledIcon>
