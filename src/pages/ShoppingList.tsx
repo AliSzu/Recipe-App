@@ -53,7 +53,7 @@ const ShoppingList = () => {
     });
   };
 
-  const onDeleteItem = (itemId: string) => {
+  const onDeleteItem = () => {
     // TODO: DELETE RECIPE
   };
   

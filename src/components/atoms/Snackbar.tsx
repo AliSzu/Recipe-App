@@ -17,10 +17,7 @@ const Snackbar = () => {
   const snackbarMessage =
     SnackbarMessage[getMessageKey(messageKey) as keyof typeof SnackbarMessage];
 
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
@@ -32,7 +29,7 @@ const Snackbar = () => {
       <MuiSnackbar
         open={isOpen}
         autoHideDuration={autoHideDuration}
-        onClose={handleClose}
+        onClose={(_, reason) => handleClose(reason)}
       >
         <Alert severity={severity} variant="filled" sx={{ width: "100%" }}>
           {snackbarMessage ? t(snackbarMessage) : t("error.unknown")}

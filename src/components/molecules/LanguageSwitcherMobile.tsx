@@ -7,10 +7,7 @@ const LanguageSwitcherMobile = () => {
   const [language, setLanguage] = useState("en");
   const { i18n } = useTranslation();
 
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newLanguage: string
-  ) => {
+  const handleChange = (newLanguage: string) => {
     if (newLanguage !== null) {
       i18n.changeLanguage(newLanguage);
       setLanguage(newLanguage);
@@ -22,7 +19,7 @@ const LanguageSwitcherMobile = () => {
       color="primary"
       value={language}
       exclusive
-      onChange={handleChange}
+      onChange={(_, newLanguage) => handleChange(newLanguage)}
       fullWidth
     >
       {Object.keys(languages).map((lang) => (
