@@ -10,7 +10,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+
+      #Install dependencies
+      - run: npm install
 
       #Install dependencies
       - run: npm install
@@ -21,7 +23,11 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
+      #Run Tests
       - run: npm test
 
-      - run: npm run build --if-present
+      #Run Linter
+      - run: npm run lint
+
+      #Build
+      - run: npm run build
