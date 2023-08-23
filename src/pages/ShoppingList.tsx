@@ -46,28 +46,28 @@ const ShoppingList = () => {
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    mutate(formData, {
-      onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
-      },
-    });
+    mutate(
+      { ...formData, owner: userUid },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
+        },
+      }
+    );
   };
-
-  const onDeleteItem = (itemId: string) => {
-    // TODO: DELETE RECIPE
-  };
-  
 
   const shoppingData =
     shoppingList &&
     shoppingList.length !== 0 &&
     shoppingList.map((item: ShoppingItem) => (
       <React.Fragment key={item.id}>
-        <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
+        <ShoppingListItem item={item} />
       </React.Fragment>
     ));
 
+
   return (
+    <>
     <ShoppingListContainer>
       <Title>{t("shoppingList.name")}</Title>
       <StyledList>
@@ -81,6 +81,7 @@ const ShoppingList = () => {
         )}
       </StyledList>
     </ShoppingListContainer>
+    </>
   );
 };
 
