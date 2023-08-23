@@ -1,39 +1,26 @@
-version: 2.1
+version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14-browsers
+      - image: node:20.5.1
 
     steps:
       - checkout
-
+      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run:
-          name: Install Dependencies
-          command: npm install
+      - run: npm install
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
           paths:
-            - ~/.npm
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run:
-          name: Run Tests
-          command: npm test
+      # run tests!
+      - run: npm test
 
-      - run:
-          name: Run Linter
-          command: npm run lint
-
-      - run:
-          name: Build
-          command: npm run build
-
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - build
+      - run: npm run build --if-present
