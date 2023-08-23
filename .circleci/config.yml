@@ -1,6 +1,6 @@
-version: 2
+version: 2.1
 jobs:
-  build:
+  test:
     docker:
       - image: node:20.5.1
 
@@ -25,8 +25,34 @@ jobs:
       #Run Linter
       - run: npm run lint
 
+  build:
+    docker:
+      - image: node:20.5.1
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+
+      #Install dependencies
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
       #Build
       - run: npm run build
 
       #Deploy
       - run: './node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN'
+
+workflows:
+  build_and_test:
+    jobs:
+      - test
+      - build
+
