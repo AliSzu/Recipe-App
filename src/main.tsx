@@ -11,21 +11,27 @@ import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore";
+import { Provider as RollbarProvider, ErrorBoundary } from "@rollbar/react"; 
+import { rollbarConfig } from "./rollbar.ts";
 
 const queryClient = new QueryClient();
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <Router />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </PersistGate>
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Router />
+              </ThemeProvider>
+            </QueryClientProvider>
+          </PersistGate>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   </React.StrictMode>
 );
