@@ -21,6 +21,7 @@ export const recipeDefaultValues: RecipeFormValues = {
 
 export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
+  owner: "",
   amount: 1,
   owner: ''
 };

@@ -65,7 +65,6 @@ const ShoppingList = () => {
       </React.Fragment>
     ));
 
-
   return (
     <>
     <ShoppingListContainer>
