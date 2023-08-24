@@ -1,0 +1,55 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: node:20.5.1
+
+    steps:
+      - checkout
+
+      # Restore cached dependencies
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run: npm install
+      # save any changes to the cache
+
+      # Run Tests
+      - run: npm test
+
+      # Run Linter
+      - run: npm run lint
+
+  build:
+    docker:
+      - image: node:20.5.1
+
+    steps:
+      - checkout
+
+      # Restore cached dependencies
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run: npm install
+      # save any changes to the cache 
+
+      # Build
+      - run: npm run build
+
+      # Deploy
+      - run:
+          name: Deploy to Firebase
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN 
+
+      # Save dependencies cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+workflows:
+  build_and_test:
+    jobs:
+      - test
+      - build

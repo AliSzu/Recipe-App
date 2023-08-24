@@ -7,6 +7,7 @@ export const MOCK_RECIPE: Recipe = {
   imgSrc:
     "https://wszystkiegoslodkiego.pl/storage/images/202111/puszyste-pancakes.jpg",
   id: "mock1",
+  owner: "",
   ingredients: [
     {
       amount: "1/2",
