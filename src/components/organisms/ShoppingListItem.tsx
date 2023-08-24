@@ -2,7 +2,10 @@ import { Card, IconButton, ListItem, debounce, styled } from "@mui/material";
 import { ShoppingItem } from "../../types/ShoppingListTypes";
 import AmountPicker from "../molecules/AmountPicker";
 import { useCallback, useState } from "react";
-import { useEditShoppingListItem } from "../../api/shoppingList";
+import {
+  useDeleteShoppingListItem,
+  useEditShoppingListItem,
+} from "../../api/shoppingList";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/QueryKeys";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -14,7 +17,6 @@ import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
-  onDeleteItem: (itemId: string) => void;
 }
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -67,11 +69,12 @@ const ItemInformation = styled("div")({
   gap: "1rem",
 });
 
-const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
+const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
 
   const queryClient = useQueryClient();
-  const editShoppingListItemMutation = useEditShoppingListItem();
+  const {mutate: editMutate} = useEditShoppingListItem();
+  const {mutate: deleteMutate} = useDeleteShoppingListItem();
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
@@ -85,7 +88,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
   const editAmount = (newAmount: number) => {
     if (!item.id) return;
     const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
-    editShoppingListItemMutation.mutate(newItem, {
+    editMutate(newItem, {
       onSuccess: () => {
         queryClient.setQueryData(
           [QueryKeys.shoppingListData, { userUid: userUid }],
@@ -108,6 +111,24 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
     debounceEditAmount(amount);
   };
 
+  const handleDeleteItem = () => {
+    if (!item.id) return;
+    deleteMutate(item.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
+      },
+      onError: (error) => {
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: 6000,
+            severity: "error",
+          })
+        );
+      },
+    });
+  };
+
   return (
     <StyledListItem>
       <StyledCard>
@@ -116,7 +137,7 @@ const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
             <StyledIcon
               disableRipple={true}
               size="small"
-              onClick={() => onDeleteItem(item.id!)}
+              onClick={handleDeleteItem}
             >
               <CloseIcon />
             </StyledIcon>
