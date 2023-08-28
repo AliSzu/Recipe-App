@@ -14,7 +14,6 @@ import { showSnackbar } from "../../slices/snackbarSlice";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
 import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
-import React from "react";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;

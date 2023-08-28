@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
 import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
-import React from "react";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
