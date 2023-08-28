@@ -79,7 +79,8 @@ export function useAddItemToShoppingList() {
       }
       else {
         const docId = shoppingList[0].docId
-        await updateDoc(doc(db, Collections.shoppingList, docId!), {
+        if(!docId) return
+        await updateDoc(doc(db, Collections.shoppingList, docId), {
           amount: shoppingList[0].amount + shoppingItem.amount,
           updatedAt: Timestamp.fromDate(new Date()),
         })
