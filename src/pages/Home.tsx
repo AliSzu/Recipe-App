@@ -14,6 +14,7 @@ import { uniqueId } from "../utils/utils";
 import { Category } from "../enums/Category";
 import { OrderByDirection } from "firebase/firestore";
 import Selector from "../components/organisms/Selector";
+import SearchBar from "../components/molecules/SearchBar";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -33,10 +34,18 @@ const Title = styled("div")(({ theme }) => ({
   },
 }));
 
-const SortButtonContainer = styled("div")({
+const ActionsContainer = styled("div")(({ theme }) => ({
   display: "flex",
-  gap: "1rem",
-});
+  gap: '1rem',
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
+}));
+
+const SelectContainer = styled('div')({
+  display: 'flex',
+  gap: '1rem'
+})
 
 const Home = () => {
   const [sortProperty, setSortProperty] = useState<Order>({
@@ -44,12 +53,14 @@ const Home = () => {
     direction: "desc",
   });
   const [filter, setFilter] = useState<string>();
+  const [searchPhrase, setSearchPhrase] = useState<string>()
 
   const { t } = useTranslation();
   const { ref, inView } = useInView();
   const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes(
     sortProperty,
-    filter
+    filter,
+    searchPhrase
   );
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
@@ -82,6 +93,10 @@ const Home = () => {
     setFilter(property);
   };
 
+  const handleSearch = (phrase: string) => {
+    setSearchPhrase(phrase)
+  }
+
   const recipesData =
     data &&
     data.pages &&
@@ -102,10 +117,21 @@ const Home = () => {
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
-      <SortButtonContainer>
-        <Selector onSelect={handleSort} selectItems={SORT_ITEMS} name="sort.name" />
-        <Selector onSelect={handleFilter} selectItems={categoryOptions} name="filter" />
-      </SortButtonContainer>
+      <ActionsContainer>
+        <SearchBar onSearch={handleSearch} />
+        <SelectContainer>
+          <Selector
+            onSelect={handleSort}
+            selectItems={SORT_ITEMS}
+            name="sort.name"
+          />
+          <Selector
+            onSelect={handleFilter}
+            selectItems={categoryOptions}
+            name="filter"
+          />
+        </SelectContainer>
+      </ActionsContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}
         {isFetching && data ? <CenteredCircularProgress /> : <div ref={ref} />}

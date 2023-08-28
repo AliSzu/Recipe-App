@@ -14,6 +14,8 @@ import {
   Timestamp,
   updateDoc,
   QueryConstraint,
+  startAt,
+  endAt,
 } from "firebase/firestore";
 import { InfiniteRecipe, Order, Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
@@ -22,30 +24,30 @@ import { db, recipeCollection } from "../firebase";
 import { useAuthGuard } from "../hooks/useAuthGuard";
 import { Collections } from "../enums/Collections";
 
-export function useFetchRecipes(orderElemenets: Order, filter?: string) {
+export function useFetchRecipes(
+  orderElemenets: Order,
+  filter?: string,
+  searchPhrase?: string
+) {
   return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
-    queryKey: [QueryKeys.recipesData, orderElemenets, filter],
+    queryKey: [QueryKeys.recipesData, orderElemenets, filter, searchPhrase],
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
     queryFn: async ({ pageParam }) => {
-      let recipeConstrains: QueryConstraint[] = []
+      let recipeConstrains: QueryConstraint[] = [];
 
-      if (filter) recipeConstrains.push(where('category', '==', filter))
-
-      let recipeQuery = query(
-        recipeCollection,
-        orderBy(orderElemenets.sort, orderElemenets.direction),
-        limit(10),
-        ...recipeConstrains
-      );
-
-      if (pageParam) {
-        recipeQuery = query(
-          recipeQuery,
-          startAfter(pageParam),
+      if (filter) recipeConstrains.push(where("category", "==", filter));
+      if (searchPhrase)
+        recipeConstrains.push(
+          orderBy("title"),
+          startAt(searchPhrase),
+          endAt(searchPhrase + "\uf8ff")
         );
-      }
+      if (pageParam) recipeConstrains.push(startAfter(pageParam));
+
+      const recipeQuery = query(recipeCollection, limit(10), ...recipeConstrains);
+
       const recipeSnap = await getDocs(recipeQuery);
       const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => ({
         id: item.id,
@@ -55,7 +57,7 @@ export function useFetchRecipes(orderElemenets: Order, filter?: string) {
       const doc = recipeSnap.docs[recipeSnap.docs.length - 1];
       return { recipes, doc };
     },
-    getNextPageParam: (lastPage) => lastPage.doc ?? undefined
+    getNextPageParam: (lastPage) => lastPage.doc ?? undefined,
   });
 }
 
