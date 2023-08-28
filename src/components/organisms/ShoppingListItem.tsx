@@ -14,6 +14,7 @@ import { showSnackbar } from "../../slices/snackbarSlice";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
 import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
+import React from "react";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
@@ -81,7 +82,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const editAmount = useCallback(
     (newAmount: number) => {
       if (!item.id) return;
-      const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
+      const newItem: ShoppingItem = { ...item, amount: newAmount };
       editMutate(newItem, {
         onSuccess: () => {
           queryClient.setQueryData(
@@ -118,8 +119,8 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   };
 
   const handleDeleteItem = () => {
-    if (!item.id) return;
-    deleteMutate(item.id, {
+    if (!item.docId) return;
+    deleteMutate(item.docId, {
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
       },

@@ -23,7 +23,6 @@ export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
   owner: "",
   amount: 1,
-  owner: ''
 };
 
 export const DEBOUNCE_TIME = 800;

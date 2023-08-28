@@ -32,7 +32,7 @@ export function useFetchShoppingList(userUid: string) {
       const shoppingListSnap = await getDocs(shoppingListQuery);
       const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
         (item: DocumentData) => ({
-          id: item.id,
+          docId: item.id,
           ...item.data(),
         })
       );
@@ -92,11 +92,11 @@ export function useEditShoppingListItem() {
   useAuthGuard();
   return useMutation<void, FirebaseError, ShoppingItem>({
     mutationFn: async (ShoppingItem: ShoppingItem) => {
-      const { id, ...item } = ShoppingItem;
-      if (!id) return;
-      const docRef = doc(db, Collections.shoppingList, id);
+      const { docId, ...item } = ShoppingItem;
+      if (!docId) return;
+      const docRef = doc(db, Collections.shoppingList, docId);
       await updateDoc(docRef, {
-        ...item,
+        amount: item.amount,
         updatedAt: Timestamp.fromDate(new Date()),
       });
     },

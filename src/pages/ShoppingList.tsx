@@ -14,6 +14,7 @@ import CenteredCircularProgress from "../components/atoms/CenteredCircularProgre
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/QueryKeys";
 import { selectUserUid } from "../slices/authSlice";
+import { uniqueId } from "../utils/utils";
 
 const ShoppingListContainer = styled("div")({
   display: "flex",
@@ -47,7 +48,7 @@ const ShoppingList = () => {
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
     mutate(
-      { ...formData, owner: userUid },
+      { ...formData, owner: userUid, id: uniqueId() },
       {
         onSuccess: () => {
           queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);

@@ -27,12 +27,12 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
 
   const handleIngredientAdd = (ingredient: Ingredient) => {
     addIngredientMutate(
-      { ...ingredient, owner: userUid },
+      { ...ingredient, owner: userUid, id: ingredient.id },
       {
         onSuccess: () => {
           dispatch(
             showSnackbar({
-              message: "test",
+              message: "ingredient-success",
               severity: "success",
               autoHideDuration: 6000,
             })
