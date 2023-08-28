@@ -4,8 +4,8 @@ import { languages } from "../../constants/Languages";
 import { useState } from "react";
 
 const LanguageSwitcherMobile = () => {
-  const [language, setLanguage] = useState("en");
   const { i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
 
   const handleChange = (newLanguage: string) => {
     if (newLanguage !== null) {
