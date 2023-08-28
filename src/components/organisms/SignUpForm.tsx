@@ -1,11 +1,4 @@
-import { Button } from "@mui/material";
-import {
-  FormContainer,
-  FormErrorProvider,
-  PasswordElement,
-  TextFieldElement,
-  useForm,
-} from "react-hook-form-mui";
+import { Button, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
@@ -14,21 +7,29 @@ import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/Routes";
 import { useSignUp } from "../../api/auth";
 import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
+import { FormProvider, useForm } from "react-hook-form";
+import PasswordField from "../molecules/PasswordField";
+import { ErrorMessage } from "@hookform/error-message";
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const formContext = useForm<SignUpFormProps>({
+  const methods = useForm<SignUpFormProps>({
     defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
-  const { watch } = formContext;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = methods;
 
   const signUpMutation = useSignUp();
 
-  const handleSignUp = (data: SignUpFormProps) => {
+  const onSubmit = (data: SignUpFormProps) => {
     signUpMutation.mutate(
       { email: data.email, password: data.password },
       {
@@ -55,42 +56,37 @@ const SignUpFrom = () => {
   };
 
   return (
-    <FormErrorProvider
-      onError={(error) => {
-        if (error.type === "required") {
-          return t("textField.error.required");
-        } else if (error.type === "minLength") {
-          return t("textField.error.passwordLength");
-        }
-        return error.message;
-      }}
-    >
-      <FormContainer
-        formContext={formContext}
-        onSuccess={(data) => handleSignUp(data)}
-      >
-        <TextFieldElement
-          required
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
           label="Email"
-          name="email"
           fullWidth
           type="email"
-        ></TextFieldElement>
-        <PasswordElement
-          name="password"
-          label={t("textField.label.password")}
-          fullWidth
-          required
-          validation={{
-            minLength: 6,
-          }}
+          {...register("email", {
+            required: t("textField.error.required"),
+            pattern: {
+              value:
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,10}[a-zA-Z0-9])?)*$/g,
+              message: t("textField.error.email"),
+            },
+          })}
+          error={!!errors["email"]}
+          helperText={
+            <ErrorMessage
+              errors={errors}
+              name={"email"}
+              render={({ message }) => <>{message}</>}
+            />
+          }
         />
-        <PasswordElement
-          name="confirmPassword"
+        <PasswordField
+          field={"password"}
+          label={t("textField.label.password")}
+        />
+        <PasswordField
+          field={"confirmPassword"}
           label={t("textField.label.confirmPassword")}
-          fullWidth
-          required
-          validation={{
+          validationSchema={{
             validate: (val: string) => {
               if (watch("password") !== val) {
                 return t("textField.error.passwordMatch");
@@ -101,8 +97,8 @@ const SignUpFrom = () => {
         <Button variant="contained" type="submit" fullWidth>
           {t("button.signUp")}
         </Button>
-      </FormContainer>
-    </FormErrorProvider>
+      </form>
+    </FormProvider>
   );
 };
 

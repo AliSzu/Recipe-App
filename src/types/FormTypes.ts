@@ -10,6 +10,11 @@ export interface SignUpFormProps {
   password: string;
   confirmPassword: string;
 }
+
+export interface PasswordFormValues {
+  password: string,
+  confirmPassword: string
+}
 export interface RecipeFormValues {
   title: string,
   time: string,
