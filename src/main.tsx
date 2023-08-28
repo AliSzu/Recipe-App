@@ -17,10 +17,17 @@ import { rollbarConfig } from "./rollbar.ts";
 const queryClient = new QueryClient();
 const persistor = persistStore(store);
 
+
+function TestErro2() {
+  const b = null;
+  return b.hello()
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
+      <TestErro2 />
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <QueryClientProvider client={queryClient}>
