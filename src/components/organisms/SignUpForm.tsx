@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
@@ -8,8 +8,12 @@ import { ROUTES } from "../../constants/Routes";
 import { useSignUp } from "../../api/auth";
 import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
 import { FormProvider, useForm } from "react-hook-form";
-import PasswordField from "../molecules/PasswordField";
-import { ErrorMessage } from "@hookform/error-message";
+import PasswordField from "../atoms/PasswordField";
+import EmailField from "../atoms/EmailField";
+
+const StyledForm = styled("form")({
+  width: "100%",
+});
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
@@ -21,16 +25,14 @@ const SignUpFrom = () => {
   });
 
   const {
-    register,
     handleSubmit,
-    formState: { errors },
     watch,
   } = methods;
 
-  const signUpMutation = useSignUp();
+  const { mutate, isLoading } = useSignUp();
 
   const onSubmit = (data: SignUpFormProps) => {
-    signUpMutation.mutate(
+    mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
@@ -57,28 +59,8 @@ const SignUpFrom = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          label="Email"
-          fullWidth
-          type="email"
-          {...register("email", {
-            required: t("textField.error.required"),
-            pattern: {
-              value:
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,10}[a-zA-Z0-9])?)*$/g,
-              message: t("textField.error.email"),
-            },
-          })}
-          error={!!errors["email"]}
-          helperText={
-            <ErrorMessage
-              errors={errors}
-              name={"email"}
-              render={({ message }) => <>{message}</>}
-            />
-          }
-        />
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <EmailField />
         <PasswordField
           field={"password"}
           label={t("textField.label.password")}
@@ -94,10 +76,15 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <Button variant="contained" type="submit" fullWidth>
+        <Button
+          variant="contained"
+          type="submit"
+          fullWidth
+          disabled={isLoading}
+        >
           {t("button.signUp")}
         </Button>
-      </form>
+      </StyledForm>
     </FormProvider>
   );
 };

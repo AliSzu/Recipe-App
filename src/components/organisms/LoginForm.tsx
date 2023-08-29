@@ -1,32 +1,34 @@
-import { Button } from "@mui/material";
-import {
-  FormContainer,
-  FormErrorProvider,
-  PasswordElement,
-  TextFieldElement,
-  useForm,
-} from "react-hook-form-mui";
+import { Button, styled } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { LoginFormProps } from "../../types/FormTypes";
+import { LoginFormProps, SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
 import { login } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
 import { useSignIn } from "../../api/auth";
 import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
+import { FormProvider, useForm } from "react-hook-form";
+import PasswordField from "../atoms/PasswordField";
+import EmailField from "../atoms/EmailField";
+
+const StyledForm = styled("form")({
+  width: "100%",
+});
 
 const LoginForm = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const formContext = useForm<LoginFormProps>({
-    defaultValues: { email: "", password: "" },
+  const methods = useForm<SignUpFormProps>({
+    defaultValues: { email: "", password: "", confirmPassword: "" },
   });
+
+  const { handleSubmit } = methods;
 
   const signInMutation = useSignIn();
 
-  const handleSignIn = (data: LoginFormProps) => {
+  const onSubmit = (data: LoginFormProps) => {
     signInMutation.mutate(
       { email: data.email, password: data.password },
       {
@@ -53,40 +55,18 @@ const LoginForm = () => {
   };
 
   return (
-    <FormErrorProvider
-      onError={(error) => {
-        if (error.type === "required") {
-          return t("textField.error.required");
-        } else if (error.type === "pattern") {
-          return t("textField.error.email");
-        }
-        return error?.message;
-      }}
-    >
-      <FormContainer
-        formContext={formContext}
-        onSuccess={(data) => {
-          handleSignIn(data);
-        }}
-      >
-        <TextFieldElement
-          name="email"
-          label={t("textField.label.email")}
-          fullWidth
-          required
-          type={"email"}
-        />
-        <PasswordElement
-          name="password"
+    <FormProvider {...methods}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <EmailField />
+        <PasswordField
+          field={"password"}
           label={t("textField.label.password")}
-          fullWidth
-          required
         />
         <Button type="submit" variant="contained" fullWidth>
           {t("button.login")}
         </Button>
-      </FormContainer>
-    </FormErrorProvider>
+      </StyledForm>
+    </FormProvider>
   );
 };
 
