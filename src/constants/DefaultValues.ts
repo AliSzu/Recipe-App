@@ -35,3 +35,4 @@ export const MAX_LENGTH = {
 };
 
 export const FILE_MAX_SIZE = 1 * 1024 * 1024;
+export const PREPARING_FIELDS_LIMIT = 50;

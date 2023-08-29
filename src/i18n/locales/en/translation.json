@@ -90,5 +90,9 @@
       "title": "Delete {{item}}",
       "message": "Are you sure you want to delete {{itemName}}?"
     }
+  },
+  "limit": {
+    "preparingSteps": "Exceeded the limit of allowed preparation steps. You can add a maximum of {{number}} steps",
+    "ingredients": "Exceeded the limit of allowed ingredients. You can add a maximum of {{number}} ingredients"
   }
 }

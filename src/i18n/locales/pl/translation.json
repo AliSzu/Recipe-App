@@ -89,5 +89,9 @@
       "title": "Usuń {{item}}",
       "message": "Czy na pewno chcesz usunąć {{itemName}}?"
     }
+  },
+  "limit": {
+    "preparingSteps": "Przekroczono limit ilości kroków przygotowania. Możesz dodać maksymalnie {{number}} kroków",
+    "ingredients": "Przekroczono limit ilości składników. Możesz dodać maksymalnie {{number}} składników"
   }
 }
