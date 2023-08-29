@@ -7,6 +7,7 @@ import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
 import { theme } from "../../theme/theme";
+import { MAX_LENGTH } from "../../constants/DefaultValues";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
@@ -64,11 +65,27 @@ const RecipeForm = ({
             field="title"
             isError={!!errors.title}
             label={t("textField.label.name")}
+            validationSchema={{
+              maxLength: {
+                value: MAX_LENGTH.NAME,
+                message: t("textField.error.maxLength", {
+                  number: MAX_LENGTH.NAME,
+                }),
+              },
+            }}
           />
           <FormField
             field="time"
             isError={!!errors.time}
             label={t("textField.label.time")}
+            validationSchema={{
+              maxLength: {
+                value: MAX_LENGTH.TIME,
+                message: t("textField.error.maxLength", {
+                  number: MAX_LENGTH.TIME,
+                }),
+              },
+            }}
           />
           <FormField
             field="description"
@@ -76,6 +93,14 @@ const RecipeForm = ({
             rows={5}
             isError={!!errors.description}
             label={t("textField.label.description")}
+            validationSchema={{
+              maxLength: {
+                value: MAX_LENGTH.DESCRIPTION,
+                message: t("textField.error.maxLength", {
+                  number: MAX_LENGTH.DESCRIPTION,
+                }),
+              },
+            }}
           />
           <InputFileField />
         </div>

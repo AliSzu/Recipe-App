@@ -1,15 +1,16 @@
 import { TextField } from "@mui/material";
 import { RecipeFormValues } from "../../types/FormTypes";
-import { FieldPath, useFormContext } from "react-hook-form";
+import { FieldPath, RegisterOptions, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ErrorMessage } from "@hookform/error-message";
 
 interface FormFieldProps {
   isError: boolean;
   field: FieldPath<RecipeFormValues>;
+  label: string;
   multiline?: boolean;
   rows?: number;
-  label: string;
+  validationSchema?: RegisterOptions<RecipeFormValues>;
 }
 
 const FormField = ({
@@ -18,6 +19,7 @@ const FormField = ({
   rows,
   isError,
   label,
+  validationSchema
 }: FormFieldProps) => {
   const { t } = useTranslation();
   const {
@@ -38,6 +40,7 @@ const FormField = ({
       label={label}
       {...register(field, {
         required: t("textField.error.required"),
+        ...validationSchema
       })}
       fullWidth
       helperText={error}
