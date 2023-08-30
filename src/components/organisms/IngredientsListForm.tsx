@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrayFieldContainer from "../molecules/ArrayFieldContainer";
 import FormField from "../atoms/FormField";
 import { useTranslation } from "react-i18next";
+import { MAX_LENGTH } from "../../constants/DefaultValues";
 
 const TextFieldContainer = styled("div")({
   display: "flex",
@@ -39,6 +40,12 @@ const IngredientsListForm = () => {
                   !!(errors.ingredients && errors.ingredients[index]?.name)
                 }
                 label={t("textField.label.name")}
+                validationSchema={{
+                  maxLength: {
+                    value: MAX_LENGTH.NAME,
+                    message: t("textField.error.maxLength", {number : MAX_LENGTH.NAME})
+                  }
+                }}
               />
               <FormField
                 field={`ingredients.${index}.amount` as const}
@@ -46,6 +53,7 @@ const IngredientsListForm = () => {
                   !!(errors.ingredients && errors.ingredients[index]?.amount)
                 }
                 label={t("textField.label.amount")}
+                type="number"
               />
             </TextFieldContainer>
           </ArrayFieldContainer>
@@ -55,7 +63,7 @@ const IngredientsListForm = () => {
       <Button
         onClick={() => {
           append({
-            amount: "",
+            amount: 1,
             name: "",
             id: uniqueId(),
           });

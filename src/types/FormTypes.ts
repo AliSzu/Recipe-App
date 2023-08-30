@@ -23,4 +23,6 @@ export interface RecipeFormValues {
 export interface ShoppingItemFormValues {
   name: string;
   amount: number;
+  owner: string;
+  id?: string
 }

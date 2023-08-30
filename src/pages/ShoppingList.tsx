@@ -6,14 +6,15 @@ import { ShoppingItemFormValues } from "../types/FormTypes";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
-  useAddItemToShoppingList,
+  useAddNewItemToShoppingList,
   useFetchShoppingList,
 } from "../api/shoppingList";
 import { useAppSelector } from "../store/store";
-import { selectUserUid } from "../slices/authSlice";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/QueryKeys";
+import { selectUserUid } from "../slices/authSlice";
+import { uniqueId } from "../utils/utils";
 
 const ShoppingListContainer = styled("div")({
   display: "flex",
@@ -41,20 +42,19 @@ const Title = styled("h1")({
 const ShoppingList = () => {
   const userUid = useAppSelector(selectUserUid);
   const { t } = useTranslation();
-  const addItemToShoppingListMutation = useAddItemToShoppingList();
+  const { mutate } = useAddNewItemToShoppingList();
   const { data: shoppingList, isFetching } = useFetchShoppingList(userUid);
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
-    addItemToShoppingListMutation.mutate(formData, {
-      onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.shoppingListData]);
-      },
-    });
-  };
-
-  const onDeleteItem = (itemId: string) => {
-    // TODO: DELETE RECIPE
+    mutate(
+      { ...formData, owner: userUid, id: uniqueId() },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
+        },
+      }
+    );
   };
 
   const shoppingData =
@@ -62,11 +62,12 @@ const ShoppingList = () => {
     shoppingList.length !== 0 &&
     shoppingList.map((item: ShoppingItem) => (
       <React.Fragment key={item.id}>
-        <ShoppingListItem item={item} onDeleteItem={onDeleteItem} />
+        <ShoppingListItem item={item} />
       </React.Fragment>
     ));
 
   return (
+    <>
     <ShoppingListContainer>
       <Title>{t("shoppingList.name")}</Title>
       <StyledList>
@@ -80,6 +81,7 @@ const ShoppingList = () => {
         )}
       </StyledList>
     </ShoppingListContainer>
+    </>
   );
 };
 

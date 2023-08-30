@@ -2,6 +2,7 @@ export interface Recipe {
   id?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  owner: string;
   imgSrc: string;
   title: string;
   time: string;
@@ -10,7 +11,7 @@ export interface Recipe {
   ingredients: Ingredient[];
 }
 export interface Ingredient {
-  amount: string;
+  amount: number;
   name: string;
   id: string;
 }

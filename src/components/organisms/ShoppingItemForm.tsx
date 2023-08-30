@@ -4,6 +4,8 @@ import { ShoppingItemFormValues } from "../../types/FormTypes";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useTranslation } from "react-i18next";
 import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
+import { useAppSelector } from "../../store/store";
+import { selectUserUid } from "../../slices/authSlice";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
@@ -16,14 +18,19 @@ const StyledForm = styled("form")({
 });
 
 const StyledInput = styled(TextField)({
+  width: '100%',
   padding: 0,
   margin: 0,
 });
 
 const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
   const { t } = useTranslation();
+  const userUid = useAppSelector(selectUserUid)
   const { register, handleSubmit, reset } = useForm<ShoppingItemFormValues>({
-    defaultValues: shoppingItemDefaultValues,
+    defaultValues: {
+      ...shoppingItemDefaultValues,
+      owner: userUid
+    }
   });
 
   const onSubmit = (data: ShoppingItemFormValues) => {

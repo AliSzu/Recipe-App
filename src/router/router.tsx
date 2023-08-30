@@ -6,9 +6,9 @@ import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
-import ShoppingList from "../pages/ShoppingList";
 import EditRecipe from "../pages/EditRecipe";
 import RootContainer from "./RootContainer";
+import ShoppingList from "../pages/ShoppingList";
 
 const router = createBrowserRouter([
   {

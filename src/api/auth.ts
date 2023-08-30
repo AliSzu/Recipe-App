@@ -40,17 +40,16 @@ export function useSignUp() {
 export function useSignOut() {
   return useMutation<void, FirebaseError, void>({
     mutationFn: async () => {
-      await signOut(auth)
+      await signOut(auth);
     },
   });
 }
 
 export function useSignInWithGoogle() {
   return useMutation<User, FirebaseError, GoogleAuthProvider>({
-    mutationFn: async (provider : GoogleAuthProvider) => {
-      const responseGoogle = await signInWithPopup(auth, provider)
-      return responseGoogle.user
-    }
-  })
+    mutationFn: async (provider: GoogleAuthProvider) => {
+      const responseGoogle = await signInWithPopup(auth, provider);
+      return responseGoogle.user;
+    },
+  });
 }
-

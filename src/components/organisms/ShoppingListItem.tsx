@@ -2,13 +2,21 @@ import { Card, IconButton, ListItem, debounce, styled } from "@mui/material";
 import { ShoppingItem } from "../../types/ShoppingListTypes";
 import AmountPicker from "../molecules/AmountPicker";
 import { useCallback, useState } from "react";
+import {
+  useDeleteShoppingListItem,
+  useEditShoppingListItem,
+} from "../../api/shoppingList";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../../enums/QueryKeys";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { selectUserUid } from "../../slices/authSlice";
+import { showSnackbar } from "../../slices/snackbarSlice";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
 import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
-  onDeleteItem: (itemId: string) => void;
 }
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -61,29 +69,82 @@ const ItemInformation = styled("div")({
   gap: "1rem",
 });
 
-const ShoppingItem = ({ item, onDeleteItem }: ShoppingListItemProps) => {
+const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
 
-  const debounceEditAmount = useCallback(
-    debounce((newAmount: number) => {
-      editAmount(newAmount);
-    }, DEBOUNCE_TIME),
-    [debounce]
+  const queryClient = useQueryClient();
+  const {mutate: editMutate} = useEditShoppingListItem();
+  const {mutate: deleteMutate} = useDeleteShoppingListItem();
+  const userUid = useAppSelector(selectUserUid);
+  const dispatch = useAppDispatch();
+
+  const editAmount = useCallback(
+    (newAmount: number) => {
+      if (!item.id) return;
+      const newItem: ShoppingItem = { ...item, amount: newAmount };
+      editMutate(newItem, {
+        onSuccess: () => {
+          queryClient.setQueryData(
+            [QueryKeys.shoppingListData, { userUid: userUid }],
+            newItem
+          );
+        },
+        onError: (error) => {
+          dispatch(
+            showSnackbar({
+              message: error.code,
+              autoHideDuration: 6000,
+              severity: "error",
+            })
+          );
+        },
+      });
+    },
+    [item, editMutate, queryClient, userUid, dispatch]
   );
 
-  const editAmount = (newAmount: number) => {
-    // TODO: EDIT AMOUNT IN THE FIREBASE
-  };
+  const debounceEditAmount = useCallback(
+    (newAmount: number) => {
+      debounce(() => {
+        editAmount(newAmount);
+      }, DEBOUNCE_TIME)();
+    },
+    [editAmount]
+  );
+
   const onAmountChange = (amount: number) => {
     setItemAmount(amount);
     debounceEditAmount(amount);
   };
+
+  const handleDeleteItem = () => {
+    if (!item.docId) return;
+    deleteMutate(item.docId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
+      },
+      onError: (error) => {
+        dispatch(
+          showSnackbar({
+            message: error.code,
+            autoHideDuration: 6000,
+            severity: "error",
+          })
+        );
+      },
+    });
+  };
+
   return (
     <StyledListItem>
       <StyledCard>
         <StyledCardContent>
-          <ItemActions >
-            <StyledIcon disableRipple={true} size="small" onClick={() => onDeleteItem(item.id!)}>
+          <ItemActions>
+            <StyledIcon
+              disableRipple={true}
+              size="small"
+              onClick={handleDeleteItem}
+            >
               <CloseIcon />
             </StyledIcon>
           </ItemActions>
