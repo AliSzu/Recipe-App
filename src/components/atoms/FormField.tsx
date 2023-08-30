@@ -11,6 +11,7 @@ interface FormFieldProps {
   multiline?: boolean;
   rows?: number;
   validationSchema?: RegisterOptions<RecipeFormValues>;
+  type?: string;
 }
 
 const FormField = ({
@@ -19,7 +20,8 @@ const FormField = ({
   rows,
   isError,
   label,
-  validationSchema
+  validationSchema,
+  type,
 }: FormFieldProps) => {
   const { t } = useTranslation();
   const {
@@ -47,6 +49,7 @@ const FormField = ({
       multiline={multiline}
       rows={rows ? rows : 1}
       error={isError}
+      type={type}
     />
   );
 };

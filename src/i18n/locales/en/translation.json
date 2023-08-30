@@ -50,7 +50,8 @@
   "success": {
     "post": "Recipe created",
     "delete": "Recipe deleted",
-    "edit": "Recipe edited"
+    "edit": "Recipe edited",
+    "ingredient": "Ingredient added to the shopping list"
   },
   "latestRecipes": "Latest Recipes",
   "empty": {

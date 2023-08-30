@@ -11,7 +11,7 @@ export interface Recipe {
   ingredients: Ingredient[];
 }
 export interface Ingredient {
-  amount: string;
+  amount: number;
   name: string;
   id: string;
 }
