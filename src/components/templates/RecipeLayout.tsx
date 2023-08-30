@@ -20,6 +20,7 @@ const GridItem = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "1rem",
+  wordBreak: "break-all"
 });
 
 const Grid = styled("div")(({ theme }) => ({

@@ -5,7 +5,9 @@
       "required": "This field is required",
       "email": "Please enter a valid email address",
       "passwordMatch": "Passwords do not match",
-      "passwordLength": "Password length must be at least 6 characters"
+      "passwordLength": "Password length must be at least 6 characters",
+      "maxLength": "The field should contain a maximum of {{number}} characters",
+      "imageSize": "Please upload a picture smaller than 1 MB"
     },
     "label": {
       "email": "Email",
@@ -89,5 +91,9 @@
       "title": "Delete {{item}}",
       "message": "Are you sure you want to delete {{itemName}}?"
     }
+  },
+  "limit": {
+    "preparingSteps": "Exceeded the limit of allowed preparation steps. You can add a maximum of {{number}} steps",
+    "ingredients": "Exceeded the limit of allowed ingredients. You can add a maximum of {{number}} ingredients"
   }
 }

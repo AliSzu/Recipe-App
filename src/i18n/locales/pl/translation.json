@@ -5,7 +5,9 @@
       "required": "To pole jest wymagane",
       "email": "Proszę wprowadzić poprawny adres email",
       "passwordMatch": "Hasła nie są jednakowe",
-      "passwordLength": "Hasło powinno zawierać minimum 6 znaków"
+      "passwordLength": "Hasło powinno zawierać minimum 6 znaków",
+      "maxLength": "Pole powinno zawierać maximum {{number}} znaków",
+      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB"
     },
     "label": {
       "email": "Email",
@@ -88,5 +90,9 @@
       "title": "Usuń {{item}}",
       "message": "Czy na pewno chcesz usunąć {{itemName}}?"
     }
+  },
+  "limit": {
+    "preparingSteps": "Przekroczono limit ilości kroków przygotowania. Możesz dodać maksymalnie {{number}} kroków",
+    "ingredients": "Przekroczono limit ilości składników. Możesz dodać maksymalnie {{number}} składników"
   }
 }

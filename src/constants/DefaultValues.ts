@@ -26,3 +26,13 @@ export const shoppingItemDefaultValues: ShoppingItemFormValues = {
 };
 
 export const DEBOUNCE_TIME = 800;
+
+export const MAX_LENGTH = {
+  NAME: 30,
+  TIME: 20,
+  DESCRIPTION: 400,
+  STEP: 100,
+};
+
+export const FILE_MAX_SIZE = 1 * 1024 * 1024;
+export const PREPARING_FIELDS_LIMIT = 50;

@@ -112,10 +112,6 @@ export const theme = createTheme(
       MuiImageListItemBar: {
         styleOverrides: {
           titleWrap: {
-            justifyContent: "flex-end",
-            display: "flex",
-            flexDirection: "column",
-            rowGap: "0.3rem",
             padding: "1rem",
             [globalTheme.breakpoints.down("sm")]: {
               padding: "0.75rem",
