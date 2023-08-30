@@ -19,8 +19,8 @@
     "@mui/x-date-pickers": "^6.9.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^4.29.19",
-    "framer-motion": "^10.16.0",
     "firebase": "^10.2.0",
+    "framer-motion": "^10.16.0",
     "i18next": "^23.2.7",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.1",
@@ -30,6 +30,7 @@
     "react-hook-form": "^7.45.1",
     "react-hook-form-mui": "^6.4.0",
     "react-i18next": "^13.0.1",
+    "react-intersection-observer": "^9.5.2",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
     "redux-persist": "^6.0.0"
