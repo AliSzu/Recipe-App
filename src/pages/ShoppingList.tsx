@@ -6,7 +6,7 @@ import { ShoppingItemFormValues } from "../types/FormTypes";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
-  useAddItemToShoppingList,
+  useAddNewItemToShoppingList,
   useFetchShoppingList,
 } from "../api/shoppingList";
 import { useAppSelector } from "../store/store";
@@ -14,6 +14,7 @@ import CenteredCircularProgress from "../components/atoms/CenteredCircularProgre
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/QueryKeys";
 import { selectUserUid } from "../slices/authSlice";
+import { uniqueId } from "../utils/utils";
 
 const ShoppingListContainer = styled("div")({
   display: "flex",
@@ -41,13 +42,13 @@ const Title = styled("h1")({
 const ShoppingList = () => {
   const userUid = useAppSelector(selectUserUid);
   const { t } = useTranslation();
-  const { mutate } = useAddItemToShoppingList();
+  const { mutate } = useAddNewItemToShoppingList();
   const { data: shoppingList, isFetching } = useFetchShoppingList(userUid);
   const queryClient = useQueryClient();
 
   const onFormSubmit = (formData: ShoppingItemFormValues) => {
     mutate(
-      { ...formData, owner: userUid },
+      { ...formData, owner: userUid, id: uniqueId() },
       {
         onSuccess: () => {
           queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);

@@ -11,7 +11,7 @@ export const recipeDefaultValues: RecipeFormValues = {
   imgSrc: DEFAULT_IMAGE,
   ingredients: [
     {
-      amount: "",
+      amount: 1,
       name: "",
       id: uniqueId(),
     },

@@ -4,5 +4,6 @@ export interface ShoppingItem {
   owner: string;
   id?: string;
   createdAt: Date;
-  updatedAt: Date
+  updatedAt: Date;
+  docId?: string
 }

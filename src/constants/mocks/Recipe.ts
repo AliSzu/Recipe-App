@@ -10,37 +10,37 @@ export const MOCK_RECIPE: Recipe = {
   owner: "",
   ingredients: [
     {
-      amount: "1/2",
+      amount: 1,
       name: "cups all-purpose flour",
       id: "1",
     },
     {
-      amount: "333",
+      amount: 2,
       name: "teaspoons baking powder",
       id: "2",
     },
     {
-      amount: "1/4",
+      amount: 3,
       name: "teaspoon salt",
       id: "3",
     },
     {
-      amount: "2",
+      amount: 2,
       name: "tablespoons granulated sugar",
       id: "4",
     },
     {
-      amount: "2",
+      amount: 2,
       name: "cups milk",
       id: "5",
     },
     {
-      amount: "1/4",
+      amount: 123,
       name: "cup unsalted butter, melted",
       id: "6",
     },
     {
-      amount: "1",
+      amount: 123,
       name: "large egg",
       id: "7",
     },

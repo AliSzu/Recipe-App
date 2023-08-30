@@ -48,7 +48,8 @@
   "success": {
     "post": "Utworzono przepis",
     "delete": "Usunięto przepis",
-    "edit": "Edytowano przepis"
+    "edit": "Edytowano przepis",
+    "ingredient": "Składnik dodano do listy zakupów"
   },
   "latestRecipes": "Ostatnie Przepisy",
   "empty": {

@@ -81,7 +81,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const editAmount = useCallback(
     (newAmount: number) => {
       if (!item.id) return;
-      const newItem: ShoppingItem = { ...item, amount: newAmount, id: item.id };
+      const newItem: ShoppingItem = { ...item, amount: newAmount };
       editMutate(newItem, {
         onSuccess: () => {
           queryClient.setQueryData(
@@ -118,8 +118,8 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   };
 
   const handleDeleteItem = () => {
-    if (!item.id) return;
-    deleteMutate(item.id, {
+    if (!item.docId) return;
+    deleteMutate(item.docId, {
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.shoppingListData, userUid]);
       },

@@ -46,6 +46,7 @@ const IngredientsListForm = () => {
                   !!(errors.ingredients && errors.ingredients[index]?.amount)
                 }
                 label={t("textField.label.amount")}
+                type="number"
               />
             </TextFieldContainer>
           </ArrayFieldContainer>
@@ -55,7 +56,7 @@ const IngredientsListForm = () => {
       <Button
         onClick={() => {
           append({
-            amount: "",
+            amount: 1,
             name: "",
             id: uniqueId(),
           });
