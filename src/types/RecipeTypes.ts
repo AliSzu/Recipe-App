@@ -1,3 +1,5 @@
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+
 export interface Recipe {
   id?: string;
   createdAt?: Date;
@@ -19,4 +21,9 @@ export interface Ingredient {
 export interface Preparing {
   step: string;
   id: string;
+}
+
+export interface InfiniteRecipe {
+  recipes: Recipe[];
+  doc: QueryDocumentSnapshot<Recipe, DocumentData>;
 }

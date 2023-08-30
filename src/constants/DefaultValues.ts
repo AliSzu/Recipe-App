@@ -26,6 +26,8 @@ export const shoppingItemDefaultValues: ShoppingItemFormValues = {
 };
 
 export const DEBOUNCE_TIME = 800;
+export const STALE_TIME = 1000 * 60 * 5; //5 minutes
+export const CACHE_TIME = 1000 * 60 * 10; //10 minutes
 
 export const MAX_LENGTH = {
   NAME: 30,
