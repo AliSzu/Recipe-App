@@ -29,8 +29,8 @@ const globalTheme = createTheme({
 globalTheme.typography.body1 = {
   fontFamily: "Inter",
   fontSize: 20,
-  [globalTheme.breakpoints.down('md')] : {
-    fontSize: 18
+  [globalTheme.breakpoints.down("md")]: {
+    fontSize: 18,
   },
   [globalTheme.breakpoints.down("sm")]: {
     fontSize: 16,
@@ -61,7 +61,6 @@ export const theme = createTheme(
         styleOverrides: {
           root: {
             padding: "0.8rem",
-            fontSize: "1rem",
           },
           containedPrimary: {
             color: globalTheme.palette.secondary.light,
@@ -156,15 +155,15 @@ export const theme = createTheme(
       MuiDialog: {
         styleOverrides: {
           paper: {
-            width: '50%',
-            height: '20%',
+            minWidth: "40%",
+            minHeight: "20%",
             [globalTheme.breakpoints.down("sm")]: {
-              width: 'auto',
-              height: 'auto',
-              margin: '1rem'
+              margin: "1rem",
+              minWidth: "auto",
+              minHeigh: "auto",
             },
-          }
-        }
+          },
+        },
       },
       MuiCssBaseline: {
         styleOverrides: {
