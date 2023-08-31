@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
 import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
@@ -18,20 +19,29 @@ const StyledForm = styled("form")({
 });
 
 const StyledInput = styled(TextField)({
-  width: '100%',
+  width: "100%",
   padding: 0,
   margin: 0,
 });
 
 const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
   const { t } = useTranslation();
-  const userUid = useAppSelector(selectUserUid)
-  const { register, handleSubmit, reset } = useForm<ShoppingItemFormValues>({
+  const userUid = useAppSelector(selectUserUid);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<ShoppingItemFormValues>({
     defaultValues: {
       ...shoppingItemDefaultValues,
-      owner: userUid
-    }
+      owner: userUid,
+    },
   });
+
+  const watchedName = watch("name");
 
   const onSubmit = (data: ShoppingItemFormValues) => {
     onFormSubmit(data);
@@ -43,8 +53,24 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
       <StyledInput
         id="input-with-icon-textfield"
         label={t("shoppingList.item.name")}
-        {...register("name", { required: true })}
+        value={watchedName}
+        {...register("name", {
+          required: true,
+          pattern: {
+            value: /^(?!\s*$).+/,
+            message: t('textField.error.required'),
+          },
+          onBlur: (e) => setValue("name", e.target.value.trim()),
+        })}
         fullWidth
+        error={!!errors["name"]}
+        helperText={
+          <ErrorMessage
+            errors={errors}
+            name={"name"}
+            render={({ message }) => <>{message}</>}
+          />
+        }
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
