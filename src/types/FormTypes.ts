@@ -10,14 +10,23 @@ export interface SignUpFormProps {
   password: string;
   confirmPassword: string;
 }
+
+export interface PasswordFormValues {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface EmailFormValues {
+  email: string;
+}
 export interface RecipeFormValues {
-  title: string,
-  time: string,
-  description: string,
-  image?: FileList,
-  preparing: Preparing[],
+  title: string;
+  time: string;
+  description: string;
+  image?: FileList;
+  preparing: Preparing[];
   ingredients: Ingredient[];
-  imgSrc: string
+  imgSrc: string;
 }
 
 export interface ShoppingItemFormValues {
