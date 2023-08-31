@@ -40,12 +40,7 @@ const IngredientsListForm = () => {
                   !!(errors.ingredients && errors.ingredients[index]?.name)
                 }
                 label={t("textField.label.name")}
-                validationSchema={{
-                  maxLength: {
-                    value: MAX_LENGTH.NAME,
-                    message: t("textField.error.maxLength", {number : MAX_LENGTH.NAME})
-                  }
-                }}
+                maxLength={MAX_LENGTH.NAME}
               />
               <FormField
                 field={`ingredients.${index}.amount` as const}

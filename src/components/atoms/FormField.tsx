@@ -10,8 +10,8 @@ interface FormFieldProps {
   label: string;
   multiline?: boolean;
   rows?: number;
-  validationSchema?: RegisterOptions<RecipeFormValues>;
   type?: string;
+  maxLength?: number;
 }
 
 const FormField = ({
@@ -20,13 +20,14 @@ const FormField = ({
   rows,
   isError,
   label,
-  validationSchema,
+  maxLength,
   type,
 }: FormFieldProps) => {
   const { t } = useTranslation();
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext<RecipeFormValues>();
 
   const error = (
@@ -37,13 +38,26 @@ const FormField = ({
     />
   );
 
+  const validationRules: RegisterOptions<RecipeFormValues> = {
+    required: t("textField.error.required"),
+    onBlur: (e) => setValue(field, e.target.value.trim()),
+    pattern: {
+      value: /^(?!\s*$).+/,
+      message: t("textField.error.required"),
+    },
+  };
+
+  validationRules.maxLength = maxLength && {
+    value: maxLength,
+    message: t("textField.error.maxLength", {
+      number: maxLength,
+    }),
+  };
+
   return (
     <TextField
       label={label}
-      {...register(field, {
-        required: t("textField.error.required"),
-        ...validationSchema
-      })}
+      {...register(field, validationRules)}
       fullWidth
       helperText={error}
       multiline={multiline}

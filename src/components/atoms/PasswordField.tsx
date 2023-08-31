@@ -29,7 +29,11 @@ const PasswordField = ({
   const {
     register,
     formState: { errors },
+    watch,
+    setValue
   } = useFormContext<PasswordFormValues>();
+
+  const watchedField = watch(field)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -49,8 +53,10 @@ const PasswordField = ({
             message: t("textField.error.passwordLength"),
           },
           required: t("textField.error.required"),
+          onChange: (e) => setValue(field, e.target.value.trim()),
           ...validationSchema,
         })}
+        value={watchedField}
         error={!!errors[field]}
         helperText={
           <ErrorMessage
