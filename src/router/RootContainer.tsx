@@ -1,8 +1,9 @@
-import { Container, Snackbar } from "@mui/material";
+import { Container } from "@mui/material";
 import { Navbar } from "../components/organisms/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import AnimatedOutlet from "./AnimatedOutlet";
+import Snackbar from "../components/atoms/Snackbar";
 
 const RootContainer = () => {
   const location = useLocation();
