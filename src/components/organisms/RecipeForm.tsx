@@ -65,27 +65,13 @@ const RecipeForm = ({
             field="title"
             isError={!!errors.title}
             label={t("textField.label.name")}
-            validationSchema={{
-              maxLength: {
-                value: MAX_LENGTH.NAME,
-                message: t("textField.error.maxLength", {
-                  number: MAX_LENGTH.NAME,
-                }),
-              },
-            }}
+            maxLength={MAX_LENGTH.NAME}
           />
           <FormField
             field="time"
             isError={!!errors.time}
             label={t("textField.label.time")}
-            validationSchema={{
-              maxLength: {
-                value: MAX_LENGTH.TIME,
-                message: t("textField.error.maxLength", {
-                  number: MAX_LENGTH.TIME,
-                }),
-              },
-            }}
+            maxLength={MAX_LENGTH.TIME}
           />
           <FormField
             field="description"
@@ -93,14 +79,7 @@ const RecipeForm = ({
             rows={5}
             isError={!!errors.description}
             label={t("textField.label.description")}
-            validationSchema={{
-              maxLength: {
-                value: MAX_LENGTH.DESCRIPTION,
-                message: t("textField.error.maxLength", {
-                  number: MAX_LENGTH.DESCRIPTION,
-                }),
-              },
-            }}
+            maxLength={MAX_LENGTH.DESCRIPTION}
           />
           <InputFileField />
         </div>

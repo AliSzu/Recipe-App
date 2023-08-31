@@ -31,7 +31,6 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
     register,
     handleSubmit,
     reset,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<ShoppingItemFormValues>({
@@ -40,8 +39,6 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
       owner: userUid,
     },
   });
-
-  const watchedName = watch("name");
 
   const onSubmit = (data: ShoppingItemFormValues) => {
     onFormSubmit(data);
@@ -53,12 +50,11 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
       <StyledInput
         id="input-with-icon-textfield"
         label={t("shoppingList.item.name")}
-        value={watchedName}
         {...register("name", {
-          required: true,
+          required: t("textField.error.required"),
           pattern: {
             value: /^(?!\s*$).+/,
-            message: t('textField.error.required'),
+            message: t("textField.error.required"),
           },
           onBlur: (e) => setValue("name", e.target.value.trim()),
         })}

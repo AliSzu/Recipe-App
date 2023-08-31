@@ -45,14 +45,7 @@ const PreparingStepsList = () => {
               field={`preparing.${index}.step` as const}
               isError={!!(errors.preparing && errors.preparing[index]?.step)}
               label={t("textField.label.step")}
-              validationSchema={{
-                maxLength: {
-                  value: MAX_LENGTH.STEP,
-                  message: t("textField.error.maxLength", {
-                    number: MAX_LENGTH.STEP,
-                  }),
-                },
-              }}
+              maxLength={MAX_LENGTH.STEP}
             />
           </ArrayFieldContainer>
         );
