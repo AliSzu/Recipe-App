@@ -60,8 +60,7 @@ export const theme = createTheme(
       MuiButton: {
         styleOverrides: {
           root: {
-            padding: "0.8rem",
-            fontSize: "1rem",
+            padding: "0.8rem"
           },
           containedPrimary: {
             color: globalTheme.palette.secondary.light,
@@ -156,14 +155,13 @@ export const theme = createTheme(
       MuiDialog: {
         styleOverrides: {
           paper: {
-            width: '50%',
-            height: '20%',
+            // minHeight: '20%',
             [globalTheme.breakpoints.down("sm")]: {
               width: 'auto',
               height: 'auto',
               margin: '1rem'
             },
-          }
+          },
         }
       },
       MuiCssBaseline: {
