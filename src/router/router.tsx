@@ -7,8 +7,8 @@ import PrivateRoute from "./PrivateRoute";
 import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/AddRecipe";
 import EditRecipe from "../pages/EditRecipe";
-import RootContainer from "./RootContainer";
 import ShoppingList from "../pages/ShoppingList";
+import RootContainer from "./RootContainer";
 
 const router = createBrowserRouter([
   {
