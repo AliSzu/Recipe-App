@@ -94,5 +94,11 @@
   "limit": {
     "preparingSteps": "Przekroczono limit ilości kroków przygotowania. Możesz dodać maksymalnie {{number}} kroków",
     "ingredients": "Przekroczono limit ilości składników. Możesz dodać maksymalnie {{number}} składników"
+  },
+  "sort": {
+    "name": "Sortuj",
+    "time": "Po czasie wykonania",
+    "alphabetically": "Alfabetycznie",
+    "updated": "Najnowsze"
   }
 }

@@ -8,6 +8,8 @@ import { showSnackbar } from "../slices/snackbarSlice";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { theme } from "../theme/theme";
+import { Order } from "../types/RecipeTypes";
+import Selector from "../components/organisms/Selector";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -27,12 +29,22 @@ const Title = styled("div")(({ theme }) => ({
   },
 }));
 
+const ButtonContainer = styled("div")({
+  display: "flex",
+  gap: "1rem",
+});
+
 const Home = () => {
   const [isAnimationFinished, setIsAnimationFinished] = useState(false);
+  const [sortProperty, setSortProperty] = useState<Order>({
+    sort: "updatedAt",
+    direction: "desc",
+  });
 
   const { t } = useTranslation();
   const { ref, inView } = useInView();
-  const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes();
+  const { data, isError, error, isFetching, fetchNextPage } =
+    useFetchRecipes(sortProperty);
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
@@ -63,6 +75,10 @@ const Home = () => {
     }
   };
 
+  const handleSort = (orderElements: Order) => {
+    setSortProperty(orderElements);
+  };
+
   const recipesData =
     data &&
     data.pages &&
@@ -77,6 +93,9 @@ const Home = () => {
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
+      <ButtonContainer>
+        <Selector onSort={handleSort} />
+      </ButtonContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}
         {isFetching ? (
