@@ -34,6 +34,7 @@ export const MAX_LENGTH = {
   TIME: 20,
   DESCRIPTION: 400,
   STEP: 100,
+  SHOPPING_LIST: 100
 };
 
 export const FILE_MAX_SIZE = 1 * 1024 * 1024;
