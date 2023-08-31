@@ -26,7 +26,6 @@ const StyledActionButton = styled(Button)({
 const StyledDialogContent = styled(DialogContent)({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
   wordBreak: "break-all",
 });
 
