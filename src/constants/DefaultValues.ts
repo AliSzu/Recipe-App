@@ -10,7 +10,7 @@ export const recipeDefaultValues: RecipeFormValues = {
   time: "",
   description: "",
   imgSrc: DEFAULT_IMAGE,
-  category: Category.vegan,
+  category: Category.default,
   ingredients: [
     {
       amount: 1,

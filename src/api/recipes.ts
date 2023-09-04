@@ -30,7 +30,7 @@ export function useFetchRecipes(orderElements: Order, filter?: string) {
     staleTime: STALE_TIME,
     cacheTime: CACHE_TIME,
     queryFn: async ({ pageParam }) => {
-      let recipeConstrains: QueryConstraint[] = [];
+      const recipeConstrains: QueryConstraint[] = [];
 
       if (filter) recipeConstrains.push(where("category", "==", filter));
 

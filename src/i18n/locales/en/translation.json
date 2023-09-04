@@ -105,5 +105,6 @@
   "category": "Category",
   "vegan": "Vegan",
   "breakfast": "Breakfast",
-  "filter": "Filter"
+  "filter": "Filter",
+  "default": "Show all"
 }

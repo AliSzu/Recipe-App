@@ -104,5 +104,6 @@
   "category": "Kategoria",
   "vegan": "Wegańskie",
   "breakfast": "Śniadanie",
-  "filter": "Filtruj"
+  "filter": "Filtruj",
+  "default": "Wszystkie"
 }

@@ -88,7 +88,7 @@ const Home = () => {
   };
 
   const handleFilter = (property: string) => {
-    setFilter(property);
+    property === Category.default ? setFilter(undefined) : setFilter(property);
   };
 
   const recipesData =
