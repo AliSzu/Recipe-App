@@ -21,8 +21,8 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
-  const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const userUid = useAppSelector(selectUserUid);
+  const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const dispatch = useAppDispatch();
 
   const handleIngredientAdd = (ingredient: Ingredient) => {
@@ -41,6 +41,7 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
       }
     );
   };
+
   return (
     <List>
       {items.map((item: Ingredient) => (

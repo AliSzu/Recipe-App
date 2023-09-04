@@ -7,7 +7,8 @@
       "passwordMatch": "Passwords do not match",
       "passwordLength": "Password length must be at least 6 characters",
       "maxLength": "The field should contain a maximum of {{number}} characters",
-      "imageSize": "Please upload a picture smaller than 1 MB"
+      "imageSize": "Please upload a picture smaller than 1 MB",
+      "amount": "The amount should be greater than {{min}} and less than {{max}}"
     },
     "label": {
       "email": "Email",
