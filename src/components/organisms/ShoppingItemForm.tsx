@@ -58,9 +58,9 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
             message: t("textField.error.required"),
           },
           maxLength: {
-            value: MAX_LENGTH.SHOPPING_LIST,
+            value: MAX_LENGTH.NAME,
             message: t("textField.error.maxLength", {
-              number: MAX_LENGTH.SHOPPING_LIST,
+              number: MAX_LENGTH.NAME,
             }),
           },
           onBlur: (e) => setValue("name", e.target.value.trim()),
