@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { ShoppingItemFormValues } from "../../types/FormTypes";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useTranslation } from "react-i18next";
-import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
+import { MAX_LENGTH, shoppingItemDefaultValues } from "../../constants/DefaultValues";
 import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
 import { ErrorMessage } from "@hookform/error-message";
@@ -56,6 +56,12 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
           pattern: {
             value: REGEX.ONLY_WHITESPACE,
             message: t("textField.error.required"),
+          },
+          maxLength: {
+            value: MAX_LENGTH.SHOPPING_LIST,
+            message: t("textField.error.maxLength", {
+              number: MAX_LENGTH.SHOPPING_LIST,
+            }),
           },
           onBlur: (e) => setValue("name", e.target.value.trim()),
         })}
