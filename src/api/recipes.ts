@@ -13,6 +13,7 @@ import {
   startAfter,
   limit,
   orderBy,
+  QueryConstraint,
 } from "firebase/firestore";
 import { InfiniteRecipe, Order, Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
@@ -22,30 +23,27 @@ import { useAuthGuard } from "../hooks/useAuthGuard";
 import { Collections } from "../enums/Collections";
 import { CACHE_TIME, STALE_TIME } from "../constants/DefaultValues";
 
-export function useFetchRecipes(orderElements: Order) {
+export function useFetchRecipes(orderElements: Order, filter?: string) {
   return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
-    queryKey: [QueryKeys.recipesData, orderElements],
+    queryKey: [QueryKeys.recipesData, orderElements, filter],
     refetchOnWindowFocus: false,
     staleTime: STALE_TIME,
     cacheTime: CACHE_TIME,
     queryFn: async ({ pageParam }) => {
-      let recipeQuery;
+      let recipeConstrains: QueryConstraint[] = [];
+
+      if (filter) recipeConstrains.push(where("category", "==", filter));
+
+      let recipeQuery = query(
+        recipeCollection,
+        orderBy(orderElements.sort, orderElements.direction),
+        limit(10),
+        ...recipeConstrains
+      );
 
       if (pageParam) {
-        recipeQuery = query(
-          recipeCollection,
-          orderBy(orderElements.sort, orderElements.direction),
-          startAfter(pageParam),
-          limit(10)
-        );
-      } else {
-        recipeQuery = query(
-          recipeCollection,
-          orderBy(orderElements.sort, orderElements.direction),
-          limit(10)
-        );
+        recipeQuery = query(recipeQuery, startAfter(pageParam));
       }
-
       const recipeSnap = await getDocs(recipeQuery);
       const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => ({
         id: item.id,
