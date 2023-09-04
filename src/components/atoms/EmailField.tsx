@@ -3,6 +3,7 @@ import { EmailFormValues } from "../../types/FormTypes";
 import { TextField } from "@mui/material";
 import { ErrorMessage } from "@hookform/error-message";
 import { useTranslation } from "react-i18next";
+import { REGEX } from "../../constants/Regex";
 
 const EmailField = () => {
   const { t } = useTranslation();
@@ -19,8 +20,7 @@ const EmailField = () => {
       {...register("email", {
         required: t("textField.error.required"),
         pattern: {
-          value:
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,10}[a-zA-Z0-9])?)*$/g,
+          value: REGEX.EMAIL,
           message: t("textField.error.email"),
         },
       })}

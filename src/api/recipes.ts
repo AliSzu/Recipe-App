@@ -12,8 +12,9 @@ import {
   updateDoc,
   startAfter,
   limit,
+  orderBy,
 } from "firebase/firestore";
-import { InfiniteRecipe, Recipe } from "../types/RecipeTypes";
+import { InfiniteRecipe, Order, Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
@@ -21,9 +22,9 @@ import { useAuthGuard } from "../hooks/useAuthGuard";
 import { Collections } from "../enums/Collections";
 import { CACHE_TIME, STALE_TIME } from "../constants/DefaultValues";
 
-export function useFetchRecipes() {
+export function useFetchRecipes(orderElements: Order) {
   return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
-    queryKey: [QueryKeys.recipesData],
+    queryKey: [QueryKeys.recipesData, orderElements],
     refetchOnWindowFocus: false,
     staleTime: STALE_TIME,
     cacheTime: CACHE_TIME,
@@ -31,9 +32,18 @@ export function useFetchRecipes() {
       let recipeQuery;
 
       if (pageParam) {
-        recipeQuery = query(recipeCollection, startAfter(pageParam), limit(10));
+        recipeQuery = query(
+          recipeCollection,
+          orderBy(orderElements.sort, orderElements.direction),
+          startAfter(pageParam),
+          limit(10)
+        );
       } else {
-        recipeQuery = query(recipeCollection, limit(10));
+        recipeQuery = query(
+          recipeCollection,
+          orderBy(orderElements.sort, orderElements.direction),
+          limit(10)
+        );
       }
 
       const recipeSnap = await getDocs(recipeQuery);

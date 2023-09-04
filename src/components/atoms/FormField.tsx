@@ -3,6 +3,7 @@ import { RecipeFormValues } from "../../types/FormTypes";
 import { FieldPath, RegisterOptions, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ErrorMessage } from "@hookform/error-message";
+import { REGEX } from "../../constants/Regex";
 
 interface FormFieldProps {
   isError: boolean;
@@ -42,7 +43,7 @@ const FormField = ({
     required: t("textField.error.required"),
     onBlur: (e) => setValue(field, e.target.value.trim()),
     pattern: {
-      value: /^(?!\s*$).+/,
+      value: REGEX.ONLY_WHITESPACE,
       message: t("textField.error.required"),
     },
   };

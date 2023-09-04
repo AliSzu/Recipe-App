@@ -95,5 +95,11 @@
   "limit": {
     "preparingSteps": "Exceeded the limit of allowed preparation steps. You can add a maximum of {{number}} steps",
     "ingredients": "Exceeded the limit of allowed ingredients. You can add a maximum of {{number}} ingredients"
+  },
+  "sort": {
+    "name": "Sort",
+    "time": "By preparing time",
+    "alphabetically": "Alphabetically",
+    "updated": "Newest"
   }
 }

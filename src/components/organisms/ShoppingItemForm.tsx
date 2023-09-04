@@ -7,6 +7,7 @@ import { shoppingItemDefaultValues } from "../../constants/DefaultValues";
 import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
 import { ErrorMessage } from "@hookform/error-message";
+import { REGEX } from "../../constants/Regex";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
@@ -53,7 +54,7 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
         {...register("name", {
           required: t("textField.error.required"),
           pattern: {
-            value: /^(?!\s*$).+/,
+            value: REGEX.ONLY_WHITESPACE,
             message: t("textField.error.required"),
           },
           onBlur: (e) => setValue("name", e.target.value.trim()),

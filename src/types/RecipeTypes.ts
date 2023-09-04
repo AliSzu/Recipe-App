@@ -1,4 +1,4 @@
-import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+import { DocumentData, OrderByDirection, QueryDocumentSnapshot } from "firebase/firestore";
 
 export interface Recipe {
   id?: string;
@@ -26,4 +26,15 @@ export interface Preparing {
 export interface InfiniteRecipe {
   recipes: Recipe[];
   doc: QueryDocumentSnapshot<Recipe, DocumentData>;
+}
+
+export interface Order {
+  sort: string;
+  direction: OrderByDirection;
+}
+
+export interface SortItems {
+  name: string;
+  order: Order;
+  id: string;
 }
