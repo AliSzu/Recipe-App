@@ -101,5 +101,9 @@
     "time": "By preparing time",
     "alphabetically": "Alphabetically",
     "updated": "Newest"
-  }
+  },
+  "category": "Category",
+  "vegan": "Vegan",
+  "breakfast": "Breakfast",
+  "filter": "Filter"
 }

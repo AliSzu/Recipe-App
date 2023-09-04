@@ -20,7 +20,7 @@ const GridItem = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "1rem",
-  wordBreak: "break-all"
+  wordBreak: "break-all",
 });
 
 const Grid = styled("div")(({ theme }) => ({
@@ -62,6 +62,7 @@ const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
       <GridItem>
         <Tile recipe={recipe} />
         <Typography>{recipe.description}</Typography>
+        {t("category")} : {t(recipe.category)}
       </GridItem>
       <GridItem>
         {userUid === recipe.owner && (

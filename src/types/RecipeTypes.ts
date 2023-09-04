@@ -1,4 +1,5 @@
 import { DocumentData, OrderByDirection, QueryDocumentSnapshot } from "firebase/firestore";
+import { Category } from "../enums/Category";
 
 export interface Recipe {
   id?: string;
@@ -8,6 +9,7 @@ export interface Recipe {
   imgSrc: string;
   title: string;
   time: string;
+  category: Category,
   description: string;
   preparing: Preparing[];
   ingredients: Ingredient[];

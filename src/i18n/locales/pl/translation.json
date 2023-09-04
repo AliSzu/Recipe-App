@@ -100,5 +100,9 @@
     "time": "Po czasie wykonania",
     "alphabetically": "Alfabetycznie",
     "updated": "Najnowsze"
-  }
+  },
+  "category": "Kategoria",
+  "vegan": "Wegańskie",
+  "breakfast": "Śniadanie",
+  "filter": "Filtruj"
 }
