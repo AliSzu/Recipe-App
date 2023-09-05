@@ -49,6 +49,7 @@ const IngredientsListForm = () => {
                 }
                 label={t("textField.label.amount")}
                 type="number"
+                
               />
             </TextFieldContainer>
           </ArrayFieldContainer>

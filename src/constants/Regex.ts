@@ -4,5 +4,6 @@ export const REGEX = {
   ONLY_WHITESPACE: /^(?!\s*$).+/,
   NUMBER: /^(?!0$)([1-9]\d{0,3}|1000)$/,
   TIME: /^\d+h(?:\s+\d+m)?$/,
-  TIME_NUMBER: /^(?:[1-9]\d{0,2}|100|0)$/
+  TIME_NUMBER: /^(?:[1-9]\d{0,2}|100|0)$/,
+  AMOUNT: /^(?!0$)([1-9]\d{0,3}|1000)$/
 };
