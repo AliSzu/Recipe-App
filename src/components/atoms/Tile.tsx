@@ -1,7 +1,7 @@
 import { ImageListItem, ImageListItemBar, styled } from "@mui/material";
 import { Recipe } from "../../types/RecipeTypes";
 import { useNavigate } from "react-router-dom";
-import { minutesToHoursAndMinutes } from "../../utils/utils";
+import { TimeToText } from "../../utils/utils";
 
 const StyledImageListItemBar = styled(ImageListItemBar)({
   background:
@@ -33,7 +33,7 @@ const Tile = ({ recipe }: TileProps) => {
     navigate(`/recipe/${recipe.id}`);
   };
 
-  const formattedTime = minutesToHoursAndMinutes(recipe.time);
+  const formattedTime = TimeToText(recipe.time);
 
   return (
     <StyledImageListItem onClick={handleClick}>

@@ -5,6 +5,7 @@ import {
   getFirestore,
 } from "firebase/firestore";
 import i18next from "i18next";
+import { Time } from "../types/RecipeTypes";
 
 export const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(getFirestore(), collectionName) as CollectionReference<
@@ -30,18 +31,24 @@ const pluralizeTime = (count: number, unit: string) => {
     return `${i18next.t(`time.${unit}.pluralSecond`)}`;
   }
 };
-export const minutesToHoursAndMinutes = (minutes: number) => {
+export const TimeToText = (minutes: number) => {
+  const time: Time = minutesToTime(minutes)
+
+  if (time.hours === 0) {
+    return `${time.minutes} ${pluralizeTime(time.minutes, "minute")}`;
+  } else if (time.minutes === 0) {
+    return `${time.hours} ${pluralizeTime(time.hours, "hour")}`;
+  } else {
+    return `${time.hours} ${pluralizeTime(
+      time.hours,
+      "hour"
+    )} ${time.minutes} ${pluralizeTime(time.minutes, "minute")}`;
+  }
+};
+
+export const minutesToTime = (minutes: number) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
 
-  if (hours === 0) {
-    return `${remainingMinutes} ${pluralizeTime(remainingMinutes, "minute")}`;
-  } else if (remainingMinutes === 0) {
-    return `${hours} ${pluralizeTime(hours, "hour")}`;
-  } else {
-    return `${hours} ${pluralizeTime(
-      hours,
-      "hour"
-    )} ${remainingMinutes} ${pluralizeTime(remainingMinutes, "minute")}`;
-  }
-};
+  return {hours: hours, minutes: remainingMinutes} as Time
+}
