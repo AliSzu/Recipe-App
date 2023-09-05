@@ -1,4 +1,4 @@
-import { Ingredient, Preparing } from "./RecipeTypes";
+import { Ingredient, Preparing, Time } from "./RecipeTypes";
 
 export interface LoginFormProps {
   email: string;
@@ -21,7 +21,7 @@ export interface EmailFormValues {
 }
 export interface RecipeFormValues {
   title: string;
-  time: string;
+  time: Time;
   description: string;
   image?: FileList;
   preparing: Preparing[];

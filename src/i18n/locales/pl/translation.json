@@ -7,7 +7,9 @@
       "passwordMatch": "Hasła nie są jednakowe",
       "passwordLength": "Hasło powinno zawierać minimum 6 znaków",
       "maxLength": "Pole powinno zawierać maximum {{number}} znaków",
-      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB"
+      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB",
+      "amount": "Ilość powinna być większa niż {{min}} i mniejsza niż {{max}}",
+      "timeEmpty": "Pola czasu nie mogą być jednoczesnie ustawione na 0"
     },
     "label": {
       "email": "Email",
@@ -100,5 +102,17 @@
     "time": "Po czasie wykonania",
     "alphabetically": "Alfabetycznie",
     "updated": "Najnowsze"
+  },
+  "time": {
+    "hour": {
+      "base": "Godzina",
+      "plural": "Godziny",
+      "pluralSecond": "Godzin"
+    },
+    "minute": {
+      "base": "Minuta",
+      "plural": "Minuty",
+      "pluralSecond": "Minut"
+    }
   }
 }
