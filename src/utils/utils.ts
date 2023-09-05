@@ -35,9 +35,6 @@ export const minutesToHoursAndMinutes = (minutes: number) => {
   const remainingMinutes = minutes % 60;
 
   if (hours === 0) {
-  }
-
-  if (hours === 0) {
     return `${remainingMinutes} ${pluralizeTime(remainingMinutes, "minute")}`;
   } else if (remainingMinutes === 0) {
     return `${hours} ${pluralizeTime(hours, "hour")}`;
