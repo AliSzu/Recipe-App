@@ -15,6 +15,7 @@ export const recipeDefaultValues: RecipeFormValues = {
     {
       amount: 1,
       name: "",
+      unit: "",
       id: uniqueId(),
     },
   ],
@@ -36,6 +37,7 @@ export const MAX_LENGTH = {
   TIME: 20,
   DESCRIPTION: 400,
   STEP: 100,
+  UNIT: 20
 };
 
 export const AMOUNT = {

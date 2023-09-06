@@ -51,6 +51,14 @@ const IngredientsListForm = () => {
                 type="number"
                 
               />
+              <FormField
+                field={`ingredients.${index}.unit` as const}
+                isError={
+                  !!(errors.ingredients && errors.ingredients[index]?.unit)
+                }
+                label={t("textField.label.unit")}
+                maxLength={MAX_LENGTH.UNIT}
+              />
             </TextFieldContainer>
           </ArrayFieldContainer>
         );
@@ -61,6 +69,7 @@ const IngredientsListForm = () => {
           append({
             amount: 1,
             name: "",
+            unit: "",
             id: uniqueId(),
           });
         }}

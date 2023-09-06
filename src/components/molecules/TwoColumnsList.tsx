@@ -59,7 +59,10 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
     <List>
       {items.map((item: Ingredient) => (
         <StyledListItem disableGutters={true} key={item.id}>
-          <div>{item.amount}</div>
+          <div>
+            <div>{item.amount}</div>
+            <div>{item.unit}</div>
+          </div>
           <NameWrapper>
             {item.name}
             <StyledIconButton onClick={() => handleIngredientAdd(item)}>
