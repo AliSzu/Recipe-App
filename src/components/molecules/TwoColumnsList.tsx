@@ -20,6 +20,13 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+const Wrapper = styled("div")({
+  display: "flex",
+  gap: "1rem",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
   const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const userUid = useAppSelector(selectUserUid);
@@ -45,7 +52,10 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
     <List>
       {items.map((item: Ingredient) => (
         <StyledListItem disableGutters={true} key={item.id}>
-          <div>{item.amount}</div>
+          <Wrapper>
+            <div>{item.amount}</div>
+            <div>{item.unit}</div>
+          </Wrapper>
           <div>
             {item.name}
             <IconButton onClick={() => handleIngredientAdd(item)}>

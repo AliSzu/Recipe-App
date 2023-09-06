@@ -17,7 +17,8 @@
       "time": "Time",
       "description": "Description",
       "amount": "Amount",
-      "step": "Step"
+      "step": "Step",
+      "unit": "Unit"
     }
   },
   "button": {

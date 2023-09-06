@@ -17,7 +17,8 @@
       "time": "Czas Przygotowania",
       "description": "Opis",
       "amount": "Ilość",
-      "step": "Krok"
+      "step": "Krok",
+      "unit": "Jednostki"
     }
   },
   "button": {
