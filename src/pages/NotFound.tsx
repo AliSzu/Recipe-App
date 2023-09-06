@@ -35,7 +35,7 @@ const Message = styled("div")(({ theme }) => ({
 }));
 
 const Container = styled("div")({
-  height: "90%",
+  height: "90vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
