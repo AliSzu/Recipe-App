@@ -8,8 +8,12 @@ import { showSnackbar } from "../slices/snackbarSlice";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { theme } from "../theme/theme";
-import { Order } from "../types/RecipeTypes";
+import { Order, SelectItem } from "../types/RecipeTypes";
 import Selector from "../components/organisms/Selector";
+import { SORT_ITEMS } from "../constants/SortItems";
+import { Category } from "../enums/Category";
+import { uniqueId } from "../utils/utils";
+import { OrderByDirection } from "firebase/firestore";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -36,6 +40,7 @@ const ButtonContainer = styled("div")({
 
 const Home = () => {
   const [isAnimationFinished, setIsAnimationFinished] = useState(false);
+  const [filter, setFilter] = useState<string>();
   const [sortProperty, setSortProperty] = useState<Order>({
     sort: "updatedAt",
     direction: "desc",
@@ -43,8 +48,10 @@ const Home = () => {
 
   const { t } = useTranslation();
   const { ref, inView } = useInView();
-  const { data, isError, error, isFetching, fetchNextPage } =
-    useFetchRecipes(sortProperty);
+  const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes(
+    sortProperty,
+    filter
+  );
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
@@ -75,8 +82,13 @@ const Home = () => {
     }
   };
 
-  const handleSort = (orderElements: Order) => {
-    setSortProperty(orderElements);
+  const handleSort = (property: string, order?: OrderByDirection) => {
+    if (!order) return;
+    setSortProperty({ sort: property, direction: order });
+  };
+
+  const handleFilter = (property: string) => {
+    property === Category.default ? setFilter(undefined) : setFilter(property);
   };
 
   const recipesData =
@@ -90,11 +102,28 @@ const Home = () => {
       />
     ));
 
+  const categoryOptions: SelectItem[] = Object.keys(Category).map(
+    (category) => ({
+      id: uniqueId(),
+      name: category,
+      propertyName: category,
+    })
+  );
+
   return (
     <HomeContainer>
       <Title>{t("latestRecipes")}</Title>
       <ButtonContainer>
-        <Selector onSort={handleSort} />
+        <Selector
+          onSelect={handleSort}
+          selectItems={SORT_ITEMS}
+          name="sort.name"
+        />
+        <Selector
+          onSelect={handleFilter}
+          selectItems={categoryOptions}
+          name="filter"
+        />
       </ButtonContainer>
       <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
         {recipesData}

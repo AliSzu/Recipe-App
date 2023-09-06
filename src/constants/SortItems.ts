@@ -1,29 +1,23 @@
-import { SortItems } from "../types/RecipeTypes";
+import { SelectItem } from "../types/RecipeTypes";
 import { uniqueId } from "../utils/utils";
 
-export const SORT_ITEMS: SortItems[] = [
-  {
-    name: "sort.alphabetically",
-    order: {
-      sort: "title",
-      direction: "asc",
+export const SORT_ITEMS: SelectItem[] = [
+    {
+        name: 'sort.alphabetically',
+        propertyName: 'title',
+        orderDirection: 'asc',
+        id: uniqueId()
     },
-    id: uniqueId(),
-  },
-  {
-    name: "sort.time",
-    order: {
-      sort: "time",
-      direction: "asc",
+    {
+        name: 'sort.time',
+        propertyName: 'time',
+        orderDirection: 'asc',
+        id: uniqueId()
     },
-    id: uniqueId(),
-  },
-  {
-    name: "sort.updated",
-    order: {
-      sort: "updatedAt",
-      direction: "desc",
+    {
+        name: 'sort.updated',
+        propertyName: 'updatedAt',
+        orderDirection: 'desc',
+        id: uniqueId()
     },
-    id: uniqueId(),
-  },
-];
+]
