@@ -3,6 +3,7 @@ import {
   DocumentData,
   Timestamp,
   addDoc,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -31,7 +32,7 @@ export function useFetchShoppingList(userUid: string) {
       const shoppingListSnap = await getDocs(shoppingListQuery);
       const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
         (item: DocumentData) => ({
-          id: item.id,
+          docId: item.id,
           ...item.data(),
         })
       );
@@ -40,7 +41,7 @@ export function useFetchShoppingList(userUid: string) {
   });
 }
 
-export function useAddItemToShoppingList() {
+export function useAddNewItemToShoppingList() {
   useAuthGuard();
   return useMutation<void, FirebaseError, ShoppingItemFormValues>({
     mutationFn: async (shoppingItem: ShoppingItemFormValues) => {
@@ -53,16 +54,61 @@ export function useAddItemToShoppingList() {
   });
 }
 
+export function useAddItemToShoppingList() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, ShoppingItemFormValues>({
+    mutationFn: async (shoppingItem: ShoppingItemFormValues) => {
+      const shoppingListQuery = query(
+        shoppingListCollection,
+        where('id', "==", shoppingItem.id),
+        where('owner', '==', shoppingItem.owner)
+      );
+      const shoppingListSnap = await getDocs(shoppingListQuery);
+      const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
+        (item: DocumentData) => ({
+          docId: item.id,
+          ...item.data(),
+        })
+      );
+      if (shoppingList.length === 0) {
+        await addDoc(shoppingListCollection, {
+          ...shoppingItem,
+          createdAt: Timestamp.fromDate(new Date()),
+          updatedAt: Timestamp.fromDate(new Date()),
+        });
+      }
+      else {
+        const docId = shoppingList[0].docId
+        if(!docId) return
+        await updateDoc(doc(db, Collections.shoppingList, docId), {
+          amount: shoppingList[0].amount + shoppingItem.amount,
+          updatedAt: Timestamp.fromDate(new Date()),
+        })
+      }
+    }
+  })
+}
+
 export function useEditShoppingListItem() {
+  useAuthGuard();
   return useMutation<void, FirebaseError, ShoppingItem>({
     mutationFn: async (ShoppingItem: ShoppingItem) => {
-      const { id, ...item } = ShoppingItem;
-      if (!id) return;
-      const docRef = doc(db, Collections.shoppingList, id);
+      const { docId, ...item } = ShoppingItem;
+      if (!docId) return;
+      const docRef = doc(db, Collections.shoppingList, docId);
       await updateDoc(docRef, {
-        ...item,
+        amount: item.amount,
         updatedAt: Timestamp.fromDate(new Date()),
       });
+    },
+  });
+}
+
+export function useDeleteShoppingListItem() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, string>({
+    mutationFn: async (itemId: string) => {
+      await deleteDoc(doc(db, Collections.shoppingList, itemId));
     },
   });
 }

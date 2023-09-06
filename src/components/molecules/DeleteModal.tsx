@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
@@ -22,6 +23,23 @@ const StyledActionButton = styled(Button)({
   padding: "0.5rem",
 });
 
+const StyledDialogContent = styled(DialogContent)({
+  display: "flex",
+  alignItems: "center",
+  wordBreak: "break-all",
+});
+
+const StyledDialogActions = styled(DialogActions)({
+  padding: "1rem",
+});
+
+const StyledDialogTitle = styled(DialogTitle)(({theme}) => ({
+  fontSize: '1.5rem',
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '1.25rem'
+  } 
+}))
+
 const DeleteModal = ({ recipeName, onDeleteRecipe }: DeleteModalProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { t } = useTranslation();
@@ -36,15 +54,17 @@ const DeleteModal = ({ recipeName, onDeleteRecipe }: DeleteModalProps) => {
         {t("button.delete")}
       </Button>
       <Dialog open={isDialogOpen} onClose={handleClose}>
-        <DialogTitle fontSize={20}>
+        <StyledDialogTitle>
           {t("dialog.delete.title", { item: t("recipe.name") })}
-        </DialogTitle>
-        <DialogContent>
+        </StyledDialogTitle>
+        <Divider />
+        <StyledDialogContent>
           <DialogContentText id="alert-dialog-description">
             {t("dialog.delete.message", { itemName: recipeName })}
           </DialogContentText>
-        </DialogContent>
-        <DialogActions>
+        </StyledDialogContent>
+        <Divider />
+        <StyledDialogActions>
           <StyledActionButton
             onClick={handleClose}
             variant="contained"
@@ -60,7 +80,7 @@ const DeleteModal = ({ recipeName, onDeleteRecipe }: DeleteModalProps) => {
           >
             {t("button.delete")}
           </StyledActionButton>
-        </DialogActions>
+        </StyledDialogActions>
       </Dialog>
     </>
   );

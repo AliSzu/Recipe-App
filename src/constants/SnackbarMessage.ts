@@ -6,4 +6,5 @@ export const SnackbarMessage = {
   "post-success": "success.post",
   'edit-success': "success.edit",
   "delete-success": "success.delete",
+  "ingredient-success" : "success.ingredient"
 };

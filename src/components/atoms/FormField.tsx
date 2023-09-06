@@ -1,15 +1,18 @@
 import { TextField } from "@mui/material";
 import { RecipeFormValues } from "../../types/FormTypes";
-import { FieldPath, useFormContext } from "react-hook-form";
+import { FieldPath, RegisterOptions, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ErrorMessage } from "@hookform/error-message";
+import { REGEX } from "../../constants/Regex";
 
 interface FormFieldProps {
   isError: boolean;
   field: FieldPath<RecipeFormValues>;
+  label: string;
   multiline?: boolean;
   rows?: number;
-  label: string;
+  type?: string;
+  maxLength?: number;
 }
 
 const FormField = ({
@@ -18,11 +21,14 @@ const FormField = ({
   rows,
   isError,
   label,
+  maxLength,
+  type,
 }: FormFieldProps) => {
   const { t } = useTranslation();
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext<RecipeFormValues>();
 
   const error = (
@@ -33,17 +39,32 @@ const FormField = ({
     />
   );
 
+  const validationRules: RegisterOptions<RecipeFormValues> = {
+    required: t("textField.error.required"),
+    onBlur: (e) => setValue(field, e.target.value.trim()),
+    pattern: {
+      value: REGEX.ONLY_WHITESPACE,
+      message: t("textField.error.required"),
+    },
+  };
+
+  validationRules.maxLength = maxLength && {
+    value: maxLength,
+    message: t("textField.error.maxLength", {
+      number: maxLength,
+    }),
+  };
+
   return (
     <TextField
       label={label}
-      {...register(field, {
-        required: t("textField.error.required"),
-      })}
+      {...register(field, validationRules)}
       fullWidth
       helperText={error}
       multiline={multiline}
       rows={rows ? rows : 1}
       error={isError}
+      type={type}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import {
   DocumentData,
   getDocs,
@@ -9,29 +9,53 @@ import {
   deleteDoc,
   doc,
   Timestamp,
-  orderBy,
   updateDoc,
+  startAfter,
+  limit,
+  orderBy,
 } from "firebase/firestore";
-import { Recipe } from "../types/RecipeTypes";
+import { InfiniteRecipe, Order, Recipe } from "../types/RecipeTypes";
 import { FirebaseError } from "firebase/app";
 import { QueryKeys } from "../enums/QueryKeys";
 import { db, recipeCollection } from "../firebase";
 import { useAuthGuard } from "../hooks/useAuthGuard";
 import { Collections } from "../enums/Collections";
+import { CACHE_TIME, STALE_TIME } from "../constants/DefaultValues";
 
-export function useFetchRecipes() {
-  useAuthGuard();
-  return useQuery<Recipe[], FirebaseError>({
-    queryKey: [QueryKeys.recipesData],
-    queryFn: async () => {
-      const recipeQuery = query(recipeCollection, orderBy("createdAt", "desc"));
+export function useFetchRecipes(orderElements: Order) {
+  return useInfiniteQuery<InfiniteRecipe, FirebaseError>({
+    queryKey: [QueryKeys.recipesData, orderElements],
+    refetchOnWindowFocus: false,
+    staleTime: STALE_TIME,
+    cacheTime: CACHE_TIME,
+    queryFn: async ({ pageParam }) => {
+      let recipeQuery;
+
+      if (pageParam) {
+        recipeQuery = query(
+          recipeCollection,
+          orderBy(orderElements.sort, orderElements.direction),
+          startAfter(pageParam),
+          limit(10)
+        );
+      } else {
+        recipeQuery = query(
+          recipeCollection,
+          orderBy(orderElements.sort, orderElements.direction),
+          limit(10)
+        );
+      }
+
       const recipeSnap = await getDocs(recipeQuery);
       const recipes: Recipe[] = recipeSnap.docs.map((item: DocumentData) => ({
         id: item.id,
         ...item.data(),
       }));
-      return recipes;
+
+      const doc = recipeSnap.docs[recipeSnap.docs.length - 1];
+      return { recipes, doc };
     },
+    getNextPageParam: (lastPage) => lastPage.doc ?? undefined,
   });
 }
 

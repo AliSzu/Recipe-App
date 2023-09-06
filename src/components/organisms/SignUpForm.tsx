@@ -1,11 +1,4 @@
-import { Button } from "@mui/material";
-import {
-  FormContainer,
-  FormErrorProvider,
-  PasswordElement,
-  TextFieldElement,
-  useForm,
-} from "react-hook-form-mui";
+import { Button, styled } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SignUpFormProps } from "../../types/FormTypes";
 import { useAppDispatch } from "../../store/store";
@@ -14,22 +7,32 @@ import { login } from "../../slices/authSlice";
 import { ROUTES } from "../../constants/Routes";
 import { useSignUp } from "../../api/auth";
 import { hideSnackbar, showSnackbar } from "../../slices/snackbarSlice";
+import { FormProvider, useForm } from "react-hook-form";
+import PasswordField from "../atoms/PasswordField";
+import EmailField from "../atoms/EmailField";
+
+const StyledForm = styled("form")({
+  width: "100%",
+});
 
 const SignUpFrom = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const formContext = useForm<SignUpFormProps>({
+  const methods = useForm<SignUpFormProps>({
     defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
-  const { watch } = formContext;
+  const {
+    handleSubmit,
+    watch,
+  } = methods;
 
-  const signUpMutation = useSignUp();
+  const { mutate, isLoading } = useSignUp();
 
-  const handleSignUp = (data: SignUpFormProps) => {
-    signUpMutation.mutate(
+  const onSubmit = (data: SignUpFormProps) => {
+    mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
@@ -55,42 +58,17 @@ const SignUpFrom = () => {
   };
 
   return (
-    <FormErrorProvider
-      onError={(error) => {
-        if (error.type === "required") {
-          return t("textField.error.required");
-        } else if (error.type === "minLength") {
-          return t("textField.error.passwordLength");
-        }
-        return error.message;
-      }}
-    >
-      <FormContainer
-        formContext={formContext}
-        onSuccess={(data) => handleSignUp(data)}
-      >
-        <TextFieldElement
-          required
-          label="Email"
-          name="email"
-          fullWidth
-          type="email"
-        ></TextFieldElement>
-        <PasswordElement
-          name="password"
+    <FormProvider {...methods}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <EmailField />
+        <PasswordField
+          field={"password"}
           label={t("textField.label.password")}
-          fullWidth
-          required
-          validation={{
-            minLength: 6,
-          }}
         />
-        <PasswordElement
-          name="confirmPassword"
+        <PasswordField
+          field={"confirmPassword"}
           label={t("textField.label.confirmPassword")}
-          fullWidth
-          required
-          validation={{
+          validationSchema={{
             validate: (val: string) => {
               if (watch("password") !== val) {
                 return t("textField.error.passwordMatch");
@@ -98,11 +76,16 @@ const SignUpFrom = () => {
             },
           }}
         />
-        <Button variant="contained" type="submit" fullWidth>
+        <Button
+          variant="contained"
+          type="submit"
+          fullWidth
+          disabled={isLoading}
+        >
           {t("button.signUp")}
         </Button>
-      </FormContainer>
-    </FormErrorProvider>
+      </StyledForm>
+    </FormProvider>
   );
 };
 

@@ -1,3 +1,5 @@
+import { DocumentData, OrderByDirection, QueryDocumentSnapshot } from "firebase/firestore";
+
 export interface Recipe {
   id?: string;
   createdAt?: Date;
@@ -11,12 +13,28 @@ export interface Recipe {
   ingredients: Ingredient[];
 }
 export interface Ingredient {
-  amount: string;
+  amount: number;
   name: string;
   id: string;
 }
 
 export interface Preparing {
   step: string;
+  id: string;
+}
+
+export interface InfiniteRecipe {
+  recipes: Recipe[];
+  doc: QueryDocumentSnapshot<Recipe, DocumentData>;
+}
+
+export interface Order {
+  sort: string;
+  direction: OrderByDirection;
+}
+
+export interface SortItems {
+  name: string;
+  order: Order;
   id: string;
 }

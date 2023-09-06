@@ -11,7 +11,7 @@ export const recipeDefaultValues: RecipeFormValues = {
   imgSrc: DEFAULT_IMAGE,
   ingredients: [
     {
-      amount: "",
+      amount: 1,
       name: "",
       id: uniqueId(),
     },
@@ -21,7 +21,20 @@ export const recipeDefaultValues: RecipeFormValues = {
 
 export const shoppingItemDefaultValues: ShoppingItemFormValues = {
   name: "",
+  owner: "",
   amount: 1,
 };
 
 export const DEBOUNCE_TIME = 800;
+export const STALE_TIME = 1000 * 60 * 5; //5 minutes
+export const CACHE_TIME = 1000 * 60 * 10; //10 minutes
+
+export const MAX_LENGTH = {
+  NAME: 30,
+  TIME: 20,
+  DESCRIPTION: 400,
+  STEP: 100,
+};
+
+export const FILE_MAX_SIZE = 1 * 1024 * 1024;
+export const PREPARING_FIELDS_LIMIT = 50;

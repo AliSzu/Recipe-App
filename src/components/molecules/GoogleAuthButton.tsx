@@ -28,8 +28,6 @@ const GoogleAuthButton = () => {
       onSuccess: (response) => {
         dispatch(
           login({
-            email: response.email,
-            refreshToken: response.refreshToken,
             uid: response.uid,
           })
         );
