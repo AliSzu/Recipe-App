@@ -166,11 +166,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
     setIsDisabled(!isDisabled);
     editItem(undefined, itemName);
   };
-
-  const handleChange = (e: any) => {
-    setItemName(e.target.value);
-  };
-
+  
   return (
     <StyledListItem>
       <StyledCard>
@@ -194,7 +190,7 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
           <ItemInformation>
             <StyledTextField
               value={itemName}
-              onChange={handleChange}
+              onChange={(e) => setItemName(e.target.value)}
               fullWidth
               disabled={isDisabled}
               margin="none"
