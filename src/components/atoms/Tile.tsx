@@ -36,7 +36,7 @@ const Tile = ({ recipe }: TileProps) => {
   const formattedTime = TimeToText(recipe.time);
 
   return (
-    <StyledImageListItem onClick={handleClick}>
+    <StyledImageListItem onClick={handleClick} style={{height: '100%'}}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar title={formattedTime} subtitle={recipe.title} />
     </StyledImageListItem>

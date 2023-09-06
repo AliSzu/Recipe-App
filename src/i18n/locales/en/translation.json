@@ -47,7 +47,8 @@
     "userNotFound": "User Not Found",
     "tooManyAttemptsTryLater": "Access to this account has been temporarily blocked due to multiple failed login attempts. Try again later",
     "emailExists": "Account with this email address already exists",
-    "unknown": "Something went wrong"
+    "unknown": "Something went wrong",
+    "pageNotFound" : "Oops, page not found"
   },
   "success": {
     "post": "Recipe created",
@@ -115,5 +116,10 @@
       "plural": "Minutes",
       "pluralSecond": "Minutes"
     }
-  }
+  },
+  "category": "Category",
+  "vegan": "Vegan",
+  "breakfast": "Breakfast",
+  "filter": "Filter",
+  "default": "Show all"
 }

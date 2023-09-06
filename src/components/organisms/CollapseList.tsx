@@ -11,6 +11,7 @@ interface CollapseListProps {
 const Title = styled("div")({
   fontSize: "2rem",
   fontWeight: "600",
+  color: 'black'
 });
 
 const CollapseList = ({ children, title }: CollapseListProps) => {
