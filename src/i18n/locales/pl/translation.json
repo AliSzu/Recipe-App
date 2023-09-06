@@ -7,7 +7,8 @@
       "passwordMatch": "Hasła nie są jednakowe",
       "passwordLength": "Hasło powinno zawierać minimum 6 znaków",
       "maxLength": "Pole powinno zawierać maximum {{number}} znaków",
-      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB"
+      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB",
+      "amount": "Ilość powinna być większa niż {{min}} i mniejsza niż {{max}}"
     },
     "label": {
       "email": "Email",

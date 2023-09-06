@@ -38,5 +38,10 @@ export const MAX_LENGTH = {
   STEP: 100,
 };
 
+export const AMOUNT = {
+  MIN: 0,
+  MAX: 1000
+}
+
 export const FILE_MAX_SIZE = 1 * 1024 * 1024;
 export const PREPARING_FIELDS_LIMIT = 50;
