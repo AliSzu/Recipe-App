@@ -31,7 +31,7 @@ const Tile = ({ recipe }: TileProps) => {
     navigate(`/recipe/${recipe.id}`);
   };
   return (
-    <StyledImageListItem onClick={handleClick}>
+    <StyledImageListItem onClick={handleClick} style={{height: '100%'}}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
     </StyledImageListItem>
