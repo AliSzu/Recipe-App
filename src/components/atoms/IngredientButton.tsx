@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, styled } from "@mui/material";
 import { Ingredient } from "../../types/RecipeTypes";
 import {
   useAddItemToShoppingList,
@@ -18,6 +18,10 @@ interface IngredientButtonProps {
   userUid: string;
 }
 
+const StyledIconButton = styled(IconButton)({
+  color: "black",
+});
+
 const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
   const [isPresent, setIsPresent] = useState<boolean>(false);
   const [docId, setDocId] = useState<string>();
@@ -35,7 +39,6 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
     }
   }, [data, ingredient.id]);
 
-
   const dispatchSuccess = (successMessage: string) => {
     dispatch(
       showSnackbar({
@@ -44,6 +47,12 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
         autoHideDuration: 6000,
       })
     );
+    queryClient.invalidateQueries({
+      queryKey: [
+        QueryKeys.shoppingListItem,
+        { userUid: userUid, itemId: ingredient.id },
+      ],
+    });
   };
 
   const handleAddIngredient = () => {
@@ -52,12 +61,6 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
       {
         onSuccess: (docId: string) => {
           dispatchSuccess("ingredient-success");
-          queryClient.invalidateQueries({
-            queryKey: [
-              QueryKeys.shoppingListItem,
-              { userUid: userUid, itemId: ingredient.id },
-            ],
-          });
           setDocId(docId);
           setIsPresent(true);
         },
@@ -70,12 +73,6 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
     deleteIngredientMutate(docId, {
       onSuccess: () => {
         dispatchSuccess("ingredient-delete-success");
-        queryClient.invalidateQueries({
-          queryKey: [
-            QueryKeys.shoppingListItem,
-            { userUid: userUid, itemId: ingredient.id },
-          ],
-        });
         setIsPresent(false);
       },
       onError: (error) => {
@@ -95,13 +92,9 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
   };
 
   return (
-    <IconButton onClick={handleClick}>
-      {isPresent ? (
-        <RemoveIcon />
-      ) : (
-        <AddIcon />
-      )}
-    </IconButton>
+    <StyledIconButton onClick={handleClick}>
+      {isPresent ? <RemoveIcon /> : <AddIcon />}
+    </StyledIconButton>
   );
 };
 
