@@ -11,12 +11,25 @@ interface TwoColumnListProps {
 }
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 0.5fr",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: '2rem'
+  },
+}));
+
+const StyledIconButton = styled(IconButton)({
+  color: "black",
+});
+
+const NameWrapper = styled("div")(({ theme }) => ({
   display: "flex",
+  alignItems: 'center',
   justifyContent: "space-between",
   [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-start",
-    display: "grid",
-    gridTemplateColumns: "0.3fr 1fr",
+    justifyContent: "initial",
   },
 }));
 
@@ -46,12 +59,12 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
       {items.map((item: Ingredient) => (
         <StyledListItem disableGutters={true} key={item.id}>
           <div>{item.amount}</div>
-          <div>
+          <NameWrapper>
             {item.name}
-            <IconButton onClick={() => handleIngredientAdd(item)}>
+            <StyledIconButton onClick={() => handleIngredientAdd(item)}>
               <AddIcon />
-            </IconButton>
-          </div>
+            </StyledIconButton>
+          </NameWrapper>
         </StyledListItem>
       ))}
     </List>
