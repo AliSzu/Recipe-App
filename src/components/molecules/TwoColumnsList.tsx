@@ -1,10 +1,8 @@
-import { IconButton, List, ListItem, styled } from "@mui/material";
+import { List, ListItem, styled } from "@mui/material";
 import { Ingredient } from "../../types/RecipeTypes";
-import AddIcon from "@mui/icons-material/Add";
-import { useAddItemToShoppingList } from "../../api/shoppingList";
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
-import { showSnackbar } from "../../slices/snackbarSlice";
+import IngredientButton from "../atoms/IngredientButton";
 
 interface TwoColumnListProps {
   items: Ingredient[];
@@ -21,26 +19,8 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
-  const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const userUid = useAppSelector(selectUserUid);
-  const dispatch = useAppDispatch();
 
-  const handleIngredientAdd = (ingredient: Ingredient) => {
-    addIngredientMutate(
-      { ...ingredient, owner: userUid, id: ingredient.id },
-      {
-        onSuccess: () => {
-          dispatch(
-            showSnackbar({
-              message: "ingredient-success",
-              severity: "success",
-              autoHideDuration: 6000,
-            })
-          );
-        },
-      }
-    );
-  };
   return (
     <List>
       {items.map((item: Ingredient) => (
@@ -48,9 +28,7 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
           <div>{item.amount}</div>
           <div>
             {item.name}
-            <IconButton onClick={() => handleIngredientAdd(item)}>
-              <AddIcon />
-            </IconButton>
+            <IngredientButton ingredient={item} userUid={userUid}/>
           </div>
         </StyledListItem>
       ))}

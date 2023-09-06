@@ -5,6 +5,7 @@ export const SnackbarMessage = {
   "email-already-in-use": "error.emailExists",
   "post-success": "success.post",
   'edit-success': "success.edit",
-  "delete-success": "success.delete",
-  "ingredient-success" : "success.ingredient"
+  "delete-success": "success.delete.recipe",
+  "ingredient-success" : "success.ingredient",
+  "ingredient-delete-success": "success.delete.ingredient"
 };
