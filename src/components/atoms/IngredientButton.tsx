@@ -33,7 +33,7 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
       setIsPresent(true);
       setDocId(data[0].docId);
     }
-  }, [data]);
+  }, [data, ingredient.id]);
 
 
   const dispatchSuccess = (successMessage: string) => {
