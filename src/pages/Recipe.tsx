@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { useDeleteImage } from "../api/files";
 import { FirebaseError } from "firebase/app";
 import { DEFAULT_IMAGE } from "../constants/DefaultValues";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../enums/QueryKeys";
 
 const Recipe = () => {
   const { id } = useParams();
@@ -19,6 +21,7 @@ const Recipe = () => {
   const deleteImageMutation = useDeleteImage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   const showErrorSnackbar = (errorCode: string) => {
     dispatch(
@@ -39,6 +42,15 @@ const Recipe = () => {
         autoHideDuration: 6000,
       })
     );
+    queryClient.invalidateQueries({
+      queryKey: [
+        QueryKeys.recipesData,
+        {
+          sort: "updatedAt",
+          direction: "desc",
+        },
+      ],
+    });
   };
 
   const handleDeleteRecipe = async () => {

@@ -1,3 +1,4 @@
+import { Category } from "../../enums/Category";
 import { Recipe } from "../../types/RecipeTypes";
 import { uniqueId } from "../../utils/utils";
 
@@ -8,40 +9,48 @@ export const MOCK_RECIPE: Recipe = {
     "https://wszystkiegoslodkiego.pl/storage/images/202111/puszyste-pancakes.jpg",
   id: "mock1",
   owner: "",
+  category: Category.vegan,
   ingredients: [
     {
       amount: 1,
-      name: "cups all-purpose flour",
+      name: "all-purpose flour",
+      unit: "cups",
       id: "1",
     },
     {
       amount: 2,
-      name: "teaspoons baking powder",
+      name: "baking powder",
+      unit: "teaspoons",
       id: "2",
     },
     {
       amount: 3,
-      name: "teaspoon salt",
+      name: "salt",
+      unit: "teaspoon",
       id: "3",
     },
     {
       amount: 2,
-      name: "tablespoons granulated sugar",
+      name: "granulated sugar",
+      unit: "tablespoons",
       id: "4",
     },
     {
       amount: 2,
-      name: "cups milk",
+      name: "milk",
+      unit: "cups",
       id: "5",
     },
     {
       amount: 123,
-      name: "cup unsalted butter, melted",
+      name: "unsalted butter, melted",
+      unit: "cup",
       id: "6",
     },
     {
       amount: 123,
-      name: "large egg",
+      name: "egg",
+      unit: "large",
       id: "7",
     },
   ],

@@ -7,7 +7,8 @@
       "passwordMatch": "Passwords do not match",
       "passwordLength": "Password length must be at least 6 characters",
       "maxLength": "The field should contain a maximum of {{number}} characters",
-      "imageSize": "Please upload a picture smaller than 1 MB"
+      "imageSize": "Please upload a picture smaller than 1 MB",
+      "amount": "The amount should be greater than {{min}} and less than {{max}}"
     },
     "label": {
       "email": "Email",
@@ -17,7 +18,8 @@
       "time": "Time",
       "description": "Description",
       "amount": "Amount",
-      "step": "Step"
+      "step": "Step",
+      "unit": "Unit"
     }
   },
   "button": {
@@ -45,11 +47,15 @@
     "userNotFound": "User Not Found",
     "tooManyAttemptsTryLater": "Access to this account has been temporarily blocked due to multiple failed login attempts. Try again later",
     "emailExists": "Account with this email address already exists",
-    "unknown": "Something went wrong"
+    "unknown": "Something went wrong",
+    "pageNotFound" : "Oops, page not found"
   },
   "success": {
     "post": "Recipe created",
-    "delete": "Recipe deleted",
+    "delete": {
+      "recipe" : "Recipe deleted",
+      "ingredient": "Ingredient removed from your shopping list"
+    },
     "edit": "Recipe edited",
     "ingredient": "Ingredient added to the shopping list"
   },
@@ -101,5 +107,10 @@
     "time": "By preparing time",
     "alphabetically": "Alphabetically",
     "updated": "Newest"
-  }
+  },
+  "category": "Category",
+  "vegan": "Vegan",
+  "breakfast": "Breakfast",
+  "filter": "Filter",
+  "default": "Show all"
 }
