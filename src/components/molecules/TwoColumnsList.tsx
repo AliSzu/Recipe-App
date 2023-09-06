@@ -9,27 +9,43 @@ interface TwoColumnListProps {
 }
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 0.5fr",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "2rem",
+  },
+}));
+
+const Wrapper = styled('div')({
+  display: 'flex',
+  gap: '1rem'
+})
+
+const NameWrapper = styled("div")(({ theme }) => ({
   display: "flex",
+  alignItems: "center",
   justifyContent: "space-between",
   [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-start",
-    display: "grid",
-    gridTemplateColumns: "0.3fr 1fr",
+    justifyContent: "initial",
   },
 }));
 
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
   const userUid = useAppSelector(selectUserUid);
-
   return (
     <List>
       {items.map((item: Ingredient) => (
         <StyledListItem disableGutters={true} key={item.id}>
-          <div>{item.amount}</div>
-          <div>
+          <Wrapper>
+            <div>{item.amount}</div>
+            <div>{item.unit}</div>
+          </Wrapper>
+          <NameWrapper>
             {item.name}
-            <IngredientButton ingredient={item} userUid={userUid}/>
-          </div>
+            <IngredientButton ingredient={item} userUid={userUid} />
+          </NameWrapper>
         </StyledListItem>
       ))}
     </List>

@@ -1,3 +1,4 @@
+import { Category } from "../enums/Category";
 import { RecipeFormValues, ShoppingItemFormValues } from "../types/FormTypes";
 import { uniqueId } from "../utils/utils";
 
@@ -9,10 +10,12 @@ export const recipeDefaultValues: RecipeFormValues = {
   time: "",
   description: "",
   imgSrc: DEFAULT_IMAGE,
+  category: Category.default,
   ingredients: [
     {
       amount: 1,
       name: "",
+      unit: "",
       id: uniqueId(),
     },
   ],
@@ -34,7 +37,13 @@ export const MAX_LENGTH = {
   TIME: 20,
   DESCRIPTION: 400,
   STEP: 100,
+  UNIT: 20
 };
+
+export const AMOUNT = {
+  MIN: 0,
+  MAX: 1000
+}
 
 export const FILE_MAX_SIZE = 1 * 1024 * 1024;
 export const PREPARING_FIELDS_LIMIT = 50;

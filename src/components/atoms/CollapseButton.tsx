@@ -1,4 +1,4 @@
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemText, styled } from "@mui/material";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -8,6 +8,10 @@ interface CollapseButtonProps {
   title: string
 }
 
+const StyledListItemText = styled(ListItemText)({
+  color: 'black'
+})
+
 const CollapseButton = ({ onClick, open, title }: CollapseButtonProps) => {
   const handleClick = () => {
     onClick(!open);
@@ -15,7 +19,7 @@ const CollapseButton = ({ onClick, open, title }: CollapseButtonProps) => {
 
   return (
     <ListItemButton onClick={handleClick} disableGutters>
-      <ListItemText primary={title} />
+      <StyledListItemText primary={title} />
       {open ? <ExpandLess /> : <ExpandMore />}
     </ListItemButton>
   );

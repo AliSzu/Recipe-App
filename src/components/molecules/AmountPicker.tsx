@@ -17,7 +17,7 @@ const StyledInput = styled(Input)(({ theme }) => ({
   "& MuiInputBase-input-MuiInput-input": {
     textAlign: "center",
   },
-  width: "50px",
+  maxWidth: "5rem",
   [theme.breakpoints.down("sm")]: {
     fontSize: "1.2rem",
   },

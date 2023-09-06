@@ -9,6 +9,7 @@ import AddRecipe from "../pages/AddRecipe";
 import EditRecipe from "../pages/EditRecipe";
 import ShoppingList from "../pages/ShoppingList";
 import RootContainer from "./RootContainer";
+import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
             index: true,
             path: ROUTES.ADD_RECIPE,
             element: <AddRecipe />,
+          },
+          {
+            index: true,
+            path: ROUTES.NOT_FOUND,
+            element: <NotFound />,
           },
           {
             index: true,
