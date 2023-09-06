@@ -52,7 +52,10 @@
   },
   "success": {
     "post": "Recipe created",
-    "delete": "Recipe deleted",
+    "delete": {
+      "recipe" : "Recipe deleted",
+      "ingredient": "Ingredient removed from your shopping list"
+    },
     "edit": "Recipe edited",
     "ingredient": "Ingredient added to the shopping list"
   },

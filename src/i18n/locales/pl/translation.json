@@ -52,7 +52,10 @@
   },
   "success": {
     "post": "Utworzono przepis",
-    "delete": "Usunięto przepis",
+    "delete": {
+      "recipe" : "Usunięto przepis",
+      "ingredient": "Usunięto składnik z Twojej listy zakupów"
+    },
     "edit": "Edytowano przepis",
     "ingredient": "Składnik dodano do listy zakupów"
   },
