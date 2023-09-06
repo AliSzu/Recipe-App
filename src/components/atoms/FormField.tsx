@@ -4,6 +4,7 @@ import { FieldPath, RegisterOptions, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ErrorMessage } from "@hookform/error-message";
 import { REGEX } from "../../constants/Regex";
+import { AMOUNT } from "../../constants/DefaultValues";
 
 interface FormFieldProps {
   isError: boolean;
@@ -42,17 +43,27 @@ const FormField = ({
   const validationRules: RegisterOptions<RecipeFormValues> = {
     required: t("textField.error.required"),
     onBlur: (e) => setValue(field, e.target.value.trim()),
-    pattern: {
-      value: REGEX.ONLY_WHITESPACE,
-      message: t("textField.error.required"),
+    validate: {
+      hasWhiteSpaces: (value) => {
+        if (typeof value === "string") {
+          if (!REGEX.ONLY_WHITESPACE.test(value)) {
+            return t("textField.error.required");
+          }
+          if (type === "number" && !REGEX.AMOUNT.test(value)) {
+            return t("textField.error.amount", {
+              min: AMOUNT.MIN,
+              max: AMOUNT.MAX,
+            });
+          }
+        }
+      },
     },
-  };
-
-  validationRules.maxLength = maxLength && {
-    value: maxLength,
-    message: t("textField.error.maxLength", {
-      number: maxLength,
-    }),
+    maxLength: maxLength && {
+      value: maxLength,
+      message: t("textField.error.maxLength", {
+        number: maxLength,
+      }),
+    },
   };
 
   return (

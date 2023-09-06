@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
 import { theme } from "../../theme/theme";
 import { MAX_LENGTH } from "../../constants/DefaultValues";
+import CategorySelect from "../molecules/CategorySelect";
 
 interface RecipeFormProps {
   defaultValues: RecipeFormValues;
@@ -88,6 +89,7 @@ const RecipeForm = ({
           <IngredientsListForm />
           <StyledDivider>{t("form.preparingSteps")}</StyledDivider>
           <PreparingStepsList />
+          <CategorySelect/>
           <ButtonContainer>
             <Button
               type="submit"

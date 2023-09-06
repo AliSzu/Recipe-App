@@ -4,12 +4,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
-import { Order, SortItems } from "../../types/RecipeTypes";
+import { SelectItem } from "../../types/RecipeTypes";
 import { useTranslation } from "react-i18next";
-import { SORT_ITEMS } from "../../constants/SortItems";
+import { OrderByDirection } from "firebase/firestore";
 
 interface SelectorProps {
-  onSort: (orderElements: Order) => void;
+  onSelect: (property: string, order?: OrderByDirection) => void;
+  selectItems: SelectItem[];
+  name: string;
 }
 
 const StyledMenu = styled(Menu)({
@@ -20,7 +22,7 @@ const StyledMenu = styled(Menu)({
   },
 });
 
-const Selector = ({ onSort }: SelectorProps) => {
+const Selector = ({ onSelect, selectItems, name }: SelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
@@ -28,10 +30,11 @@ const Selector = ({ onSort }: SelectorProps) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (orderElements: Order) => {
+  const handleClose = (property: string, order?: OrderByDirection) => {
     setAnchorEl(null);
-    onSort(orderElements);
+    onSelect(property, order);
   };
+
   return (
     <div>
       <Button
@@ -40,7 +43,7 @@ const Selector = ({ onSort }: SelectorProps) => {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        {t("sort.name")}
+        {t(name)}
       </Button>
       <StyledMenu
         elevation={0}
@@ -56,9 +59,9 @@ const Selector = ({ onSort }: SelectorProps) => {
         open={open}
         onClose={() => setAnchorEl(null)}
       >
-        {SORT_ITEMS.map((item: SortItems) => (
+        {selectItems.map((item: SelectItem) => (
           <MenuItem
-            onClick={() => handleClose(item.order)}
+            onClick={() => handleClose(item.propertyName, item.orderDirection)}
             disableRipple
             key={item.id}
           >

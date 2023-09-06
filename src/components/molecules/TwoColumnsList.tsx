@@ -11,25 +11,31 @@ interface TwoColumnListProps {
 }
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
+  display: "grid",
+  gridTemplateColumns: "1fr 0.5fr",
   [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-start",
-    display: "grid",
-    gridTemplateColumns: "0.3fr 1fr",
+    display: "flex",
+    justifyContent: "space-between",
+    gap: '2rem'
   },
 }));
 
-const Wrapper = styled("div")({
-  display: "flex",
-  gap: "1rem",
-  alignItems: "center",
-  justifyContent: "center",
+const StyledIconButton = styled(IconButton)({
+  color: "black",
 });
 
+const NameWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: 'center',
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "initial",
+  },
+}));
+
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
-  const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const userUid = useAppSelector(selectUserUid);
+  const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const dispatch = useAppDispatch();
 
   const handleIngredientAdd = (ingredient: Ingredient) => {
@@ -48,20 +54,21 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
       }
     );
   };
+
   return (
     <List>
       {items.map((item: Ingredient) => (
         <StyledListItem disableGutters={true} key={item.id}>
-          <Wrapper>
+          <div>
             <div>{item.amount}</div>
             <div>{item.unit}</div>
-          </Wrapper>
-          <div>
-            {item.name}
-            <IconButton onClick={() => handleIngredientAdd(item)}>
-              <AddIcon />
-            </IconButton>
           </div>
+          <NameWrapper>
+            {item.name}
+            <StyledIconButton onClick={() => handleIngredientAdd(item)}>
+              <AddIcon />
+            </StyledIconButton>
+          </NameWrapper>
         </StyledListItem>
       ))}
     </List>

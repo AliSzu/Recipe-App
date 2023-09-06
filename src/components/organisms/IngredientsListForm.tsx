@@ -49,6 +49,7 @@ const IngredientsListForm = () => {
                 }
                 label={t("textField.label.amount")}
                 type="number"
+                
               />
               <FormField
                 field={`ingredients.${index}.unit` as const}

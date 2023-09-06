@@ -7,7 +7,8 @@
       "passwordMatch": "Hasła nie są jednakowe",
       "passwordLength": "Hasło powinno zawierać minimum 6 znaków",
       "maxLength": "Pole powinno zawierać maximum {{number}} znaków",
-      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB"
+      "imageSize": "Prześlij zdjęcie o rozmiarze mniejszym niż 1MB",
+      "amount": "Ilość powinna być większa niż {{min}} i mniejsza niż {{max}}"
     },
     "label": {
       "email": "Email",
@@ -46,7 +47,8 @@
     "userNotFound": "Nie znaleziono użytkownika",
     "tooManyAttemptsTryLater": "Dostęp do konta zostal tymczasowo zablokowany z powodu wielu nieudanych prób logowania. Proszę spróbować ponownie później",
     "emailExists": "Konto z tym adresem email już istnieje",
-    "unknown": "Coś poszło nie tak"
+    "unknown": "Coś poszło nie tak",
+    "pageNotFound" : "Ups, nie odnaleziono strony"
   },
   "success": {
     "post": "Utworzono przepis",
@@ -101,5 +103,10 @@
     "time": "Po czasie wykonania",
     "alphabetically": "Alfabetycznie",
     "updated": "Najnowsze"
-  }
+  },
+  "category": "Kategoria",
+  "vegan": "Wegańskie",
+  "breakfast": "Śniadanie",
+  "filter": "Filtruj",
+  "default": "Wszystkie"
 }
