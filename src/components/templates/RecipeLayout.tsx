@@ -27,6 +27,7 @@ const Grid = styled("div")(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "2rem",
+  color: "#646363",
   [theme.breakpoints.down("sm")]: {
     gridTemplateColumns: "1fr",
     width: "100%",
