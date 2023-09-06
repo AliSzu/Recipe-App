@@ -5,6 +5,8 @@ import { useAddItemToShoppingList } from "../../api/shoppingList";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
 import { showSnackbar } from "../../slices/snackbarSlice";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../../enums/QueryKeys";
 
 interface TwoColumnListProps {
   items: Ingredient[];
@@ -23,7 +25,9 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 const TwoColumnList = ({ items }: TwoColumnListProps) => {
   const { mutate: addIngredientMutate } = useAddItemToShoppingList();
   const userUid = useAppSelector(selectUserUid);
+
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   const handleIngredientAdd = (ingredient: Ingredient) => {
     addIngredientMutate(
@@ -37,6 +41,9 @@ const TwoColumnList = ({ items }: TwoColumnListProps) => {
               autoHideDuration: 6000,
             })
           );
+          queryClient.invalidateQueries({
+            queryKey: [QueryKeys.shoppingListData, { userUid: userUid }],
+          });
         },
       }
     );

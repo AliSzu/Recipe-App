@@ -23,6 +23,7 @@ export function useFetchShoppingList(userUid: string) {
   useAuthGuard();
   return useQuery<ShoppingItem[], FirebaseError>({
     queryKey: [QueryKeys.shoppingListData, userUid],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const shoppingListQuery = query(
         shoppingListCollection,
@@ -60,8 +61,8 @@ export function useAddItemToShoppingList() {
     mutationFn: async (shoppingItem: ShoppingItemFormValues) => {
       const shoppingListQuery = query(
         shoppingListCollection,
-        where('id', "==", shoppingItem.id),
-        where('owner', '==', shoppingItem.owner)
+        where("id", "==", shoppingItem.id),
+        where("owner", "==", shoppingItem.owner)
       );
       const shoppingListSnap = await getDocs(shoppingListQuery);
       const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
@@ -76,17 +77,16 @@ export function useAddItemToShoppingList() {
           createdAt: Timestamp.fromDate(new Date()),
           updatedAt: Timestamp.fromDate(new Date()),
         });
-      }
-      else {
-        const docId = shoppingList[0].docId
-        if(!docId) return
+      } else {
+        const docId = shoppingList[0].docId;
+        if (!docId) return;
         await updateDoc(doc(db, Collections.shoppingList, docId), {
           amount: shoppingList[0].amount + shoppingItem.amount,
           updatedAt: Timestamp.fromDate(new Date()),
-        })
+        });
       }
-    }
-  })
+    },
+  });
 }
 
 export function useEditShoppingListItem() {
@@ -98,6 +98,7 @@ export function useEditShoppingListItem() {
       const docRef = doc(db, Collections.shoppingList, docId);
       await updateDoc(docRef, {
         amount: item.amount,
+        name: item.name,
         updatedAt: Timestamp.fromDate(new Date()),
       });
     },

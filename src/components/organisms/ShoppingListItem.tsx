@@ -1,4 +1,13 @@
-import { Card, IconButton, ListItem, debounce, styled } from "@mui/material";
+import {
+  Card,
+  IconButton,
+  InputAdornment,
+  ListItem,
+  TextField,
+  TextFieldProps,
+  debounce,
+  styled,
+} from "@mui/material";
 import { ShoppingItem } from "../../types/ShoppingListTypes";
 import AmountPicker from "../molecules/AmountPicker";
 import { useCallback, useState } from "react";
@@ -14,10 +23,18 @@ import { showSnackbar } from "../../slices/snackbarSlice";
 import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
 import { DEBOUNCE_TIME } from "../../constants/DefaultValues";
+import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
 
 interface ShoppingListItemProps {
   item: ShoppingItem;
 }
+
+const StyledTextField = styled(TextField)<TextFieldProps>(({ disabled }) => ({
+  ...(disabled && {
+    "& fieldset": { border: "none" },
+  }),
+}));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   display: "flex",
@@ -60,6 +77,7 @@ const StyledIcon = styled(IconButton)(({ theme }) => ({
 const ItemActions = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
+  gap: "0.5rem",
 });
 
 const ItemInformation = styled("div")({
@@ -71,17 +89,21 @@ const ItemInformation = styled("div")({
 
 const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
+  const [itemName, setItemName] = useState(item.name);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const queryClient = useQueryClient();
-  const {mutate: editMutate} = useEditShoppingListItem();
-  const {mutate: deleteMutate} = useDeleteShoppingListItem();
+  const { mutate: editMutate } = useEditShoppingListItem();
+  const { mutate: deleteMutate } = useDeleteShoppingListItem();
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
-  const editAmount = useCallback(
-    (newAmount: number) => {
+  const editItem = useCallback(
+    (newAmount?: number, newName?: string) => {
+      const amount = newAmount ? newAmount : item.amount;
+      const name = newName ? newName : item.name;
       if (!item.id) return;
-      const newItem: ShoppingItem = { ...item, amount: newAmount };
+      const newItem: ShoppingItem = { ...item, amount: amount, name: name };
       editMutate(newItem, {
         onSuccess: () => {
           queryClient.setQueryData(
@@ -106,10 +128,10 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const debounceEditAmount = useCallback(
     (newAmount: number) => {
       debounce(() => {
-        editAmount(newAmount);
+        editItem(newAmount);
       }, DEBOUNCE_TIME)();
     },
-    [editAmount]
+    [editItem]
   );
 
   const onAmountChange = (amount: number) => {
@@ -135,11 +157,32 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
     });
   };
 
+  const handleEditNameItem = () => {
+    setIsDisabled(!isDisabled);
+    setItemName(item.name);
+  };
+
+  const handleEditItem = () => {
+    setIsDisabled(!isDisabled);
+    editItem(undefined, itemName);
+  };
+
+  const handleChange = (e: any) => {
+    setItemName(e.target.value);
+  };
+
   return (
     <StyledListItem>
       <StyledCard>
         <StyledCardContent>
           <ItemActions>
+            <StyledIcon
+              disableRipple={true}
+              size="small"
+              onClick={handleEditNameItem}
+            >
+              <EditIcon />
+            </StyledIcon>
             <StyledIcon
               disableRipple={true}
               size="small"
@@ -149,7 +192,22 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
             </StyledIcon>
           </ItemActions>
           <ItemInformation>
-            <div>{item.name}</div>
+            <StyledTextField
+              value={itemName}
+              onChange={handleChange}
+              fullWidth
+              disabled={isDisabled}
+              margin="none"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => handleEditItem()}>
+                      {!isDisabled && <CheckIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
             <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
           </ItemInformation>
         </StyledCardContent>
