@@ -26,8 +26,8 @@ const RecipesList = ({ recipes, favoriteRecipes, onShowButton }: RecipesListProp
 
   const findRecipeInFavorites = (id?: string) => {
     if (!id) return false
-    const checkUsername = (obj: FavoriteRecipe) => obj.id === id;
-    return favoriteRecipes.some(checkUsername)
+    const checkRecipe = (obj: FavoriteRecipe) => obj.id === id;
+    return favoriteRecipes.some(checkRecipe)
   }
 
   return (
