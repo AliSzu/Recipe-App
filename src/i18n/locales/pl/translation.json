@@ -77,7 +77,8 @@
   },
   "menu": {
     "addRecipe": "Dodaj Przepis",
-    "shoppingList": "Lista zakupów"
+    "shoppingList": "Lista zakupów",
+    "favorite": "Ulubione"
   },
   "file": {
     "empty": "Nie wybrano pliku"

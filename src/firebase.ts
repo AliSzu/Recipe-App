@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { Recipe } from "./types/RecipeTypes";
+import { FavoriteRecipe, Recipe } from "./types/RecipeTypes";
 import { Collections } from "./enums/Collections";
 import { ShoppingItem } from "./types/ShoppingListTypes";
 import { createCollection } from "./utils/utils";
@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 
 export const recipeCollection = createCollection<Recipe>(Collections.recipes);
 export const shoppingListCollection  = createCollection<ShoppingItem>(Collections.shoppingList)
+export const favoriteCollection = createCollection<FavoriteRecipe>(Collections.favorite)
 
 export default app;
 export const auth = getAuth(app);

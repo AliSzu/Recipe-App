@@ -7,4 +7,5 @@ export const ROUTES = {
   SHOPPING_LIST: "/shopping-list",
   EDIT_RECIPE: "/edit",
   NOT_FOUND: "*",
+  FAVORITE: '/favorite'
 };

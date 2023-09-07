@@ -1,6 +1,16 @@
-import { ImageListItem, ImageListItemBar, styled } from "@mui/material";
+import {
+  IconButton,
+  ImageListItem,
+  ImageListItemBar,
+  styled,
+} from "@mui/material";
 import { Recipe } from "../../types/RecipeTypes";
 import { useNavigate } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MouseEvent } from "react";
+import { useAppSelector } from "../../store/store";
+import { selectUserUid } from "../../slices/authSlice";
+import { useAddRecipeToFavorite } from "../../api/favorite";
 
 const StyledImageListItemBar = styled(ImageListItemBar)({
   background:
@@ -21,19 +31,49 @@ const StyledImage = styled("img")({
   objectFit: "cover",
 });
 
+const StyledIcon = styled(IconButton)({
+  padding: "1rem",
+  color: "white",
+});
+
 interface TileProps {
   recipe: Recipe;
 }
 
 const Tile = ({ recipe }: TileProps) => {
+  const userUid = useAppSelector(selectUserUid);
+
+  const { mutate } = useAddRecipeToFavorite();
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/recipe/${recipe.id}`);
   };
+
+  const handleIconClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+    mutate(
+      { ...recipe, owner: userUid },
+      {
+        onSuccess: () => {
+          console.log("duppa sranie");
+        },
+      }
+    );
+  };
+
   return (
-    <StyledImageListItem onClick={handleClick} style={{height: '100%'}}>
+    <StyledImageListItem onClick={handleClick} style={{ height: "100%" }}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
-      <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
+      <StyledImageListItemBar
+        title={recipe.time}
+        subtitle={recipe.title}
+        actionIcon={
+          <StyledIcon size="large" onClick={(e) => handleIconClick(e)}>
+            <FavoriteIcon />
+          </StyledIcon>
+        }
+      />
     </StyledImageListItem>
   );
 };

@@ -18,6 +18,10 @@ export interface Recipe {
   preparing: Preparing[];
   ingredients: Ingredient[];
 }
+
+export interface FavoriteRecipe extends Recipe {
+  owner: string
+}
 export interface Ingredient {
   amount: number;
   name: string;

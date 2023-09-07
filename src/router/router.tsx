@@ -10,6 +10,7 @@ import EditRecipe from "../pages/EditRecipe";
 import ShoppingList from "../pages/ShoppingList";
 import RootContainer from "./RootContainer";
 import NotFound from "../pages/NotFound";
+import Favorite from "../pages/Favorite";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
             path: `${ROUTES.EDIT_RECIPE}/:id`,
             element: <EditRecipe />,
           },
+          {
+            index: true,
+            path: ROUTES.FAVORITE,
+            element: <Favorite/>
+          }
         ],
       },
     ],

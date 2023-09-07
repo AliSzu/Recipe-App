@@ -77,7 +77,8 @@
   },
   "menu": {
     "addRecipe": "Add Recipe",
-    "shoppingList": "Shopping List"
+    "shoppingList": "Shopping List",
+    "favorite": "Favorite"
   },
   "file": {
     "empty": "No file chosen"
