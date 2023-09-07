@@ -51,7 +51,10 @@
     "pageNotFound" : "Oops, page not found"
   },
   "success": {
-    "post": "Recipe created",
+    "post": {
+      "recipe": "Recipe created",
+      "favorite": "Recipe added to favorites list"
+    },
     "delete": {
       "recipe" : "Recipe deleted",
       "ingredient": "Ingredient removed from your shopping list"

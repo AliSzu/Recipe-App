@@ -16,7 +16,7 @@ const Favorite = () => {
  
 
   const recipeTile = data && data.map((recipe: FavoriteRecipe) => (
-    <Tile key={recipe.id} recipe={recipe}/>
+    <Tile key={recipe.id} recipe={recipe} favorite={true}/>
   ))
 
   return (

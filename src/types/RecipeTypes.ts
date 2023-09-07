@@ -20,7 +20,8 @@ export interface Recipe {
 }
 
 export interface FavoriteRecipe extends Recipe {
-  owner: string
+  owner: string,
+  docId?: string
 }
 export interface Ingredient {
   amount: number;

@@ -3,7 +3,7 @@ import { useDeleteRecipe, useFetchRecipeById } from "../api/recipes";
 import RecipeLayout from "../components/templates/RecipeLayout";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
 import { ROUTES } from "../constants/Routes";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useTranslation } from "react-i18next";
 import { useDeleteImage } from "../api/files";
@@ -11,12 +11,16 @@ import { FirebaseError } from "firebase/app";
 import { DEFAULT_IMAGE } from "../constants/DefaultValues";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../enums/QueryKeys";
+import { useFetchFavoriteById } from "../api/favorite";
+import { selectUserUid } from "../slices/authSlice";
 
 const Recipe = () => {
+  const userUid = useAppSelector(selectUserUid);
   const { id } = useParams();
   const { t } = useTranslation();
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
+  const { data: favoriteData } = useFetchFavoriteById(userUid, recipeData?.id);
   const deleteRecipeMutation = useDeleteRecipe();
   const deleteImageMutation = useDeleteImage();
   const navigate = useNavigate();
@@ -82,8 +86,8 @@ const Recipe = () => {
     <>
       {recipeIsLoading ? (
         <CenteredCircularProgress />
-      ) : recipeData && Object.keys(recipeData).length !== 0 ? (
-        <RecipeLayout onDeleteRecipe={handleDeleteRecipe} recipe={recipeData} />
+      ) : recipeData && favoriteData && Object.keys(recipeData).length !== 0 ? (
+        <RecipeLayout onDeleteRecipe={handleDeleteRecipe} recipe={recipeData} favorite={favoriteData.length > 0} />
       ) : (
         <div>{t("recipe.notFound")}</div>
       )}

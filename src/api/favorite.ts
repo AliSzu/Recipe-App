@@ -10,13 +10,11 @@ import {
   where,
 } from "firebase/firestore";
 import { favoriteCollection } from "../firebase";
-import { FavoriteRecipe, Recipe } from "../types/RecipeTypes";
-import { ShoppingItemFormValues } from "../types/FormTypes";
-import { selectUserUid } from "../slices/authSlice";
+import { FavoriteRecipe } from "../types/RecipeTypes";
 
 export function useFetchFavorite(userUid: string) {
   useAuthGuard();
-  return useQuery<Recipe[], FirebaseError>({
+  return useQuery<FavoriteRecipe[], FirebaseError>({
     queryKey: [QueryKeys.favoriteData, userUid],
     queryFn: async () => {
       const favoriteQuery = query(
@@ -24,15 +22,40 @@ export function useFetchFavorite(userUid: string) {
         where("owner", "==", userUid)
       );
       const favoriteSnap = await getDocs(favoriteQuery);
-      const favoriteRecipes: Recipe[] = favoriteSnap.docs.map(
+      const favoriteRecipes: FavoriteRecipe[] = favoriteSnap.docs.map(
         (item: DocumentData) => ({
-          id: item.id,
+          docId: item.id,
           ...item.data(),
         })
       );
 
       return favoriteRecipes;
     },
+  });
+}
+
+export function useFetchFavoriteById(userUid: string, recipeId?: string) {
+  useAuthGuard();
+  return useQuery<FavoriteRecipe[], FirebaseError>({
+    queryKey: [QueryKeys.favoriteById, userUid, recipeId],
+    queryFn: async () => {
+      const favoriteQuery = query(
+        favoriteCollection,
+        where("owner", "==", userUid),
+        where("id", "==", recipeId)
+      );
+
+      const favoriteSnap = await getDocs(favoriteQuery);
+      const favoriteRecipe: FavoriteRecipe[] = favoriteSnap.docs.map(
+        (item: DocumentData) => ({
+          docId: item.id,
+          ...item.data(),
+        })
+      );
+
+      return favoriteRecipe;
+    },
+    enabled: !!recipeId
   });
 }
 

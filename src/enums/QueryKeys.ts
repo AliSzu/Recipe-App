@@ -3,5 +3,6 @@ export enum QueryKeys {
   recipeById = "recipeById",
   shoppingListData = "shoppingListData",
   shoppingListItem = "shoppingListItem",
-  favoriteData = "favoriteData"
+  favoriteData = "favoriteData",
+  favoriteById = "favoriteById",
 }
