@@ -36,6 +36,8 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
     if (data && data?.length > 0 && data[0].id === ingredient.id) {
       setIsPresent(true);
       setDocId(data[0].docId);
+    } else {
+      setIsPresent(false)
     }
   }, [data, ingredient.id]);
 
@@ -48,10 +50,7 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
       })
     );
     queryClient.invalidateQueries({
-      queryKey: [
-        QueryKeys.shoppingListItem,
-        { userUid: userUid, itemId: ingredient.id },
-      ],
+      queryKey: [QueryKeys.shoppingListItem],
     });
   };
 
@@ -62,7 +61,6 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
         onSuccess: (docId: string) => {
           dispatchSuccess("ingredient-success");
           setDocId(docId);
-          setIsPresent(true);
         },
       }
     );
@@ -73,7 +71,6 @@ const IngredientButton = ({ ingredient, userUid }: IngredientButtonProps) => {
     deleteIngredientMutate(docId, {
       onSuccess: () => {
         dispatchSuccess("ingredient-delete-success");
-        setIsPresent(false);
       },
       onError: (error) => {
         dispatch(

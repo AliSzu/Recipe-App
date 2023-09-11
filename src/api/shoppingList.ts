@@ -110,7 +110,6 @@ export function useDeleteShoppingListItem() {
   useAuthGuard();
   return useMutation<void, FirebaseError, string>({
     mutationFn: async (itemId: string) => {
-      console.log(itemId)
       await deleteDoc(doc(db, Collections.shoppingList, itemId));
     },
   });
