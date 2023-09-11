@@ -23,6 +23,7 @@ export function useFetchShoppingList(userUid: string) {
   useAuthGuard();
   return useQuery<ShoppingItem[], FirebaseError>({
     queryKey: [QueryKeys.shoppingListData, userUid],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const shoppingListQuery = query(
         shoppingListCollection,
@@ -100,6 +101,7 @@ export function useEditShoppingListItem() {
       const docRef = doc(db, Collections.shoppingList, docId);
       await updateDoc(docRef, {
         amount: item.amount,
+        name: item.name,
         updatedAt: Timestamp.fromDate(new Date()),
       });
     },
