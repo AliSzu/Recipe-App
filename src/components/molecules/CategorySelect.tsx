@@ -41,7 +41,7 @@ const CategorySelect = () => {
     <div>
       <SelectWrapper fullWidth>
         <TextField
-          defaultValue={Category.default !== watchedCategory ? watchedCategory : ""}
+          value={Category.default !== watchedCategory ? watchedCategory : ""}
           variant="outlined"
           select
           label={t("category")}
