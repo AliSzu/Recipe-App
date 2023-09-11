@@ -47,13 +47,7 @@ const StyledImage = styled("img")({
 const StyledIconButton = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== "liked",
 })<StyledIconButtonProps>(({ liked, theme }) => ({
-  ...(liked
-    ? {
-        color: theme.palette.primary.main,
-      }
-    : {
-        color: "white",
-      }),
+  color: liked ? theme.palette.primary.main : "white",
   padding: "1rem",
 }));
 
