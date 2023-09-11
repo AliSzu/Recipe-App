@@ -69,12 +69,17 @@ const ItemInformation = styled("div")({
   gap: "1rem",
 });
 
+const ItemAmount = styled('div')({
+  display: 'flex',
+  gap: '1rem'
+})
+
 const ShoppingItem = ({ item }: ShoppingListItemProps) => {
   const [itemAmount, setItemAmount] = useState(item.amount);
 
   const queryClient = useQueryClient();
-  const {mutate: editMutate} = useEditShoppingListItem();
-  const {mutate: deleteMutate} = useDeleteShoppingListItem();
+  const { mutate: editMutate } = useEditShoppingListItem();
+  const { mutate: deleteMutate } = useDeleteShoppingListItem();
   const userUid = useAppSelector(selectUserUid);
   const dispatch = useAppDispatch();
 
@@ -150,7 +155,13 @@ const ShoppingItem = ({ item }: ShoppingListItemProps) => {
           </ItemActions>
           <ItemInformation>
             <div>{item.name}</div>
-            <AmountPicker amount={itemAmount} onAmountChange={onAmountChange} />
+            <ItemAmount>
+              <AmountPicker
+                amount={itemAmount}
+                onAmountChange={onAmountChange}
+              />
+              {item.unit}
+            </ItemAmount>
           </ItemInformation>
         </StyledCardContent>
       </StyledCard>

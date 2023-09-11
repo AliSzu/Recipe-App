@@ -35,5 +35,6 @@ export interface ShoppingItemFormValues {
   name: string;
   amount: number;
   owner: string;
+  unit: string;
   id?: string;
 }

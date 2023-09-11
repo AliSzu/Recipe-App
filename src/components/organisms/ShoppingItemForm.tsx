@@ -1,45 +1,55 @@
-import { IconButton, InputAdornment, TextField, styled } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Button, IconButton, styled, useMediaQuery } from "@mui/material";
+import { FormProvider, useForm } from "react-hook-form";
 import { ShoppingItemFormValues } from "../../types/FormTypes";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useTranslation } from "react-i18next";
-import { MAX_LENGTH, shoppingItemDefaultValues } from "../../constants/DefaultValues";
+import {
+  MAX_LENGTH,
+  shoppingItemDefaultValues,
+} from "../../constants/DefaultValues";
 import { useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
-import { ErrorMessage } from "@hookform/error-message";
-import { REGEX } from "../../constants/Regex";
+import IngredientFormField from "../atoms/IngredientFormField";
+import { theme } from "../../theme/theme";
+import { useTranslation } from "react-i18next";
 
 interface ShoppingItemFormProps {
   onFormSubmit: (data: ShoppingItemFormValues) => void;
 }
 
-const StyledForm = styled("form")({
-  display: "flex",
-  padding: "1rem",
+const StyledForm = styled("form")(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 0.5fr 0.1fr",
+  gap: "1rem",
+  padding: '1rem',
   justifyContent: "space-between",
-});
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "1fr 1fr 1fr",
+    padding: "0",
+    marginBottom: '2rem'
+  },
+}));
 
-const StyledInput = styled(TextField)({
-  width: "100%",
-  padding: 0,
-  margin: 0,
+const ButtonContainer = styled("div")({
+  display: "flex",
+  justifyContent: "baseline",
+  alignItems: "center",
 });
 
 const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
-  const { t } = useTranslation();
   const userUid = useAppSelector(selectUserUid);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm<ShoppingItemFormValues>({
+  const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { t } = useTranslation();
+
+  const methods = useForm<ShoppingItemFormValues>({
     defaultValues: {
       ...shoppingItemDefaultValues,
       owner: userUid,
     },
   });
+
+  const { handleSubmit, reset } = methods;
 
   const onSubmit = (data: ShoppingItemFormValues) => {
     onFormSubmit(data);
@@ -47,44 +57,25 @@ const ShoppingItemForm = ({ onFormSubmit }: ShoppingItemFormProps) => {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <StyledInput
-        id="input-with-icon-textfield"
-        label={t("shoppingList.item.name")}
-        {...register("name", {
-          required: t("textField.error.required"),
-          pattern: {
-            value: REGEX.ONLY_WHITESPACE,
-            message: t("textField.error.required"),
-          },
-          maxLength: {
-            value: MAX_LENGTH.NAME,
-            message: t("textField.error.maxLength", {
-              number: MAX_LENGTH.NAME,
-            }),
-          },
-          onBlur: (e) => setValue("name", e.target.value.trim()),
-        })}
-        fullWidth
-        error={!!errors["name"]}
-        helperText={
-          <ErrorMessage
-            errors={errors}
-            name={"name"}
-            render={({ message }) => <>{message}</>}
-          />
-        }
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
+    <FormProvider {...methods}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <IngredientFormField field="name" maxLength={MAX_LENGTH.NAME} />
+        <IngredientFormField field="unit" maxLength={MAX_LENGTH.UNIT} />
+        <ButtonContainer>
+          {matchDownSm ? (
+            <Button fullWidth variant="contained" type="submit">
+              {t("button.submit")}
+            </Button>
+          ) : (
+            <>
               <IconButton type="submit">
                 <AddCircleIcon />
               </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-    </StyledForm>
+            </>
+          )}
+        </ButtonContainer>
+      </StyledForm>
+    </FormProvider>
   );
 };
 

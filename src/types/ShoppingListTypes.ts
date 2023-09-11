@@ -3,6 +3,7 @@ export interface ShoppingItem {
   amount: number;
   owner: string;
   id?: string;
+  unit: string;
   createdAt: Date;
   updatedAt: Date;
   docId?: string

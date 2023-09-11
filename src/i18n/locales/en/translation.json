@@ -85,7 +85,8 @@
   "shoppingList": {
     "name": "Shopping List",
     "item": {
-      "name": "Name"
+      "name": "Name",
+      "unit": "Unit"
     }
   },
   "popover": {

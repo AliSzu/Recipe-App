@@ -85,7 +85,8 @@
   "shoppingList": {
     "name": "Lista zakupów",
     "item": {
-      "name": "Nazwa"
+      "name": "Nazwa",
+      "unit": "Jednostka"
     }
   },
   "popover": {
