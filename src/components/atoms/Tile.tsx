@@ -1,6 +1,29 @@
-import { ImageListItem, ImageListItemBar, styled } from "@mui/material";
+import {
+  IconButton,
+  IconButtonProps,
+  ImageListItem,
+  ImageListItemBar,
+  styled,
+} from "@mui/material";
 import { Recipe } from "../../types/RecipeTypes";
 import { useNavigate } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MouseEvent, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { selectUserUid } from "../../slices/authSlice";
+import { useAddRecipeToFavorite } from "../../api/favorite";
+import { showSnackbar } from "../../slices/snackbarSlice";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "../../enums/QueryKeys";
+
+interface TileProps {
+  recipe: Recipe;
+  favorite: boolean;
+}
+
+interface StyledIconButtonProps extends IconButtonProps {
+  liked?: boolean;
+}
 
 const StyledImageListItemBar = styled(ImageListItemBar)({
   background:
@@ -21,19 +44,71 @@ const StyledImage = styled("img")({
   objectFit: "cover",
 });
 
-interface TileProps {
-  recipe: Recipe;
-}
+const StyledIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "liked",
+})<StyledIconButtonProps>(({ liked, theme }) => ({
+  color: liked ? theme.palette.primary.main : "white",
+  padding: "1rem",
+}));
 
-const Tile = ({ recipe }: TileProps) => {
+const Tile = ({ recipe, favorite }: TileProps) => {
+  const [isLiked, setIsLiked] = useState<boolean>(favorite);
+  const userUid = useAppSelector(selectUserUid);
+  const dispatch = useAppDispatch();
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useAddRecipeToFavorite();
+
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/recipe/${recipe.id}`);
   };
+
+  const handleIconClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    !isLiked &&
+      mutate(
+        { ...recipe, owner: userUid },
+        {
+          onSuccess: () => {
+            dispatch(
+              showSnackbar({
+                message: "favorite-add-success",
+                autoHideDuration: null,
+                severity: "success",
+              })
+            );
+            queryClient.invalidateQueries({
+              queryKey: [
+                QueryKeys.favoriteData,
+                {
+                  userUid: userUid,
+                },
+              ],
+            });
+            setIsLiked(!isLiked);
+          },
+        }
+      );
+  };
+
   return (
-    <StyledImageListItem onClick={handleClick} style={{height: '100%'}}>
+    <StyledImageListItem onClick={handleClick} style={{ height: "100%" }}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
-      <StyledImageListItemBar title={recipe.time} subtitle={recipe.title} />
+      <StyledImageListItemBar
+        title={recipe.time}
+        subtitle={recipe.title}
+        actionIcon={
+          <StyledIconButton
+            size="large"
+            onClick={(e) => handleIconClick(e)}
+            liked={isLiked}
+          >
+            <FavoriteIcon />
+          </StyledIconButton>
+        }
+      />
     </StyledImageListItem>
   );
 };

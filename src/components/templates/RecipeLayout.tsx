@@ -14,6 +14,7 @@ import { selectUserUid } from "../../slices/authSlice";
 interface RecipeLayoutProps {
   recipe: Recipe;
   onDeleteRecipe: () => void;
+  favorite: boolean,
 }
 
 const GridItem = styled("div")({
@@ -49,7 +50,7 @@ const ButtonContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
+const RecipeLayout = ({ recipe, onDeleteRecipe, favorite }: RecipeLayoutProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const userUid = useAppSelector(selectUserUid);
@@ -61,7 +62,7 @@ const RecipeLayout = ({ recipe, onDeleteRecipe }: RecipeLayoutProps) => {
   return (
     <Grid>
       <GridItem>
-        <Tile recipe={recipe} />
+        <Tile recipe={recipe} favorite={favorite} />
         <Typography>{recipe.description}</Typography>
         {t("category")} : {t(recipe.category)}
       </GridItem>

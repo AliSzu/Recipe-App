@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useFetchRecipes } from "../api/recipes";
 import RecipesList from "../components/molecules/RecipesList";
 import CenteredCircularProgress from "../components/atoms/CenteredCircularProgress";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { showSnackbar } from "../slices/snackbarSlice";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -14,6 +14,8 @@ import { SORT_ITEMS } from "../constants/SortItems";
 import { Category } from "../enums/Category";
 import { uniqueId } from "../utils/utils";
 import { OrderByDirection } from "firebase/firestore";
+import { useFetchFavorite } from "../api/favorite";
+import { selectUserUid } from "../slices/authSlice";
 
 const HomeContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -46,12 +48,19 @@ const Home = () => {
     direction: "desc",
   });
 
+  const userUid = useAppSelector(selectUserUid);
+
   const { t } = useTranslation();
   const { ref, inView } = useInView();
-  const { data, isError, error, isFetching, fetchNextPage } = useFetchRecipes(
-    sortProperty,
-    filter
-  );
+  const {
+    data: recipeData,
+    isError,
+    error,
+    isFetching,
+    fetchNextPage,
+  } = useFetchRecipes(sortProperty, filter);
+
+  const { data: favoriteData } = useFetchFavorite(userUid);
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
@@ -75,7 +84,7 @@ const Home = () => {
   }, [fetchNextPage, inView]);
 
   const handleShowButton = (index: number) => {
-    if (index + 1 === data?.pages[0].recipes.length) {
+    if (index + 1 === recipeData?.pages[0].recipes.length) {
       setIsAnimationFinished(true);
     } else {
       setIsAnimationFinished(false);
@@ -92,11 +101,13 @@ const Home = () => {
   };
 
   const recipesData =
-    data &&
-    data.pages &&
-    data.pages.map((page, index) => (
+    recipeData &&
+    favoriteData &&
+    recipeData.pages &&
+    recipeData.pages.map((page, index) => (
       <RecipesList
         recipes={page.recipes}
+        favoriteRecipes={favoriteData}
         key={index}
         onShowButton={handleShowButton}
       />

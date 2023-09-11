@@ -51,7 +51,10 @@
     "pageNotFound" : "Ups, nie odnaleziono strony"
   },
   "success": {
-    "post": "Utworzono przepis",
+    "post": {
+      "recipe": "Utworzono przepis",
+      "favorite": "Przepis dodano do listy ulubionych"
+    },
     "delete": {
       "recipe" : "Usunięto przepis",
       "ingredient": "Usunięto składnik z Twojej listy zakupów"
@@ -77,7 +80,8 @@
   },
   "menu": {
     "addRecipe": "Dodaj Przepis",
-    "shoppingList": "Lista zakupów"
+    "shoppingList": "Lista zakupów",
+    "favorite": "Ulubione"
   },
   "file": {
     "empty": "Nie wybrano pliku"
