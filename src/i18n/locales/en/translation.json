@@ -57,7 +57,8 @@
     },
     "delete": {
       "recipe" : "Recipe deleted",
-      "ingredient": "Ingredient removed from your shopping list"
+      "ingredient": "Ingredient removed from your shopping list",
+      "favorite": "Recipe removed from your favorites list"
     },
     "edit": "Recipe edited",
     "ingredient": "Ingredient added to the shopping list"

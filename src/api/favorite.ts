@@ -5,6 +5,7 @@ import { QueryKeys } from "../enums/QueryKeys";
 import {
   DocumentData,
   addDoc,
+  deleteDoc,
   getDocs,
   query,
   where,
@@ -55,17 +56,33 @@ export function useFetchFavoriteById(userUid: string, recipeId?: string) {
 
       return favoriteRecipe;
     },
-    enabled: !!recipeId
+    enabled: !!recipeId,
   });
 }
 
 export function useAddRecipeToFavorite() {
   useAuthGuard();
-  return useMutation<void, FirebaseError, FavoriteRecipe>({
+  return useMutation<string, FirebaseError, FavoriteRecipe>({
     mutationFn: async (recipe: FavoriteRecipe) => {
-      await addDoc(favoriteCollection, {
+      const response = await addDoc(favoriteCollection, {
         ...recipe,
       });
+      return response.id;
+    },
+  });
+}
+
+export function useDeleteFavoriteRecipe() {
+  useAuthGuard();
+  return useMutation<void, FirebaseError, FavoriteRecipe>({
+    mutationFn: async (recipe: FavoriteRecipe) => {
+      const deleteQuery = query(
+        favoriteCollection,
+        where("owner", "==", recipe.owner),
+        where("id", "==", recipe.id)
+      );
+      const deleteSnap = await getDocs(deleteQuery);
+      deleteSnap.docs.map((item) => deleteDoc(item.ref));
     },
   });
 }

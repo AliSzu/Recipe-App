@@ -13,17 +13,17 @@ const Favorite = () => {
 
   const matchDownSm = useMediaQuery(theme.breakpoints.down("sm"));
 
- 
-
-  const recipeTile = data && data.map((recipe: FavoriteRecipe) => (
-    <Tile key={recipe.id} recipe={recipe} favorite={true}/>
-  ))
+  const recipeTile =
+    data &&
+    data.map((recipe: FavoriteRecipe) => (
+      <Tile key={recipe.id} recipe={recipe} favorite={true} />
+    ));
 
   return (
     <>
       {data && (
         <ImageList cols={matchDownSm ? 1 : 3} gap={10}>
-          {recipeTile ? recipeTile : <CenteredCircularProgress/>}
+          {recipeTile ? recipeTile : <CenteredCircularProgress />}
         </ImageList>
       )}
     </>

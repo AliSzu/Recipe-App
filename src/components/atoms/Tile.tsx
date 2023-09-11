@@ -11,7 +11,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { MouseEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { selectUserUid } from "../../slices/authSlice";
-import { useAddRecipeToFavorite } from "../../api/favorite";
+import {
+  useAddRecipeToFavorite,
+  useDeleteFavoriteRecipe,
+} from "../../api/favorite";
 import { showSnackbar } from "../../slices/snackbarSlice";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../../enums/QueryKeys";
@@ -63,40 +66,49 @@ const Tile = ({ recipe, favorite }: TileProps) => {
   const dispatch = useAppDispatch();
 
   const queryClient = useQueryClient();
-
-  const { mutate } = useAddRecipeToFavorite();
+  const { mutate: addRecipeMutation } = useAddRecipeToFavorite();
+  const { mutate: deleteRecipeMutation } = useDeleteFavoriteRecipe();
 
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/recipe/${recipe.id}`);
   };
 
+  const handleSuccess = (dispatchMessage: string) => {
+    dispatch(
+      showSnackbar({
+        message: dispatchMessage,
+        autoHideDuration: null,
+        severity: "success",
+      })
+    );
+    setIsLiked(!isLiked);
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.favoriteData],
+    });
+  };
+
   const handleIconClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    !isLiked &&
-      mutate(
+    if (!isLiked) {
+      addRecipeMutation(
         { ...recipe, owner: userUid },
         {
           onSuccess: () => {
-            dispatch(
-              showSnackbar({
-                message: "favorite-add-success",
-                autoHideDuration: null,
-                severity: "success",
-              })
-            );
-            queryClient.invalidateQueries({
-              queryKey: [
-                QueryKeys.favoriteData,
-                {
-                  userUid: userUid,
-                },
-              ],
-            });
-            setIsLiked(!isLiked);
+            handleSuccess("favorite-add-success");
           },
         }
       );
+    } else {
+      deleteRecipeMutation(
+        { ...recipe, owner: userUid },
+        {
+          onSuccess: () => {
+            handleSuccess("favorite-delete-success");
+          },
+        }
+      );
+    }
   };
 
   return (
