@@ -10,5 +10,10 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'menu.shoppingList',
     route: 'SHOPPING_LIST',
     id: 'shoppingList'
+  },
+  {
+    title: 'menu.favorite',
+    route: "FAVORITE",
+    id: "favorite"
   }
 ];

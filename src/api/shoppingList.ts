@@ -23,11 +23,34 @@ export function useFetchShoppingList(userUid: string) {
   useAuthGuard();
   return useQuery<ShoppingItem[], FirebaseError>({
     queryKey: [QueryKeys.shoppingListData, userUid],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const shoppingListQuery = query(
         shoppingListCollection,
         where("owner", "==", userUid),
         orderBy("createdAt", "desc")
+      );
+      const shoppingListSnap = await getDocs(shoppingListQuery);
+      const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
+        (item: DocumentData) => ({
+          docId: item.id,
+          ...item.data(),
+        })
+      );
+      return shoppingList;
+    },
+  });
+}
+
+export function useFetchShoppingListItem(userUid: string, itemId: string) {
+  useAuthGuard();
+  return useQuery<ShoppingItem[], FirebaseError>({
+    queryKey: [QueryKeys.shoppingListItem, userUid, itemId],
+    queryFn: async () => {
+      const shoppingListQuery = query(
+        shoppingListCollection,
+        where("owner", "==", userUid),
+        where("id", "==", itemId),
       );
       const shoppingListSnap = await getDocs(shoppingListQuery);
       const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
@@ -56,34 +79,15 @@ export function useAddNewItemToShoppingList() {
 
 export function useAddItemToShoppingList() {
   useAuthGuard();
-  return useMutation<void, FirebaseError, ShoppingItemFormValues>({
+  return useMutation<string, FirebaseError, ShoppingItemFormValues>({
     mutationFn: async (shoppingItem: ShoppingItemFormValues) => {
-      const shoppingListQuery = query(
-        shoppingListCollection,
-        where("id", "==", shoppingItem.id),
-        where("owner", "==", shoppingItem.owner)
-      );
-      const shoppingListSnap = await getDocs(shoppingListQuery);
-      const shoppingList: ShoppingItem[] = shoppingListSnap.docs.map(
-        (item: DocumentData) => ({
-          docId: item.id,
-          ...item.data(),
-        })
-      );
-      if (shoppingList.length === 0) {
-        await addDoc(shoppingListCollection, {
+        const response = await addDoc(shoppingListCollection, {
           ...shoppingItem,
           createdAt: Timestamp.fromDate(new Date()),
           updatedAt: Timestamp.fromDate(new Date()),
         });
-      } else {
-        const docId = shoppingList[0].docId;
-        if (!docId) return;
-        await updateDoc(doc(db, Collections.shoppingList, docId), {
-          amount: shoppingList[0].amount + 1,
-          updatedAt: Timestamp.fromDate(new Date()),
-        })
-      }
+        
+        return response.id
     },
   });
 }
@@ -97,6 +101,7 @@ export function useEditShoppingListItem() {
       const docRef = doc(db, Collections.shoppingList, docId);
       await updateDoc(docRef, {
         amount: item.amount,
+        name: item.name,
         updatedAt: Timestamp.fromDate(new Date()),
       });
     },

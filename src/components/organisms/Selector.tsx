@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
 import { SelectItem } from "../../types/RecipeTypes";
@@ -14,6 +14,21 @@ interface SelectorProps {
   name: string;
 }
 
+interface StyledMenuItemProps extends MenuItemProps {
+  selected?: boolean
+}
+
+const StyledMenuItem = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== "selected",
+})<StyledMenuItemProps>(({ selected, theme }) => ({
+  ...(selected && {
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      background: theme.palette.primary.dark,
+   },
+  }),
+}));
+
 const StyledMenu = styled(Menu)({
   "& .MuiPaper-root": {
     minWidth: 180,
@@ -24,6 +39,7 @@ const StyledMenu = styled(Menu)({
 
 const Selector = ({ onSelect, selectItems, name }: SelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedProperty, setSelectedProperty] = useState<string>('')
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
 
@@ -32,6 +48,7 @@ const Selector = ({ onSelect, selectItems, name }: SelectorProps) => {
   };
   const handleClose = (property: string, order?: OrderByDirection) => {
     setAnchorEl(null);
+    setSelectedProperty(property)
     onSelect(property, order);
   };
 
@@ -60,13 +77,14 @@ const Selector = ({ onSelect, selectItems, name }: SelectorProps) => {
         onClose={() => setAnchorEl(null)}
       >
         {selectItems.map((item: SelectItem) => (
-          <MenuItem
+          <StyledMenuItem
             onClick={() => handleClose(item.propertyName, item.orderDirection)}
             disableRipple
             key={item.id}
+            selected={selectedProperty === item.propertyName}
           >
             {t(item.name)}
-          </MenuItem>
+          </StyledMenuItem>
         ))}
       </StyledMenu>
     </div>

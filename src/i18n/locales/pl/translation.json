@@ -19,7 +19,8 @@
       "time": "Czas Przygotowania",
       "description": "Opis",
       "amount": "Ilość",
-      "step": "Krok"
+      "step": "Krok",
+      "unit": "Jednostki"
     }
   },
   "button": {
@@ -51,8 +52,14 @@
     "pageNotFound" : "Ups, nie odnaleziono strony"
   },
   "success": {
-    "post": "Utworzono przepis",
-    "delete": "Usunięto przepis",
+    "post": {
+      "recipe": "Utworzono przepis",
+      "favorite": "Przepis dodano do listy ulubionych"
+    },
+    "delete": {
+      "recipe" : "Usunięto przepis",
+      "ingredient": "Usunięto składnik z Twojej listy zakupów"
+    },
     "edit": "Edytowano przepis",
     "ingredient": "Składnik dodano do listy zakupów"
   },
@@ -74,7 +81,8 @@
   },
   "menu": {
     "addRecipe": "Dodaj Przepis",
-    "shoppingList": "Lista zakupów"
+    "shoppingList": "Lista zakupów",
+    "favorite": "Ulubione"
   },
   "file": {
     "empty": "Nie wybrano pliku"

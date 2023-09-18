@@ -18,9 +18,15 @@ export interface Recipe {
   preparing: Preparing[];
   ingredients: Ingredient[];
 }
+
+export interface FavoriteRecipe extends Recipe {
+  owner: string,
+  docId?: string
+}
 export interface Ingredient {
   amount: number;
   name: string;
+  unit: string;
   id: string;
 }
 

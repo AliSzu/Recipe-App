@@ -1,9 +1,10 @@
 import { styled } from "@mui/material";
-import { Recipe } from "../../types/RecipeTypes";
+import { FavoriteRecipe, Recipe } from "../../types/RecipeTypes";
 import Tile from "../atoms/Tile";
 
 interface RecipesListProps {
   recipes: Recipe[];
+  favoriteRecipes: FavoriteRecipe[];
   onShowButton: (index: number) => void
 }
 
@@ -21,7 +22,13 @@ const AnimatedTile = styled("div")({
   },
 });
 
-const RecipesList = ({ recipes, onShowButton }: RecipesListProps) => {
+const RecipesList = ({ recipes, favoriteRecipes, onShowButton }: RecipesListProps) => {
+
+  const findRecipeInFavorites = (id?: string) => {
+    if (!id) return false
+    const checkRecipe = (obj: FavoriteRecipe) => obj.id === id;
+    return favoriteRecipes.some(checkRecipe)
+  }
 
   return (
     <>
@@ -31,7 +38,7 @@ const RecipesList = ({ recipes, onShowButton }: RecipesListProps) => {
           style={{ animationDelay: `${index * 200}ms` }}
           onAnimationEnd={() => onShowButton(index)}
         >
-          <Tile recipe={recipe} />
+          <Tile recipe={recipe} favorite={findRecipeInFavorites(recipe.id)} />
         </AnimatedTile>
       ))}
     </>
