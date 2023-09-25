@@ -8,5 +8,6 @@ export const SnackbarMessage = {
   "delete-success": "success.delete.recipe",
   "ingredient-success" : "success.ingredient",
   "ingredient-delete-success": "success.delete.ingredient",
-  "favorite-add-success": "success.post.favorite"
+  "favorite-add-success": "success.post.favorite",
+  "favorite-delete-success": "success.delete.favorite"
 };

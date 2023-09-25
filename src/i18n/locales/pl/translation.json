@@ -58,7 +58,8 @@
     },
     "delete": {
       "recipe" : "Usunięto przepis",
-      "ingredient": "Usunięto składnik z Twojej listy zakupów"
+      "ingredient": "Usunięto składnik z Twojej listy zakupów",
+      "favorite": "Usunięto przepis z Twojej listy ulubionych"
     },
     "edit": "Edytowano przepis",
     "ingredient": "Składnik dodano do listy zakupów"
