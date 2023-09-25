@@ -1,5 +1,5 @@
+import { Ingredient, Preparing, Time } from "./RecipeTypes";
 import { Category } from "../enums/Category";
-import { Ingredient, Preparing } from "./RecipeTypes";
 
 export interface LoginFormProps {
   email: string;
@@ -22,7 +22,7 @@ export interface EmailFormValues {
 }
 export interface RecipeFormValues {
   title: string;
-  time: string;
+  time: Time;
   description: string;
   category: Category;
   image?: FileList;

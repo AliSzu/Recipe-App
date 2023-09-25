@@ -12,7 +12,7 @@ export interface Recipe {
   owner: string;
   imgSrc: string;
   title: string;
-  time: string;
+  time: number;
   category: Category;
   description: string;
   preparing: Preparing[];
@@ -33,6 +33,11 @@ export interface Ingredient {
 export interface Preparing {
   step: string;
   id: string;
+}
+
+export interface Time {
+  hours: number;
+  minutes: number;
 }
 
 export interface InfiniteRecipe {

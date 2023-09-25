@@ -8,11 +8,12 @@ import { useSubmitWithFile } from "../hooks/useSubmitWithFile";
 import { useSubmit } from "../hooks/useSubmit";
 import { useAppSelector } from "../store/store";
 import { selectUserUid } from "../slices/authSlice";
+import { calculateMinutes, minutesToTime } from "../utils/utils";
 
 const EditRecipe = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const userUid = useAppSelector(selectUserUid)
+  const userUid = useAppSelector(selectUserUid);
 
   const { data: recipeData, isLoading: recipeIsLoading } =
     useFetchRecipeById(id);
@@ -26,10 +27,18 @@ const EditRecipe = () => {
 
   const handleSubmit = (formData: RecipeFormValues) => {
     const { image, ...formRecipe } = formData;
+    const timeInMinutes = calculateMinutes(
+      formRecipe.time.hours,
+      formRecipe.time.minutes
+    );
     if (image && image[0]) {
-      submitWithFile(image[0], {...formRecipe, owner: userUid}, "edit-success");
+      submitWithFile(
+        image[0],
+        { ...formRecipe, owner: userUid, time: timeInMinutes },
+        "edit-success"
+      );
     } else {
-      submitWithoutFile({...formRecipe, owner: userUid}, "edit-success");
+      submitWithoutFile({ ...formRecipe, owner: userUid, time: timeInMinutes }, "edit-success");
     }
   };
 
@@ -39,7 +48,7 @@ const EditRecipe = () => {
         <CenteredCircularProgress />
       ) : recipeData && Object.keys(recipeData).length !== 0 ? (
         <RecipeForm
-          defaultValues={{ ...recipeData }}
+          defaultValues={{ ...recipeData, time: minutesToTime(recipeData.time)}}
           onFormSubmit={handleSubmit}
           isLoading={isLoadingWithFile || isLoadingWithoutFile}
         />

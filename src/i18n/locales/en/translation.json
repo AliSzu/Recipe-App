@@ -8,7 +8,8 @@
       "passwordLength": "Password length must be at least 6 characters",
       "maxLength": "The field should contain a maximum of {{number}} characters",
       "imageSize": "Please upload a picture smaller than 1 MB",
-      "amount": "The amount should be greater than {{min}} and less than {{max}}"
+      "amount": "The amount should be greater than {{min}} and less than {{max}}",
+      "timeEmpty": "Time fields cannot both be set to 0"
     },
     "label": {
       "email": "Email",
@@ -112,6 +113,18 @@
     "time": "By preparing time",
     "alphabetically": "Alphabetically",
     "updated": "Newest"
+  },
+  "time": {
+    "hour": {
+      "base": "Hour",
+      "plural": "Hours",
+      "pluralSecond": "Hours"
+    },
+    "minute": {
+      "base": "Minute",
+      "plural": "Minutes",
+      "pluralSecond": "Minutes"
+    }
   },
   "category": "Category",
   "vegan": "Vegan",

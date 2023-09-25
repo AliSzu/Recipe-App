@@ -1,4 +1,9 @@
-import { Button, Divider, styled, useMediaQuery } from "@mui/material";
+import {
+  Button,
+  Divider,
+  styled,
+  useMediaQuery,
+} from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { RecipeFormValues } from "../../types/FormTypes";
 import IngredientsListForm from "./IngredientsListForm";
@@ -8,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import InputFileField from "../molecules/InputFileField";
 import { theme } from "../../theme/theme";
 import { MAX_LENGTH } from "../../constants/DefaultValues";
+import TimeForm from "../molecules/TimeForm";
 import CategorySelect from "../molecules/CategorySelect";
 
 interface RecipeFormProps {
@@ -68,12 +74,7 @@ const RecipeForm = ({
             label={t("textField.label.name")}
             maxLength={MAX_LENGTH.NAME}
           />
-          <FormField
-            field="time"
-            isError={!!errors.time}
-            label={t("textField.label.time")}
-            maxLength={MAX_LENGTH.TIME}
-          />
+          <TimeForm/>
           <FormField
             field="description"
             multiline={true}

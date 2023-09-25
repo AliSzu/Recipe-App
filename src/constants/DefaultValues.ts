@@ -7,7 +7,10 @@ export const DEFAULT_IMAGE =
 
 export const recipeDefaultValues: RecipeFormValues = {
   title: "",
-  time: "",
+  time: {
+    hours: 0,
+    minutes: 0
+  },
   description: "",
   imgSrc: DEFAULT_IMAGE,
   category: Category.default,
@@ -47,3 +50,8 @@ export const AMOUNT = {
 
 export const FILE_MAX_SIZE = 1 * 1024 * 1024;
 export const PREPARING_FIELDS_LIMIT = 50;
+
+export const TIME = {
+  MIN: 0,
+  MAX: 100
+}

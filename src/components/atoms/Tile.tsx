@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { Recipe } from "../../types/RecipeTypes";
 import { useNavigate } from "react-router-dom";
+import { TimeToText } from "../../utils/utils";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { MouseEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -64,10 +65,13 @@ const Tile = ({ recipe, favorite }: TileProps) => {
   const { mutate: deleteRecipeMutation } = useDeleteFavoriteRecipe();
 
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/recipe/${recipe.id}`);
   };
 
+  const formattedTime = TimeToText(recipe.time);
+  
   const handleSuccess = (dispatchMessage: string) => {
     dispatch(
       showSnackbar({
@@ -109,7 +113,7 @@ const Tile = ({ recipe, favorite }: TileProps) => {
     <StyledImageListItem onClick={handleClick} style={{ height: "100%" }}>
       <StyledImage src={recipe.imgSrc} loading="lazy" />
       <StyledImageListItemBar
-        title={recipe.time}
+        title={formattedTime}
         subtitle={recipe.title}
         actionIcon={
           <StyledIconButton
